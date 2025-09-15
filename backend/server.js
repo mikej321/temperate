@@ -28,7 +28,7 @@ app.use(
     })
 );
 
-app.get('/health', (req, res) => res.status(200).send('ok'));
+app.get('/healthz', (req, res) => res.status(200).send('ok'));
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.use('/search', searchRoute);
