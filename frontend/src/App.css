@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --mobile_max: 375px;
+  --tablet_max: 940px;
+  --desktop_max: 1800px;
+  --page-gutter: clamp(1rem, 4vw, 2rem);
+  --cadet_gray_100: #E8ECED;
+  --cadet_gray_200: #90A4AE;
+  --cadet_gray_300: #8092A0;
+  --cadet_gray_400: #4D5D6A;
+  --cadet_gray_500: #3D4951;
+  --prussian_blue_100: #AFCFE9;
+  --prussian_blue_200: #5F9DD3;
+  --prussian_blue_300: #2C6AA0;
+  --prussian_blue_400: #173753;
+  --prussian_blue_500: #03213A;
+  --argentinian_blue_100: #B2DAFB;
+  --argentinian_blue_200: #9FD1F9;
+  --argentinian_blue_300: #64B5F6;
+  --argentinian_blue_400: #09599A;
+  --argentinian_blue_500: #03213A;
+  --anti_flash_white_100: #ECEFF1; 
+  --anti_flash_white_200: #D0D7DC;
+  --anti_flash_white_300: #A1B0BA;
+  --anti_flash_white_400: #3D4A52;
+  --anti_flash_white_500: #344046;
+  --charcoal_100: #A3CFE1;
+  --charcoal_200: #84BFD7;
+  --charcoal_300: #327D9A;
+  --charcoal_400: #1B4353;
+  --charcoal_500: #14323E;
+  --charcoal_600: #0A191F;
+  --poppins_titles: "Poppins", sans-serif;
+  --roboto_body: "Roboto", sans-serif;
+  --roboto_digits: "Roboto Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  min-height: 100dvh;
+  background: linear-gradient(-110deg,
+              var(--cadet_gray_100) 0%,
+              var(--argentinian_blue_100) 25%);
+  background-repeat: no-repeat;
+  font-family: var(--roboto_body);
+  color: var(--argentinian_blue_500);
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page_container {
+  inline-size: 100%;
+  max-inline-size: var(--mobile_max);     /* <-- constrain the entire page */
+  margin-inline: auto;                  /* center the page frame */
+  padding-inline: var(--page-gutter);   
+  box-sizing: border-box;               /* padding doesn’t grow width */
+}
+
+
+@media screen and (min-width: 400px) {
+  .page_container {
+    max-inline-size: var(--tablet_max);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .page_container {
+    max-inline-size: var(--desktop_max);
+  }
+}
+
+
+
+
+

@@ -1,0 +1,37 @@
+.location_desktop {
+    grid-area: location;
+    display: none;
+}
+
+.location_icon {
+    stroke: var(--argentinian_blue_500);
+}
+
+.location {
+
+}
+
+@media screen and (min-width: 1000px) {
+    .location_desktop {
+    /* keep your own sizes for the icon/text */
+    width: min(100%, 303px);
+    text-wrap: nowrap;          /* item stays only as wide as its content */
+    min-width: 0;                /* avoid content pinning */
+    display: flex;
+    gap: 2rem;
+
+    /* remove: justify-content: stretch; (invalid) */
+  }
+
+    .location_icon {
+        max-width: 49px;
+        max-height: 49px;
+        margin-left: -1rem;
+    }
+
+    .location {
+        font-size: 32px;
+        font-weight: bold;
+        font-family: var(--poppins_titles);
+    }
+}

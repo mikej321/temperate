@@ -1,0 +1,23 @@
+.tempDisplay {
+    margin-left: 6rem;
+    font-family: var(--roboto_digits);
+    font-weight: 700;
+    font-size: 64px;
+    grid-area: temp;
+    justify-self: center;
+}
+
+@media screen and (min-width: 600px) {
+    .tempDisplay {
+        font-size: 76px;
+        max-inline-size: min(100%, 126px);
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .tempDisplay {
+        margin-left: unset;
+        align-self: center;
+        justify-self: end;
+    }
+}

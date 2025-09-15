@@ -1,0 +1,109 @@
+.quickcast_container {
+  grid-area: forecast;           /* or the area you actually use */
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  padding-inline: 3rem;
+  inline-size: min(100%, 380px); /* your desired cap */
+  min-inline-size: 0;            /* <-- KEY: allow shrinking inside grid */
+  margin-inline: auto;           /* center in the track */
+  box-sizing: border-box;        /* keep padding inside */
+}
+
+
+.quickcast_label {
+    font-family: var(--roboto_body);
+    font-weight: 700;
+}
+
+.quickcast_inner_container {
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-bottom: 2rem;
+    cursor: grab;
+    touch-action: pan-x;
+    user-select: none;
+}
+
+.quickcast_inner_container:active {
+    cursor: grabbing;
+}
+
+.quickcast_inner_container .card {
+    background: var(--argentinian_blue_200);
+    flex: 0 0 auto;
+    min-inline-size: min(100%, 103.33px);
+    max-height: 200px;
+    will-change: transform;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    padding-block: 2rem;
+    align-items: center;
+    border-radius: 8px;
+    font-family: var(--roboto_body);
+    font-weight: 700;
+    box-shadow: 2px 8px 4px rgba(255, 255, 255, 0.2),
+                -1px 2px 5px 3px rgba(3, 33, 58, .25);
+
+}
+
+.quick_icon {
+    width: 66px;
+    height: 66px;
+    margin-bottom: 20px;
+}
+
+.day_of_week {
+    margin-bottom: 7px;
+
+}
+
+.weather_description {
+    margin-bottom: 7px;
+}
+
+.quick_temp {
+    font-family: var(--roboto_digits);
+    font-size: 24px;
+}
+
+@media screen and (min-width: 400px) {
+    .quickcast_container {
+        inline-size: min(100%, 710px);
+    }
+}
+
+@media screen and (min-width: 1000px) {
+
+    .quickcast_label {
+        display: none;
+    }
+
+    .quickcast_container {
+        inline-size: 100%;
+        padding-inline: 0;
+        margin-top: 4rem;
+    }
+
+    .quickcast_inner_container {
+        justify-content: space-between;
+        overflow: visible;
+        cursor: auto;
+    }
+
+    .quickcast_inner_container .card {
+        margin-right: 0;
+        min-inline-size: min(100%, 140px);
+        max-block-size: max(100%, 250px);
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .quickcast_inner_container .card {
+        min-inline-size: min(100%, 150px);
+        max-block-size: max(100%, 250px);
+    }
+}

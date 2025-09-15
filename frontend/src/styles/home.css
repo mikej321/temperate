@@ -1,0 +1,23 @@
+.home_container {
+    display: grid;
+    grid-template-areas: "nav" "search" "popup" "temp" "description" "icon" "details" "forecast";
+    grid-template-rows: repeat(5, auto) 250px repeat(2, auto);
+}
+
+@media screen and (min-width: 1000px) {
+    .home_container {
+        grid-template-columns: 1fr 400px 1fr;
+        grid-template-areas: "nav nav nav" "search icon temp" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
+        grid-template-rows: 80px 1fr repeat(3, auto) 280px;
+        row-gap: 2rem;
+        min-inline-size: min(100%, 1800px);
+    }
+}
+
+/* 
+
+I'm going to have to make every element it's own element instead of putting them into "Sections"
+via flexbox. It's going to be difficult but this will allow me to map the layout with one set
+of elements without having to make duplicate elements just for mobile / desktop.
+
+*/

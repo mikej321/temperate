@@ -1,0 +1,168 @@
+.details_container {
+  grid-area: details; /* or the area you actually use */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-inline: 3rem;
+  inline-size: min(100%, 380px); /* your desired cap */
+  min-inline-size: 0; /* <-- KEY: allow shrinking inside grid */
+  margin-inline: auto; /* center in the track */
+  box-sizing: border-box; /* keep padding inside */
+  margin-top: 8rem;
+  margin-bottom: 2rem;
+}
+
+.more_details_label {
+  font-family: var(--roboto_body);
+  font-weight: 700;
+}
+
+.inner_container {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  padding-bottom: 2rem;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  gap: 4rem;
+}
+
+.inner_container:active {
+  cursor: grabbing;
+}
+
+.inner_container .card {
+  flex: 0 0 auto;
+  min-width: 103.33px;
+  margin-right: 40px;
+  will-change: transform;
+}
+
+.feels_like_container {
+  position: relative;
+  grid-area: feels_like;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inner_container div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feels_like_label,
+.low_temp_label,
+.high_temp_label,
+.humidity_label,
+.sunrise_label,
+.sunset_label,
+.wind_direction_label,
+.wind_speed_label {
+  font-size: 14px;
+  order: 1;
+}
+
+.feels_like_temp,
+.low_temp,
+.high_temp,
+.humidity,
+.sunrise,
+.sunset,
+.wind_direction,
+.wind_speed {
+  font-family: var(--roboto_digits);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.low_temp_container {
+  display: flex;
+}
+
+@media screen and (min-width: 400px) {
+  .details_container {
+    inline-size: min(100%, 710px);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+
+  .details_container {
+    padding-inline: 0;
+    gap: 0;
+    align-items: end;
+    margin-top: unset;
+  }
+
+  .more_details_label {
+    display: none;
+  }
+
+  .feels_like_container {
+    grid-area: feels_like;
+  }
+
+  .low_temp_container {
+    grid-area: low_temp;
+  }
+
+  .high_temp_container {
+    grid-area: high_temp;
+  }
+
+  .humidity_container {
+    grid-area: humidity;
+  }
+
+  .sunrise_container {
+    grid-area: sunrise;
+  }
+
+  .sunset_container {
+    grid-area: sunset;
+  }
+
+  .wind_direction_container {
+    grid-area: wind_direction;
+  }
+
+  .wind_speed_container {
+    grid-area: wind_speed;
+  }
+
+  .inner_container {
+    display: grid;
+    grid-template-areas: "feels_like low_temp" "high_temp humidity" "sunrise sunrise" "sunset sunset" "wind_direction wind_direction" "wind_speed wind_speed";
+    row-gap: 2rem;
+    column-gap: 2rem;
+    max-inline-size: 400px;
+    cursor: auto;
+  }
+
+  .inner_container div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .inner_container .card {
+    margin-right: 0;
+  }
+
+  .feels_like_label,
+  .low_temp_label,
+  .high_temp_label,
+  .humidity_label,
+  .sunrise_label,
+  .sunset_label,
+  .wind_direction_label,
+  .wind_speed_label {
+    order: unset;
+  }
+  
+}

@@ -1,0 +1,48 @@
+.icon_container {
+  grid-area: icon;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-block: 4rem 2rem;
+}
+
+.icon_container .main_icon {
+  width: min(100%, 250px);
+  height: 250px;
+}
+
+@media screen and (min-width: 600px) {
+  .icon_container .main_icon {
+    width: min(100%, 300px);
+    height: 300px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .icon_container .main_icon {
+    width: min(100%, 400px);
+    height: 400px;
+  } 
+}
+
+/* Gonna need more media query icon sizes to account for the icon size bleeding into the content on smaller desktop screen sizes */
+
+@media screen and (min-width: 1115px) {
+  .icon_container {
+    
+  }
+
+  .icon_container svg {
+    
+  }
+
+  
+}
+
+@media screen and (min-width: 1260px) {
+  .icon_container svg {
+
+  }
+}
