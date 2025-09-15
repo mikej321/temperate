@@ -4,12 +4,16 @@ import '../styles/searchBar.css';
 
 export default function SearchBar({searchVal, setSearchVal, setLocations, setSearched}) {
 
+    const api = axios.create({
+        baseURL: import.meta.env.VITE_API_URL
+    })
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLocations([]);
         e.target[0].value = '';
         
-        const { data } = await axios.post('/search', {
+        const { data } = await api.post('/search', {
             searchVal,
         })
 

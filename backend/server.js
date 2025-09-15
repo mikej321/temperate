@@ -30,12 +30,12 @@ app.use(
 
 app.get('/healthz', (req, res) => res.status(200).send('ok'));
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.use('/search', searchRoute);
 
-app.get("/*splat", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-})
+// app.get("/*splat", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+// })
 
 
 
