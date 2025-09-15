@@ -25,6 +25,7 @@
     .description_container {
         /* justify-self: stretch; */
         width: min(100%, 303px);
+        margin-bottom: 2rem;
     }
     
     .description {
@@ -41,6 +42,7 @@
         margin-left: unset;
         align-items: unset;
         justify-self: unset;
+        margin-bottom: unset;
     }
 
     
