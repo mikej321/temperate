@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-inline: 3rem;
   inline-size: min(100%, 380px); /* your desired cap */
   min-inline-size: 0; /* <-- KEY: allow shrinking inside grid */
   margin-inline: auto; /* center in the track */
