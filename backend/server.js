@@ -10,16 +10,30 @@ const app = express();
 
 const allowedOrigins = [
     process.env.FRONTEND_ORIGIN,
-    'http://localhost:5173'
-];
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
+].filter(Boolean);
 
 app.use(cors({
-    origin(origin, cb) {
-        if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-        return cb(new Error('CORS origin error'));
-    },
-    credentials: true,
-}))
+  origin(origin, cb) {
+    console.log('CORS check for:', origin); // TEMP: confirm what the browser sends
+    if (!origin) return cb(null, true);     // server-to-server, curl, etc.
+    if (allowedOrigins.includes(origin)) return cb(null, true);
+
+    // If you want to be flexible about localhost hostnames/ports:
+    try {
+      const { hostname, port, protocol } = new URL(origin);
+      if ((hostname === 'localhost' || hostname === '127.0.0.1') && port === '5173' && (protocol === 'http:' || protocol === 'https:')) {
+        return cb(null, true);
+      }
+    } catch (_) {}
+
+    cb(new Error('CORS origin error'));
+  },
+  methods: ['GET','POST','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 app.use(express.json());
 app.use(
@@ -27,6 +41,8 @@ app.use(
         extended: true
     })
 );
+
+// app.options('/(.*)', cors());
 
 app.get('/healthz', (req, res) => res.status(200).send('ok'));
 

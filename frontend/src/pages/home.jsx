@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { api } from '../utils/api';
 import axios from 'axios';
 import WeatherContainer from '../components/weather_container';
 import LocationPopup from '../components/location_popup';
@@ -65,7 +66,7 @@ export default function Home({ weather, setWeather }) {
     
 
     const getWeather = async () => {
-        const { data } = await axios.post('/search/get-weather', {
+        const { data } = await api.post('/search/get-weather', {
             pickedLocation
         });
 

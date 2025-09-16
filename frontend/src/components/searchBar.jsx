@@ -1,13 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { api } from "../utils/api";
 import axios from "axios";
 import '../styles/searchBar.css';
 
 export default function SearchBar({searchVal, setSearchVal, setLocations, setSearched}) {
-
-    const api = axios.create({
-        baseURL: import.meta.env.VITE_API_URL
-    })
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLocations([]);

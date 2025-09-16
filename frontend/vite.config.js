@@ -6,10 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/weather': {
-        target: "http://localhost:4000",
-        changeOrigin: true
-      },
       "/search": {
         target: "http://localhost:4000",
         changeOrigin: true
