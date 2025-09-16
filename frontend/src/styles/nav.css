@@ -206,19 +206,13 @@ The temperature display
     display: none;
 }
 
-.greeting_container {
+.weather_alert_container {
     display: none;
+    gap: 2rem;
 }
 
-.avatar_container {
+.settings_container {
     display: none;
-    width: 4rem;
-    height: 4rem;
-    border: 1px solid var(--cadet_gray_200);
-    border-radius: 50%;
-}
-
-.avatar_container .avatar_pic {
 }
 
 @media screen and (min-width: 600px) {
@@ -309,14 +303,11 @@ The temperature display
     font-weight: 700;
   }
 
-  .greeting_container {
-    display: block;
-  }
-
-  .avatar_container {
+  .weather_alert_container {
     display: flex;
   }
 
-  .avatar_container .avatar_pic {
+  .settings_container {
+    display: flex;
   }
 }

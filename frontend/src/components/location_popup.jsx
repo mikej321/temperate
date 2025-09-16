@@ -14,8 +14,8 @@ export default function LocationPopup({
       opacity: 1,
       height: "auto",
       transition: {
-        height: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
-        opacity: { duration: 0.18 },
+        height: { delay: 0.3, duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+        opacity: { delay: 0.3, duration: 0.18 },
         when: "beforeChildren"
       }
     },

@@ -1,11 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { api } from "../utils/api";
+import { motion } from "framer-motion";
 import axios from "axios";
 import '../styles/searchBar.css';
 
-export default function SearchBar({searchVal, setSearchVal, setLocations, setSearched}) {
+
+export default function SearchBar({searchVal, setSearchVal, setLocations, searched, setSearched}) {
     
     const inputRef = useRef(null);
+    const [firstSearch, setFirstSearch] = useState(false);
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,20 +25,10 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, setSea
             searchVal,
         })
 
-        /* properties in this object are
-        
-          name: "area name",
-          admin1: "state name",
-          admin2: "district name",
-          country: "United States",
-          lat: "latitude",
-          lon: "longitude"
-        
-        */
-
         const results = data.data.results;
 
         setSearched(true);
+        setFirstSearch(true);
 
         if (results !== undefined) {
             for (let area of results) {
@@ -52,9 +47,17 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, setSea
          className="search_container"
          onSubmit={(e) => handleSubmit(e)}
          >
-            <input
+            <motion.input
              ref={inputRef}
              className="search_bar"
+             initial={false}
+             animate={firstSearch ? { y: 0 } : { y: 300 }}
+             transition={{
+                type: "spring",
+                duration: 0.2,
+                stiffness: 500,
+                damping: 35
+             }}
              type="search"
              name="search"
              id="search"

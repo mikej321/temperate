@@ -94,7 +94,7 @@ export default function Home({ weather, setWeather }) {
         <WeatherContainer>
             <div className="home_container">
                 {pickedLocation ? <Navbar date={date} time={time} setTime={setTime} pickedLocation={pickedLocation} name={pickedLocation.name} state={pickedLocation.admin1} /> : <Navbar date={date} time={time} setTime={setTime} />}
-                <SearchBar searchVal={searchVal} setSearchVal={setSearchVal} setLocations={setLocations} setSearched={setSearched} />
+                <SearchBar searchVal={searchVal} searched={searched} setSearchVal={setSearchVal} setLocations={setLocations} setSearched={setSearched} />
                 <AnimatePresence>
                     {searched && <LocationPopup setSearched={setSearched} locations={locations} setLocations={setLocations} setPickedLocation={setPickedLocation} />}
                 </AnimatePresence>

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {formatDateCustom, displayTime} from "../utils/formatDate";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Navbar({ date, time, setTime, pickedLocation, name, state }) {
@@ -252,12 +254,12 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
             <div className="time">{time}</div>
         </div>
       </div>
-      <div className="greeting_container">
-        {/* Welcome back greeting goes here */}
-        <div className="greeting">Welcome back, Michael!</div>
+      <div className="weather_alert_container">
+        <p>Weather Alerts: </p>
+        <p>0</p>
       </div>
-      <div className="avatar_container">
-        {/* <img src="" alt="" className="avatar_pic" /> */}
+      <div className="settings_container">
+        <FontAwesomeIcon icon={faGear} size="2xl" />
       </div>
     </div>
   );
