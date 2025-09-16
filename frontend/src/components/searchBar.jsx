@@ -4,8 +4,15 @@ import axios from "axios";
 import '../styles/searchBar.css';
 
 export default function SearchBar({searchVal, setSearchVal, setLocations, setSearched}) {
+    
+    const inputRef = useRef(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        inputRef.current?.blur();
+        setTimeout(() => inputRef.current?.blur(), 0);
+
         setLocations([]);
         e.target[0].value = '';
         
@@ -46,6 +53,7 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, setSea
          onSubmit={(e) => handleSubmit(e)}
          >
             <input
+             ref={inputRef}
              className="search_bar"
              type="search"
              name="search"
