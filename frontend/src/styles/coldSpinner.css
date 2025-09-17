@@ -1,0 +1,79 @@
+:root {
+    --overlay-bg: rgba(0, 0, 0, 0.4);
+    --card-bg: #ffffff;
+    --text: #111827;
+    --muted: #4b5563;
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    --radius: 16px;
+}
+
+.spinner_overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: var(--overlay-bg);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.spinner_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    box-shadow: var(--shadow);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+.spinner_ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+    opacity: 0.2;
+}
+
+.spinner_arc {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+    stroke-linecap: round;
+}
+
+.spinner_text {
+    text-align: center;
+}
+
+.spinner_title {
+    margin: 0;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.spinner_subtitle {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}   
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: none;
+    }
+}
