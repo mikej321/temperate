@@ -1,4 +1,6 @@
+import { useState, CSSProperties } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SpinnerDotted } from 'spinners-react';
 import "../styles/coldSpinner.css";
 
 export default function ColdSpinner({ waking, message }) {
@@ -30,19 +32,21 @@ export default function ColdSpinner({ waking, message }) {
             }}
             exit={{ scale: 0.98, opacity: 0 }}
           >
-            <svg
-              className="spinner"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="12" r="10" className="spinner-ring" />
-              <path d="M22 12a10 10 0 0 1-10 10" className="spinner-arc" />
-            </svg>
+            
+            <SpinnerDotted
+             enabled={waking}
+             size={60}
+             thickness={80}
+             color="#32739A"
+             speed={50}
+             />
 
-            <div className="spinner-text">
-              <p className="spinner-title">{message || "Waking the server…"}</p>
-              <p className="spinner-subtitle">
-                First load can take a few seconds on the free tier.
+            <div className="spinner_text">
+              <p className="spinner_title">{message || "Loading Temperate"}</p>
+              <p className="spinner_subtitle">
+                  Because I am using Render's free tier, the first load takes around 15-20
+                  seconds to load. This box will disappear after that. My apologies and thank
+                  you so much for understanding!
               </p>
             </div>
           </motion.div>

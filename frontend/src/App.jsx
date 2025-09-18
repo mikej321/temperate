@@ -61,8 +61,7 @@ function App() {
             <Home
               weather={weather}
               setWeather={setWeather}
-              // optional: pass `waking` down if you want to disable controls while waking
-              // waking={waking}
+              waking={waking}
             />
           }
         />
