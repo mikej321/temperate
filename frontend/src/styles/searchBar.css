@@ -5,6 +5,7 @@
     grid-area: search;
     justify-content: center;
     padding-inline: 1rem;
+    
 }
 
 .search_bar {
@@ -55,7 +56,6 @@
     }
 
     .search_bar {
-        margin-top: 2rem;
         width: min(100%, 600px);
         
     }
@@ -67,6 +67,7 @@
         width: min(100%, 400px);
         justify-self: unset;
         padding-inline: unset;
+        transform: translateY(15px);
     }
 
     .search_bar {

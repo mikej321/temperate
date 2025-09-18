@@ -18,6 +18,7 @@ The temperature display
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    padding-inline: var(--page-gutter);
 }
 
 .logo_container {
@@ -223,7 +224,7 @@ The temperature display
 
 @media screen and (min-width: 1000px) {
   .navbar {
-    padding-inline: unset;
+    padding-inline: 2rem;
   }
 
   .logo_container {
@@ -309,5 +310,25 @@ The temperature display
 
   .settings_container {
     display: flex;
+    cursor: pointer;
   }
+
+.settings_container svg {
+  /* define it once so it has a timeline to pause */
+  animation: spin 10s linear infinite;
+  animation-play-state: paused;       /* default = frozen */
+  transform-origin: 50% 50%;
+  transform-box: view-box;            /* SVG center, esp. for Firefox */
+  scale: 1;
+  transition: scale 0.2s ease-in-out;
+}
+
+.settings_container:hover svg {
+  animation-play-state: running;      /* hover = play */
+  scale: 1.1;
+}
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

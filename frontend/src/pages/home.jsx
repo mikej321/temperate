@@ -11,6 +11,7 @@ import WeatherIcon from '../components/weatherIcon';
 import WeatherDetails from '../components/weatherDetails';
 import DailyQuickcast from '../components/dailyQuickcast';
 import Location from '../components/location';
+import Footer from '../components/footer';
 import '../App.css';
 import '../styles/nav.css';
 import '../styles/home.css';
@@ -92,8 +93,8 @@ export default function Home({ weather, setWeather }) {
 
     return (
         <WeatherContainer>
+            {pickedLocation ? <Navbar date={date} time={time} setTime={setTime} pickedLocation={pickedLocation} name={pickedLocation.name} state={pickedLocation.admin1} /> : <Navbar date={date} time={time} setTime={setTime} />}
             <div className="home_container">
-                {pickedLocation ? <Navbar date={date} time={time} setTime={setTime} pickedLocation={pickedLocation} name={pickedLocation.name} state={pickedLocation.admin1} /> : <Navbar date={date} time={time} setTime={setTime} />}
                 <SearchBar searchVal={searchVal} searched={searched} setSearchVal={setSearchVal} setLocations={setLocations} setSearched={setSearched} />
                 <AnimatePresence>
                     {searched && <LocationPopup setSearched={setSearched} locations={locations} setLocations={setLocations} setPickedLocation={setPickedLocation} />}
@@ -115,6 +116,7 @@ export default function Home({ weather, setWeather }) {
                     )}
                 </AnimatePresence>
             </div>
+            <Footer />
         </WeatherContainer>
     )
 }

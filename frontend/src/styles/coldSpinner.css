@@ -38,7 +38,7 @@
 }
 
 .spinner_title {
-    margin: 0;
+    margin-top: 4rem;
     color: var(--argentinian_blue_500);
     font-size: 16px;
     font-weight: 600;

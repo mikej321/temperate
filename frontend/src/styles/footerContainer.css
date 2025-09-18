@@ -1,0 +1,19 @@
+.footer_container {
+    grid-area: footer;
+    background: var(--argentinian_blue_500);
+    display: flex;
+    width: 100%;
+    height: 6rem;
+    justify-content: center;
+    align-items: center;
+    align-self: end;
+}
+
+.footer_container p {
+    color: var(--anti_flash_white_100);
+    font-size: 1.6rem;
+}
+
+.author {
+    font-weight: bold;
+}

@@ -4,33 +4,62 @@ import { SpinnerDotted } from 'spinners-react';
 import "../styles/coldSpinner.css";
 
 export default function ColdSpinner({ waking, message }) {
+
+  const overlayVariant = {
+    hidden: {
+      opacity: 0
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 24,
+        when: "beforeChildren"
+      }
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        when: "afterChildren"
+      }
+    }
+  }
+
+  const cardVariant = {
+    hidden: {
+      scaleY: 0,
+      opacity: 0
+    },
+    visible: {
+      scaleY: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.2,
+        type: "spring",
+        stiffness: 300,
+        damping: 25
+      }
+    },
+    exit: {
+      scaleY: 0,
+      opacity: 0
+    }
+  }
+
   return (
     <AnimatePresence>
       {waking && (
         <motion.div
           className="spinner_overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            transition: {
-              duration: 0.25,
-            },
-          }}
+          variants={overlayVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
           <motion.div
             className="spinner_card"
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 24,
-              },
-            }}
-            exit={{ scale: 0.98, opacity: 0 }}
+            variants={cardVariant}
           >
             
             <SpinnerDotted
@@ -40,7 +69,6 @@ export default function ColdSpinner({ waking, message }) {
              color="#32739A"
              speed={50}
              />
-
             <div className="spinner_text">
               <p className="spinner_title">{message || "Loading Temperate"}</p>
               <p className="spinner_subtitle">

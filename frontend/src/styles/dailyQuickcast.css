@@ -1,12 +1,12 @@
 .quickcast_container {
-  grid-area: forecast;           /* or the area you actually use */
+  grid-area: forecast;           
   display: flex;
   gap: 2rem;
   flex-direction: column;
-  inline-size: min(100%, 380px); /* your desired cap */
-  min-inline-size: 0;            /* <-- KEY: allow shrinking inside grid */
-  margin-inline: auto;           /* center in the track */
-  box-sizing: border-box;        /* keep padding inside */
+  inline-size: min(100%, 380px); 
+  min-inline-size: 0;            
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 
