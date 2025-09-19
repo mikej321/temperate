@@ -1,12 +1,10 @@
 .home_container {
-    position: relative;
     grid-area: content;
     display: grid;
     grid-template-areas: "search" "popup" "temp" "description" "icon" "details" "forecast";
-    grid-template-rows: auto repeat(3, auto) 250px repeat(2, auto);
+    grid-template-rows: 40px repeat(3, auto) 250px repeat(2, auto);
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
-    place-items: initial;
 }
 
 @media screen and (min-width: 1000px) {
@@ -14,7 +12,7 @@
         align-items: center;
         grid-template-columns: 1fr 400px 1fr;
         grid-template-areas: "search icon temp" "popup icon details" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
-        grid-template-rows: auto minmax(0, max-content) repeat(3, auto) 280px;
+        grid-template-rows: 80px minmax(0, max-content) repeat(3, auto) 280px;
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;
