@@ -19,5 +19,5 @@ jobs:
             -H "X-Task-Secret: $TASK_SECRET" \
             "$TARGET_URL" -o /dev/null
         env:
-          Target_URL: ${{ secrets.TARGET_URL }}
+          TARGET_URL: ${{ secrets.TARGET_URL }}
           TASK_SECRET: ${{ secrets.TASK_SECRET }}
