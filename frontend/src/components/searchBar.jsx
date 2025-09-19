@@ -51,7 +51,7 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, search
              ref={inputRef}
              className="search_bar"
              initial={false}
-             animate={firstSearch ? { y: 0 } : { y: 300 }}
+             animate={firstSearch ? { y: 0 } : { y: 200 }}
              transition={{
                 type: "spring",
                 duration: 0.2,
