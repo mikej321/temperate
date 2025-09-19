@@ -15,9 +15,16 @@ jobs:
     steps:
       - name: Call health endpoint
         run: |
-          curl -fsS -m 5 \
+          set -euo pipefail
+          echo "Pinging: $TARGET_URL"
+          # Try a quick HEAD first; if that fails, fall back to a longer GET (cold start)
+          curl -fIsS --connect-timeout 5 -m 10 \
+            -H "X-Task-Secret: $TASK_SECRET" \
+            "$TARGET_URL" -o /dev/null || \
+          curl -fsS --retry 3 --retry-delay 5 --retry-all-errors -m 60 \
             -H "X-Task-Secret: $TASK_SECRET" \
             "$TARGET_URL" -o /dev/null
+        
         env:
           TARGET_URL: ${{ secrets.TARGET_URL }}
           TASK_SECRET: ${{ secrets.TASK_SECRET }}
