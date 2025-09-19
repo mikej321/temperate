@@ -5,10 +5,10 @@ import axios from "axios";
 import '../styles/searchBar.css';
 
 
-export default function SearchBar({searchVal, setSearchVal, setLocations, searched, setSearched}) {
+export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSearchVal, setLocations, searched, setSearched}) {
     
     const inputRef = useRef(null);
-    const [firstSearch, setFirstSearch] = useState(false);
+    
 
     
 
@@ -43,21 +43,27 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, search
     }
 
     return (
-        <form
+        <motion.form
          className="search_container"
          onSubmit={(e) => handleSubmit(e)}
-         >
-            <motion.input
-             ref={inputRef}
-             className="search_bar"
-             initial={false}
-             animate={firstSearch ? { y: 0 } : { y: 300 }}
-             transition={{
+         layout
+         initial={{ height: 400 }}
+         animate={{ height: firstSearch ? 100 : 400 }}
+         style={{
+            alignSelf: firstSearch ? "start" : "center"
+         }}
+         transition={{
+            layout: {
                 type: "spring",
                 duration: 0.2,
                 stiffness: 500,
                 damping: 35
-             }}
+            }
+         }}
+         >
+            <motion.input
+             ref={inputRef}
+             className="search_bar"
              type="search"
              name="search"
              id="search"
@@ -66,7 +72,7 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, search
              onChange={(e) => setSearchVal(e.target.value)}
              />
              <button type="submit" className="sr-only">Search</button>
-        </form>
+        </motion.form>
 
     ) 
     

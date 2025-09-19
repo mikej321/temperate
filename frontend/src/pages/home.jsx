@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+
 import { api } from '../utils/api';
+import { AnimatePresence, motion } from 'framer-motion';
 import axios from 'axios';
 import WeatherContainer from '../components/weather_container';
 import LocationPopup from '../components/location_popup';
@@ -17,7 +19,6 @@ import '../styles/nav.css';
 import '../styles/home.css';
 import '../styles/weather_container.css';
 import generateWindLabel from '../utils/generateWindLabel';
-import { AnimatePresence } from 'framer-motion';
 import { displayTime } from '../utils/formatDate';
 
 
@@ -26,6 +27,7 @@ export default function Home({ weather, setWeather }) {
 
     /* Use openweather for current forecasting and open-meteo for hourly/daily/minuteCast */
 
+    const [firstSearch, setFirstSearch] = useState(false);
     const [searched, setSearched] = useState(false);
     const [searchVal, setSearchVal] = useState('');
     const [pickedLocation, setPickedLocation] = useState(null);
@@ -94,8 +96,18 @@ export default function Home({ weather, setWeather }) {
     return (
         <WeatherContainer>
             {pickedLocation ? <Navbar date={date} time={time} setTime={setTime} pickedLocation={pickedLocation} name={pickedLocation.name} state={pickedLocation.admin1} /> : <Navbar date={date} time={time} setTime={setTime} />}
-            <div className="home_container">
-                <SearchBar searchVal={searchVal} searched={searched} setSearchVal={setSearchVal} setLocations={setLocations} setSearched={setSearched} />
+            <motion.div
+             className="home_container"
+             initial={{ ['--search_row']: '100%' }}
+             animate={{ ['--search_row']: firstSearch ? '40px' : '100%' }}
+             type={{
+                type: 'spring',
+                duration: 0.2,
+                stiffness: 200,
+                damping: 25
+             }}
+             >
+                <SearchBar firstSearch={firstSearch} setFirstSearch={setFirstSearch} searchVal={searchVal} searched={searched} setSearchVal={setSearchVal} setLocations={setLocations} setSearched={setSearched} />
                 <AnimatePresence>
                     {searched && <LocationPopup setSearched={setSearched} locations={locations} setLocations={setLocations} setPickedLocation={setPickedLocation} />}
                 </AnimatePresence>
@@ -115,7 +127,7 @@ export default function Home({ weather, setWeather }) {
                     </>
                     )}
                 </AnimatePresence>
-            </div>
+            </motion.div>
             <Footer />
         </WeatherContainer>
     )

@@ -53,6 +53,7 @@ export default function LocationPopup({
     <motion.div
       className="popup_shell"
       variants={shell}
+      layout
       initial="hidden"
       animate="visible"
       exit="exit"
