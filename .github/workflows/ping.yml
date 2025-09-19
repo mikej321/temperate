@@ -1,0 +1,23 @@
+name: ping-temperate
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ping-temperate
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Call health endpoint
+        run: |
+          curl -fsS -m 5 \
+            -H "X-Task-Secret: $TASK_SECRET" \
+            "$TARGET_URL" -o /dev/null
+        env:
+          Target_URL: ${{ secrets.TARGET_URL }}
+          TASK_SECRET: ${{ secrets.TASK_SECRET }}

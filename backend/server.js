@@ -8,6 +8,8 @@ const searchRoute = require('./routes/searchRoute');
 dotenv.config();
 const app = express();
 
+const TASK_SECRET = process.env.TASK_SECRET;
+
 const isDev = process.env.NODE_ENV !== 'production';
 const allowedOrigins = [
     process.env.FRONTEND_ORIGIN,
@@ -45,6 +47,14 @@ app.use(
 // app.options('/(.*)', cors());
 
 app.get('/healthz', (req, res) => res.status(200).send('ok'));
+
+app.get('/tasks/warmup', (req, res) => {
+  if (!TASK_SECRET || req.get("X-Task-Secret") !== TASK_SECRET) {
+    return res.sendStatus(401);
+  }
+
+  return res.sendStatus(204);
+})
 
 // app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.use('/search', searchRoute);
