@@ -3,9 +3,6 @@
     font-family: var(--roboto_digits);
     font-weight: 700;
     font-size: 64px;
-    grid-area: temp;
-    justify-self: center;
-    margin-top: 4rem;
 }
 
 @media screen and (min-width: 600px) {
@@ -19,7 +16,5 @@
     .tempDisplay {
         margin-top: unset;
         margin-left: unset;
-        align-self: center;
-        justify-self: end;
     }
 }

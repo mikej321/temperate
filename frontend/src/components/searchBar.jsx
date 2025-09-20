@@ -5,12 +5,9 @@ import axios from "axios";
 import '../styles/searchBar.css';
 
 
-export default function SearchBar({searchVal, setSearchVal, setLocations, searched, setSearched}) {
+export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSearchVal, setLocations, searched, setSearched}) {
     
     const inputRef = useRef(null);
-    const [firstSearch, setFirstSearch] = useState(false);
-
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,13 +35,12 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, search
                 ]))
             }
         }
-
-        
     }
 
     return (
-        <form
+        <motion.form
          className="search_container"
+         inherit={false}
          onSubmit={(e) => handleSubmit(e)}
          >
             <motion.input
@@ -66,7 +62,7 @@ export default function SearchBar({searchVal, setSearchVal, setLocations, search
              onChange={(e) => setSearchVal(e.target.value)}
              />
              <button type="submit" className="sr-only">Search</button>
-        </form>
+        </motion.form>
 
     ) 
     

@@ -1,8 +1,5 @@
 .description_container {
-    grid-area: description;
     color: var(--argentinian_blue_500);  
-    margin-left: 2rem;
-    justify-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;  /* Mobile alignment is slightly off, this is to fix that */  
@@ -23,8 +20,6 @@
 
 @media screen and (min-width: 600px) {
     .description_container {
-        /* justify-self: stretch; */
-        width: min(100%, 303px);
         margin-bottom: 2rem;
     }
     
@@ -39,10 +34,7 @@
 
 @media screen and (min-width: 1000px) {
     .description_container {
-        margin-left: unset;
         align-items: unset;
-        justify-self: unset;
-        margin-bottom: unset;
     }
 
     

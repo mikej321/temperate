@@ -31,29 +31,8 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [waking, setWaking] = useState(true);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetchWithRetry(`${API}/healthz`, {}, { retries: 3, baseDelayMs: 600 });
-        if (!cancelled) {
-          // tiny grace delay so the fade-out feels intentional
-          await sleep(200);
-          setWaking(false);
-        }
-        if (!res.ok && !cancelled) setWaking(false);
-      } catch (_) {
-        if (!cancelled) setWaking(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
-
   return (
     <Router>
-      {/* Full-screen overlay while backend wakes */}
-      <ColdSpinner waking={waking} />
-
       <Routes>
         <Route
           path="/"

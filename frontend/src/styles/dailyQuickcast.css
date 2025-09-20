@@ -1,10 +1,7 @@
-.quickcast_container {
-  grid-area: forecast;           
+.quickcast_container {         
   display: flex;
   gap: 2rem;
-  flex-direction: column;
-  inline-size: min(100%, 380px); 
-  min-inline-size: 0;            
+  flex-direction: column;         
   margin-inline: auto;
   box-sizing: border-box;
 }
@@ -70,9 +67,9 @@
 }
 
 @media screen and (min-width: 400px) {
-    .quickcast_container {
+    /* .quickcast_container {
         inline-size: min(100%, 710px);
-    }
+    } */
 }
 
 @media screen and (min-width: 1000px) {
@@ -82,9 +79,7 @@
     }
 
     .quickcast_container {
-        inline-size: 100%;
         padding-inline: 0;
-        margin-top: 4rem;
     }
 
     .quickcast_inner_container {

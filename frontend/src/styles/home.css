@@ -1,10 +1,86 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "search" "popup" "temp" "description" "icon" "details" "forecast";
-    grid-template-rows: 40px repeat(3, auto) 250px repeat(2, auto);
+    grid-template-areas: "search" "popup" "loader" "temp" "description" "icon" "details" "forecast";
+    grid-template-rows: 40px repeat(4, auto) 250px repeat(2, auto);
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
+}
+
+.loader_overlay {
+    grid-area: loader;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home_temp_container {
+    grid-area: temp;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    min-width: 0;
+    min-height: 0;
+}
+
+.home_description_container {
+    grid-area: description;
+    justify-self: center;
+    margin-left: 2rem;
+    min-width: 0;
+    min-height: 0;
+}
+
+.home_icon_container {
+    grid-area: icon;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-block: 4rem 2rem;
+    min-width: 0;
+    min-height: 0;
+}
+
+.home_details_container {
+    grid-area: details;
+    inline-size: min(100%, 380px);
+    min-inline-size: 0;
+    margin-inline: auto;
+    margin-top: 8rem;
+    margin-bottom: 2rem;
+    min-width: 0;
+    min-height: 0;
+}
+
+.home_quickcast_container {
+    grid-area: forecast;
+    inline-size: min(100%, 380px);
+    min-inline-size: 0;
+    margin-inline: auto;
+    min-width: 0;
+    min-height: 0;
+}
+
+@media screen and (min-width: 400px) {
+    .home_details_container {
+        inline-size: min(100%, 710px);
+    }
+
+    .home_quickcast_container {
+        inline-size: min(100%, 710px);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .home_description_container {
+        width: min(100%, 303px);
+        margin-bottom: 2rem;
+    }
 }
 
 @media screen and (min-width: 1000px) {
@@ -16,6 +92,30 @@
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;
+    }
+
+    .home_temp_container {
+        justify-self: end;
+        align-self: end;
+        margin-top: unset;
+        margin-bottom: unset;
+    }
+
+    .home_description_container {
+        margin-left: 0;
+        margin-bottom: 0;
+        justify-self: stretch;
+    }
+
+    .home_details_container {
+        align-self: end;
+        margin-top: 0;
+    }
+
+    .home_quickcast_container {
+        inline-size: 100%;
+        margin-top: 4rem;
+        margin-bottom: 8rem;
     }
 }
 

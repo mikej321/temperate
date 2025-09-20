@@ -1,14 +1,8 @@
 .details_container {
-  grid-area: details; /* or the area you actually use */
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  inline-size: min(100%, 380px); /* your desired cap */
-  min-inline-size: 0; /* <-- KEY: allow shrinking inside grid */
-  margin-inline: auto; /* center in the track */
   box-sizing: border-box; /* keep padding inside */
-  margin-top: 8rem;
-  margin-bottom: 2rem;
 }
 
 .more_details_label {
@@ -93,8 +87,6 @@
   .details_container {
     padding-inline: 0;
     gap: 0;
-    align-items: end;
-    margin-top: unset;
   }
 
   .more_details_label {
@@ -140,13 +132,14 @@
     column-gap: 2rem;
     max-inline-size: 400px;
     cursor: auto;
+    align-self: end;
   }
 
   .inner_container div {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    
   }
 
   .inner_container .card {

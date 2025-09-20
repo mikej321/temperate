@@ -6,6 +6,7 @@ export default function LocationPopup({
   setLocations,
   setPickedLocation,
   setSearched,
+  setFirstSearch
 }) {
   // Animate only the shell's height/opacity
   const shell = {
