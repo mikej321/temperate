@@ -35,6 +35,8 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
                 ]))
             }
         }
+
+        
     }
 
     return (

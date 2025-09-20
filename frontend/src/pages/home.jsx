@@ -72,8 +72,8 @@ export default function Home({ weather, setWeather }) {
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.2,
-            delayChildren: 0.25
+            staggerChildren: 0.4,
+            delayChildren: 0.4
         }
     },
     exit: {
@@ -88,7 +88,6 @@ export default function Home({ weather, setWeather }) {
     visible: {
         opacity: 1,
         transition: {
-            delay: 0.75,
             duration: 0.25, 
             ease: "easeOut"
         }
@@ -225,7 +224,6 @@ function buildEndpoint(path) {
       )}
       <motion.div
        className="home_container"
-       key={`wx-${pickedLocation?.latitude}-${pickedLocation?.longitude}`}
        variants={homeVariant}
        initial="hidden"
        animate={(!isLoading && weather) ? "visible" : "hidden"}
@@ -250,27 +248,20 @@ function buildEndpoint(path) {
               setPickedLocation={setPickedLocation}
             />
           )}
-        </AnimatePresence>
-        {pickedLocation && (
-          <>
-            <Location
-              name={pickedLocation.name}
-              state={pickedLocation.admin1}
-            />
-          </>
-        )}
-        <AnimatePresence>
-          {isLoading && (
+          {pickedLocation && (
+            <>
+              <Location
+                name={pickedLocation.name}
+                state={pickedLocation.admin1}
+              />
+            </>
+          )}
+          {isLoading ? (
             <motion.div
              className="loader_overlay"
+             layout
              initial={{ 
-              opacity: 0,
-              transition: {
-                opacity: {
-                  duration: 0.2,
-                  delay: 0.18
-                }
-              }
+              opacity: 0
              }}
              animate={{ 
               opacity: 1,
@@ -285,7 +276,7 @@ function buildEndpoint(path) {
               opacity: 0,
               transition: {
                 opacity: {
-                  duration: 0.1,
+                  duration: 0.2,
                 }
               }
             }}
@@ -298,21 +289,16 @@ function buildEndpoint(path) {
                 speed={50}
               />
             </motion.div>
-          )}
-        </AnimatePresence>
-        {error && !isLoading && <div className="section_error">{error}</div>}
-        <AnimatePresence>
-          {!isLoading && weather && (
-            <>
+          ): error && !isLoading ? <div className="section_error">{error}</div>
+           : !isLoading && weather ? (
+             <>
               <motion.div
-               layout
                className="home_temp_container"
                variants={children}
                >
                   <TempDisplay temp={weather.current.temperature_2m} />
               </motion.div>
               <motion.div
-               layout
                className="home_description_container"
                variants={children}
                >
@@ -322,28 +308,25 @@ function buildEndpoint(path) {
                   />
               </motion.div>
               <motion.div
-               layout
                className="home_icon_container"
                variants={children}
                >
                   <WeatherIcon weather={weather} />
               </motion.div>
               <motion.div
-               layout
                className="home_details_container"
                variants={children}
                >
                   <WeatherDetails weather={weather} />
               </motion.div>
               <motion.div
-               layout
                className="home_quickcast_container"
                variants={children}
                >
                   <DailyQuickcast weather={weather} />
               </motion.div>
             </>
-          )}
+           ) : null}
         </AnimatePresence>
       </motion.div>
       <Footer />
