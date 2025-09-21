@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import useHistory from "../utils/useHistory";
 import "../styles/location_popup.css";
 
 export default function LocationPopup({
@@ -9,6 +10,20 @@ export default function LocationPopup({
   setFirstSearch
 }) {
   // Animate only the shell's height/opacity
+
+  const { history, pushHistory } = useHistory();
+
+  async function handlePickLocation(picked) {
+    pushHistory({
+      name: picked.name,
+      lat: picked.latitude,
+      lon: picked.longitude,
+      admin1: picked.admin1,
+      country: picked.country,
+      temperature: null,
+    })
+  }
+
   const shell = {
     hidden: { opacity: 0, height: 0 },
     visible: {
@@ -45,9 +60,16 @@ export default function LocationPopup({
     visible: { opacity: 1, x: 0 }
   };
 
-  const handlePick = (loc) => {
+  const handlePick = async (loc) => {
     setSearched(false);
     setPickedLocation(loc);
+    pushHistory({
+      name: loc.name,
+      lat: loc.latitude,
+      lon: loc.longitude,
+      admin1: loc.admin1,
+      country: loc.country
+    })
   };
 
   return (

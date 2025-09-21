@@ -2,8 +2,8 @@ name: ping-temperate
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # every 5 minutes (UTC)
-  workflow_dispatch:
+    - cron: "*/5 * * * *"   # every 10 minutes (UTC)
+  workflow_dispatch:          # allow manual runs
 
 concurrency:
   group: ping-temperate
@@ -15,53 +15,19 @@ jobs:
     timeout-minutes: 3
 
     steps:
-      - name: Sanity (secrets + current time)
+      - name: Ping backend keep-alive (robust)
         env:
-          TARGET_URL: ${{ secrets.TARGET_URL }}
+          TARGET_URL: ${{ secrets.TARGET_URL }}     # e.g. https://<backend>.onrender.com/tasks/warmup
+          TASK_SECRET: ${{ secrets.TASK_SECRET }}   # same value as on your backend
         run: |
           set -euo pipefail
-          date -u "+UTC now: %Y-%m-%d %H:%M:%S"
-          : "${TARGET_URL?Need TARGET_URL secret (e.g. https://your-app.onrender.com/healthz)}"
-          echo "TARGET_URL is set ✅ -> $TARGET_URL"
+          echo "Pinging: $TARGET_URL"
 
-      - name: Jitter (avoid synchronized pings)
-        run: |
-          JITTER=$(( (RANDOM % 31) + 5 ))  # 5–35s
-          echo "Sleeping ${JITTER}s for jitter..."
-          sleep "${JITTER}"
+          # Try a quick HEAD first (10s). If it fails (4xx/5xx/timeout), fall back to GET with retries.
+          curl -fIsS --connect-timeout 5 -m 10 \
+            -H "X-Task-Secret: $TASK_SECRET" \
+            "$TARGET_URL" -o /dev/null || \
+          curl -fsS --retry 5 --retry-delay 10 --retry-all-errors --retry-connrefused -m 120 \
+            -H "X-Task-Secret: $TASK_SECRET" \
+            "$TARGET_URL" -o /dev/null
 
-      - name: Ping /healthz (IPv4, retries, timeouts, visible status)
-        env:
-          TARGET_URL: ${{ secrets.TARGET_URL }}
-          TASK_SECRET: ${{ secrets.TASK_SECRET }}
-        run: |
-          set -euo pipefail
-          max_tries=4
-          for attempt in $(seq 1 $max_tries); do
-            echo "--- Attempt $attempt/$max_tries at $(date -u +"%H:%M:%S") → $TARGET_URL"
-            set +e
-            OUT=$(curl -4sS -o /dev/null \
-                 -H "User-Agent: keepalive-gha" \
-                 -H "X-Task-Secret: ${TASK_SECRET:-}" \
-                 --connect-timeout 5 \
-                 -m 15 \
-                 -w "HTTP %{http_code} in %{time_total}s" \
-                 "$TARGET_URL")
-            code=$?
-            set -e
-            echo "$OUT"
-
-            if [ $code -eq 0 ]; then
-              http_code=$(echo "$OUT" | awk '{print $2}')
-              case "$http_code" in
-                200|20[0-9]|30[0-9]) echo "✅ Success"; exit 0 ;;
-                *) echo "Non-2xx/3xx: $http_code, will retry…";;
-              esac
-            else
-              echo "curl exit code $code, will retry…"
-            fi
-
-            [ $attempt -lt $max_tries ] && sleep $((3 * 2 ** (attempt - 1)))
-          done
-          echo "::error::All attempts failed"
-          exit 1
