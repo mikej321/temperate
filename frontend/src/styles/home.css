@@ -86,7 +86,7 @@
 @media screen and (min-width: 1000px) {
     .home_container {
         align-items: center;
-        grid-template-columns: 1fr 400px 1fr;
+        grid-template-columns: 1fr 2fr 1fr;
         grid-template-areas: "search icon temp" "popup icon details" "loader icon details" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
         grid-template-rows: 80px minmax(0, max-content) minmax(0, max-content) repeat(3, auto) 280px;
         row-gap: 2rem;
