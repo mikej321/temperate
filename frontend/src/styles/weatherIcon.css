@@ -1,5 +1,7 @@
 .icon_container {
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .icon_container .main_icon {
@@ -18,6 +20,7 @@
   .icon_container .main_icon {
     width: min(100%, 400px);
     height: 400px;
+    margin-left: 13rem;
   } 
 }
 
