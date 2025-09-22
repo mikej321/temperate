@@ -1,0 +1,44 @@
+.recent_locations_container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.recent_locations {
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background: var(--cadet_gray_100);
+    border-radius: 8px;
+    padding-block: 2rem;
+}
+
+.recent_location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 4rem;
+    cursor: pointer;
+    gap: 4rem;
+    background: transparent;
+    transition: background 0.3s ease-in-out,
+                color 0.3s ease-in-out;
+}
+
+.recent_location:hover {
+    background: var(--argentinian_blue_500);
+    color: var(--cadet_gray_100);
+}
+
+.recent_location {
+
+}
+
+.recent_location_name {
+
+}

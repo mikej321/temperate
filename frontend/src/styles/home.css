@@ -1,8 +1,8 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "search" "popup" "loader" "temp" "description" "icon" "details" "forecast";
-    grid-template-rows: 40px repeat(4, auto) 250px repeat(2, auto);
+    grid-template-areas: "recent" "search" "popup" "loader" "temp" "description" "icon" "details" "forecast";
+    grid-template-rows: auto 40px repeat(4, auto) 250px repeat(2, auto);
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
 }
@@ -87,8 +87,8 @@
     .home_container {
         align-items: center;
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "search icon temp" "popup icon details" "loader icon details" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
-        grid-template-rows: 80px minmax(0, max-content) minmax(0, max-content) repeat(3, auto) 280px;
+        grid-template-areas: "recent icon temp" "search icon temp" "popup icon details" "loader icon details" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
+        grid-template-rows: minmax(0, max-content) 80px minmax(0, max-content) minmax(0, max-content) repeat(3, auto) 280px;
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;

@@ -36,7 +36,9 @@ export default function Home({ weather, setWeather }) {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(() => displayTime(new Date()));
   const [locations, setLocations] = useState([]);
+  const [locationTemps, setLocationTemps] = useState([]);
   const [storageLocations, setStorageLocations] = useState(() => readHistory());
+  const [chosenHistoryLocation, setChosenHistoryLocation] = useState(null);
   const [stateAbbr, setStateAbbr] = useState({
     'Alabama': 'AL',
       'Alaska': 'AK',
@@ -263,6 +265,50 @@ function buildEndpoint(path) {
     // )
   }, [pickedLocation, API, setWeather]);
 
+  // useEffect(() => {
+  //   if (!locationTemps) return;
+
+  //   let cancelled = false;
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   (async () => {
+  //     const endpoint = buildEndpoint('/search/get-weather');
+  //     try {
+  //       console.debug('[weather] POST', endpoint, { pickedLocation });
+  //       const res = await postJsonWithRetry(
+  //         endpoint,
+  //         { pickedLocation },
+  //         { retries: 3, baseDelayMs: 600 }
+  //       );
+        
+  //       if (!res.ok) {
+  //           const text = await res.text().catch(() => '');
+  //           console.warn('[weather] non-OK', res.status, text);
+  //           throw new Error(`Weather request failed (${res.status})`);
+  //       }
+        
+        
+  //       const data = await res.json();
+  //       if (cancelled) return;
+
+  //       setWindLabel(generateWindLabel(data.current.wind_speed_10m));
+  //       setWeather(data);
+  //     } catch (e) {
+  //       if (!cancelled) {
+  //         setError(e?.message || "Failed to fetch weather");
+  //         setWeather(null);
+  //       }
+  //     } finally {
+  //       if (!cancelled) setIsLoading(false);
+  //     }
+  //   })();
+
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, [locationTemps])
+
   return (
     <WeatherContainer>
       {pickedLocation ? (
@@ -285,7 +331,7 @@ function buildEndpoint(path) {
        animate={(!isLoading && weather) ? "visible" : "hidden"}
        exit="exit"
        >
-        <RecentLocations pickedLocation={pickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} />
+        <RecentLocations locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} />
         <SearchBar
           firstSearch={firstSearch}
           setFirstSearch={setFirstSearch}

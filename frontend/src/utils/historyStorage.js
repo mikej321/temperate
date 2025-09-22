@@ -31,6 +31,7 @@ export function pushHistory(loc) {
         lon: Number(loc.lon),
         admin1: loc.admin1 || null,
         country: loc.country || null,
+        temp: null,
         savedAt: Date.now()
     }
 

@@ -68,7 +68,8 @@ export default function LocationPopup({
       lat: loc.latitude,
       lon: loc.longitude,
       admin1: loc.admin1,
-      country: loc.country
+      country: loc.country,
+      temperature: 'none'
     })
   };
 
