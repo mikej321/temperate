@@ -1,14 +1,20 @@
 .location_desktop {
     grid-area: location;
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12rem;
 }
 
 .location_icon {
     stroke: var(--argentinian_blue_500);
+    display: none;
 }
 
 .location {
-
+    font-size: 32px;
+    font-weight: bold;
+    font-family: var(--poppins_titles);
 }
 
 @media screen and (min-width: 1000px) {
@@ -19,11 +25,12 @@
     min-width: 0;                /* avoid content pinning */
     display: flex;
     gap: 2rem;
-
+    margin-top: unset;
     /* remove: justify-content: stretch; (invalid) */
   }
 
     .location_icon {
+        display: block;
         max-width: 49px;
         max-height: 49px;
         margin-left: -1rem;

@@ -7,6 +7,25 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar({ date, time, setTime, pickedLocation, name, state, stateAbbr }) {
   
+  /* IMPORTANT
+  
+    Move the location from the navbar to above the temperature display. Not only will it look
+    better in mobile, but it will further be in line with what I already have on the desktop version
+  
+    Also, make it to where the recent searches populate immediately after you input something
+    into the search. Right now, it requires a refresh before updating. This might involve
+    messing with a useEffect dependency.
+
+    When you hover over a specific card, I want to add an animation that scales the card (maybe by 1.2?)
+    and *shakes* the card. I think this would be cool
+
+    Add a flexbox container that will hold 'Nearby Locations'. The user will be able to click
+    on this, which will change to recent locations that will be run by user's location stats.
+    Add a framer motion animation for exits to make it look good. This will cut down on screen
+    real estate
+  */
+
+
     const [navClicked, setNavClicked] = useState(false);
     const {navDate, navYear} = formatDateCustom(date);
     const [stateAbb, setStateAbb] = useState(null);
@@ -122,11 +141,6 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
           />
         </svg>
       </div>
-      {pickedLocation && 
-        <div className="nav_location">
-          {name}, {stateAbb}
-        </div>
-      }
       <div
        className="hamburger_menu"
        ref={hamburgerRef}

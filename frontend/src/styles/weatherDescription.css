@@ -2,6 +2,8 @@
     color: var(--argentinian_blue_500);  
     display: flex;
     flex-direction: column;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
     align-items: center;  /* Mobile alignment is slightly off, this is to fix that */  
 }
 
@@ -35,6 +37,7 @@
 @media screen and (min-width: 1000px) {
     .description_container {
         align-items: unset;
+        margin-bottom: unset;
     }
 
     
