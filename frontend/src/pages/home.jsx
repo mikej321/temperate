@@ -26,6 +26,8 @@ import ColdSpinner from "../components/coldSpinner";
 
 export default function Home({ weather, setWeather }) {
   const [searched, setSearched] = useState(false);
+  const [place, setPlace] = useState(null);
+  const [userCoord, setUserCoord] = useState(null);
   const [firstSearch, setFirstSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -256,58 +258,79 @@ function buildEndpoint(path) {
     return () => {
       cancelled = true;
     };
-
-    //     getWeather()
-    //     .then((res) => {
-    //         setWindLabel(generateWindLabel(res.current.wind_speed_10m));
-    //         setWeather(res);
-    //     }
-    // )
   }, [pickedLocation, API, setWeather]);
 
-  // useEffect(() => {
-  //   if (!locationTemps) return;
+  function shortenPlaceName(str, maxLength) {
+    if (str.length > maxLength) {
+      let splitStr = str.split(' ');
+      let shortenedPlace = splitStr[0].slice(0, maxLength);
+      return shortenedPlace;
+    }
+  }
 
-  //   let cancelled = false;
-  //   setIsLoading(true);
-  //   setError(null);
+  useEffect(() => {
+    if (!userCoord) return;
 
-  //   (async () => {
-  //     const endpoint = buildEndpoint('/search/get-weather');
-  //     try {
-  //       console.debug('[weather] POST', endpoint, { pickedLocation });
-  //       const res = await postJsonWithRetry(
-  //         endpoint,
-  //         { pickedLocation },
-  //         { retries: 3, baseDelayMs: 600 }
-  //       );
+    let cancelled = false;
+    setIsLoading(true);
+    setError(null);
+
+
+
+    (async () => {
+      const endpoint = buildEndpoint('/search/by-coords');
+      try {
+        const res = await postJsonWithRetry(
+          endpoint,
+          { lat: userCoord.latitude, lon: userCoord.longitude },
+          { retries: 3, baseDelayMs: 600 }
+        );
         
-  //       if (!res.ok) {
-  //           const text = await res.text().catch(() => '');
-  //           console.warn('[weather] non-OK', res.status, text);
-  //           throw new Error(`Weather request failed (${res.status})`);
-  //       }
+        if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            console.warn('[weather] non-OK', res.status, text);
+            throw new Error(`Weather request failed (${res.status})`);
+        }
         
         
-  //       const data = await res.json();
-  //       if (cancelled) return;
+        const data = await res.json();
+        if (cancelled) return;
 
-  //       setWindLabel(generateWindLabel(data.current.wind_speed_10m));
-  //       setWeather(data);
-  //     } catch (e) {
-  //       if (!cancelled) {
-  //         setError(e?.message || "Failed to fetch weather");
-  //         setWeather(null);
-  //       }
-  //     } finally {
-  //       if (!cancelled) setIsLoading(false);
-  //     }
-  //   })();
+        const place = shortenPlaceName(data.pickedLocation.name, 12);
+        
+        setPlace(place);
+        setPickedLocation(data.pickedLocation);
+        setWindLabel(generateWindLabel(data.current.wind_speed_10m));
+        setWeather(data);
+      } catch (e) {
+        if (!cancelled) {
+          setError(e?.message || "Failed to fetch weather");
+          setWeather(null);
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
 
-  //   return () => {
-  //     cancelled = true;
-  //   };
-  // }, [locationTemps])
+    return () => {
+      cancelled = true;
+    };
+
+
+  }, [userCoord, API, setWeather])
+
+  function addToHistoryFromSearch(loc) {
+    pushHistory({
+      name: loc.name,
+      lat: loc.latitude,
+      lon: loc.longitude,
+      admin1: loc.admin1,
+      country: loc.country,
+      temperature: null,
+    })
+
+    setStorageLocations(readHistory());
+  }
 
   return (
     <WeatherContainer>
@@ -331,7 +354,7 @@ function buildEndpoint(path) {
        animate={(!isLoading && weather) ? "visible" : "hidden"}
        exit="exit"
        >
-        <RecentLocations locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} />
+        <RecentLocations locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} />
         <SearchBar
           firstSearch={firstSearch}
           setFirstSearch={setFirstSearch}
@@ -349,12 +372,13 @@ function buildEndpoint(path) {
               locations={locations}
               setLocations={setLocations}
               setPickedLocation={setPickedLocation}
+              addToHistoryFromSearch={addToHistoryFromSearch}
             />
           )}
           {pickedLocation && (
             <>
               <Location
-                name={pickedLocation.name}
+                name={place ? place : pickedLocation.name}
                 state={pickedLocation.admin1}
               />
             </>
@@ -393,7 +417,7 @@ function buildEndpoint(path) {
               />
             </motion.div>
           ): error && !isLoading ? <div className="section_error">{error}</div>
-           : !isLoading && weather ? (
+           : !isLoading && weather?.current ? (
              <>
               <motion.div
                className="home_temp_container"

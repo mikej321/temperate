@@ -9,9 +9,6 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
   
   /* IMPORTANT
   
-    Move the location from the navbar to above the temperature display. Not only will it look
-    better in mobile, but it will further be in line with what I already have on the desktop version
-  
     Also, make it to where the recent searches populate immediately after you input something
     into the search. Right now, it requires a refresh before updating. This might involve
     messing with a useEffect dependency.

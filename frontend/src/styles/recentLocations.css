@@ -5,6 +5,30 @@
     align-items: center;
 }
 
+.location_selection_container {
+    position: relative;
+    display: flex;
+    gap: 2rem;
+}
+
+.location_selection_container p {
+    scale: 1;
+    cursor: pointer;
+    transition: scale 0.2s ease-in-out;
+}
+
+.location_selection_container p:hover {
+    scale: 1.1;
+}
+
+.divider {
+    position: relative;
+    content: '';
+    background: var(--prussian_blue_400);
+    width: 1px;
+    height: 20px;
+}
+
 .recent_locations {
     display: flex;
     min-width: 100%;

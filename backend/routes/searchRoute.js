@@ -27,6 +27,59 @@ router.post('/', async (req, res) => {
     })
 })
 
+router.post("/by-coords", async (req, res) => {
+  try {
+    const API_KEY = process.env.OPENWEATHER_KEY;
+    const lat = Number(req.body.lat ?? req.body.latitude);
+    const lon = Number(req.body.lon ?? req.body.longitude);
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+      return res.status(400).json({ error: "latitude/longitude required" });
+    }
+    if (!API_KEY) {
+      return res.status(500).json({ error: "OPENWEATHER_KEY not set" });
+    }
+
+    const reverseGeo = await axios.get(
+      "https://api.openweathermap.org/geo/1.0/reverse",
+      {
+        params: { lat, lon, limit: 1, appid: API_KEY },      // note: appid
+        timeout: 7000,
+        validateStatus: (s) => s >= 200 && s < 500,           // let us inspect 4xx
+      }
+    );
+
+    // Log for debugging
+    console.log("OWM status:", reverseGeo.status);
+    console.log("OWM data:", reverseGeo.data);
+
+    if (reverseGeo.status !== 200 || !Array.isArray(reverseGeo.data) || !reverseGeo.data[0]) {
+      return res.status(502).json({
+        error: "reverse geocoding failed",
+        providerStatus: reverseGeo.status,
+        providerMessage: reverseGeo.data?.message ?? "no result",
+      });
+    }
+
+    const g = reverseGeo.data[0]; // { name, lat, lon, country, state? }
+
+    const pickedLocation = {
+      name: g.name,
+      admin1: g.state ?? null,
+      country: g.country ?? null,
+      latitude: g.lat,
+      longitude: g.lon,
+      zip: g.zip ?? null, // often not provided by OWM
+    };
+
+    return res.json({ pickedLocation });
+  } catch (err) {
+    console.error("by-coords error:", err?.message);
+    return res.status(500).json({ error: "internal error resolving coordinates" });
+  }
+});
+
+
 router.post('/get-weather', async (req, res) => {
   try {
     const { pickedLocation, lat, lon } = req.body;

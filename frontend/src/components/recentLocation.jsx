@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { api } from '../utils/api';
+import getPosition from '../utils/getPosition';
 import '../styles/recentLocations.css';
 
 export default function RecentLocations({
@@ -11,9 +12,48 @@ export default function RecentLocations({
   pickedLocation,
   setPickedLocation,
   setWeather, 
-  setFirstSearch
+  setFirstSearch,
+  userCoord,
+  setUserCoord
 }) {    
-  const [currentConds, setCurrentConds] = useState([]);       
+  const [currentConds, setCurrentConds] = useState([]);
+
+  /* 
+
+    Steps for implementing nearby locations
+
+    1. Add a container for the header which will also have a separator
+
+    2. It will load recent locations by default. If the user clicks nearby locations,
+    it will run the getPosition() function.
+
+    3. Ensure that I have a state that tracks if I'm on recent searches or
+    nearby locations.
+  
+  */
+  
+  const locationVariant = {
+    hidden: {
+      opacity: 0,
+      x: -10
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.2,
+        easing: "easeInOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      x: -10,
+      transition: {
+        duration: 0.2,
+        easing: "easeInOut"
+      }
+    }
+  }
 
   useEffect(() => {
     if (!Array.isArray(storageLocations) || storageLocations.length === 0) {
@@ -31,7 +71,6 @@ export default function RecentLocations({
         );
         const res = await Promise.all(promises);
         const temps = res.map(r => r.data);
-        console.log(temps)
         if (!cancelled) setLocationTemps(temps);
       } catch (e) {
         console.error('history fetch failed', e);
@@ -45,10 +84,16 @@ export default function RecentLocations({
     return () => { cancelled = true; };
   }, [storageLocations]);
 
-  async function getTempWeather() {
-    const { data } = await api.post('/search/get-weather', {
+  const grabUserLocation = async () => {
+    
+    try {
+      const { coords } = await getPosition();
+      const { latitude, longitude } = coords;
 
-    })
+      setUserCoord({ latitude, longitude });
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   useEffect(() => {
@@ -62,9 +107,22 @@ export default function RecentLocations({
 
   /* Try running setWeather on the clicked location */
 
+
+  
+
   return (
     <motion.div className="recent_locations_container">
-      <motion.p>Recently Searched</motion.p>
+      <motion.div className="location_selection_container">
+        <motion.p>Recently Searched</motion.p>
+        <motion.div className="divider"></motion.div>
+        <motion.p
+          onClick={() => {
+            setFirstSearch(true)
+            grabUserLocation()
+          }
+        }
+        >Use My Location</motion.p>
+      </motion.div>
 
       <motion.div className="recent_locations">
         {Array.isArray(storageLocations) && storageLocations.length > 0 ? (
@@ -73,11 +131,14 @@ export default function RecentLocations({
             const temp = current?.temperature_2m; 
             return (
               <motion.div
-               className="recent_location" 
+               className="recent_location"
+               variants={locationVariant}
+               hidden="hidden"
+               animate="visible"
+               exit="exit" 
                key={index}
                onClick={() => {
                    setFirstSearch(true)
-                   setWeather(pickedLocation)
                    setPickedLocation(loc)
                }
             }

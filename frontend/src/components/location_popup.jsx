@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import useHistory from "../utils/useHistory";
 import "../styles/location_popup.css";
+import { add } from "date-fns";
 
 export default function LocationPopup({
   locations,
   setLocations,
   setPickedLocation,
   setSearched,
-  setFirstSearch
+  setFirstSearch,
+  addToHistoryFromSearch
 }) {
   // Animate only the shell's height/opacity
 
@@ -63,14 +65,7 @@ export default function LocationPopup({
   const handlePick = async (loc) => {
     setSearched(false);
     setPickedLocation(loc);
-    pushHistory({
-      name: loc.name,
-      lat: loc.latitude,
-      lon: loc.longitude,
-      admin1: loc.admin1,
-      country: loc.country,
-      temperature: 'none'
-    })
+    addToHistoryFromSearch?.(loc);
   };
 
   return (
