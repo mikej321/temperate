@@ -1,8 +1,8 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "recent" "search" "popup" "loader" "location" "temp" "description" "icon" "details" "forecast";
-    grid-template-rows: auto 40px repeat(5, auto) 250px repeat(2, auto);
+    grid-template-areas: "recent" "search" "popup" "loader" "location" "temp" "description" "icon" "details" "forecast" "map";
+    grid-template-rows: auto 40px repeat(5, auto) 250px repeat(2, auto) 600px;
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
 }

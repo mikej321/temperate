@@ -23,6 +23,8 @@ import generateWindLabel from "../utils/generateWindLabel";
 import { AnimatePresence, motion } from "framer-motion";
 import { displayTime } from "../utils/formatDate";
 import ColdSpinner from "../components/coldSpinner";
+import Map from "../components/map";
+
 
 export default function Home({ weather, setWeather }) {
   const [searched, setSearched] = useState(false);
@@ -452,6 +454,7 @@ function buildEndpoint(path) {
                >
                   <DailyQuickcast weather={weather} />
               </motion.div>
+              <Map weather={weather} />
             </>
            ) : null}
         </AnimatePresence>
