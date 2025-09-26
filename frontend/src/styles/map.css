@@ -1,12 +1,104 @@
 @import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+@import url("https://cdn.jsdelivr.net/npm/@maptiler/sdk@3/dist/maptiler-sdk.css");
+@import url("https://cdn.jsdelivr.net/npm/@radix-ui/themes@3/styles.css");
+
 
 .map_container {
+    position: relative;
     grid-area: map;
-    margin-top: 14rem;
+    margin-top: 2rem;
+    min-width: 0;
+}
+
+.map_button_container,
+.rt-SegmentedControlRoot {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.radar_layer_container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 110px;
+    left: 10px;
+    justify-content: space-around;
+}
+
+.map_button_container div {
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.rt-SegmentedControlRoot {
+    margin-bottom: 2rem;
+}
+
+.rt-SegmentedControlItem { 
+    cursor: pointer;
+    background: var(--argentinian_blue_300) !important;
+    transition: background 0.2s ease-in-out,
+                color 0.2s ease-in-out; 
+}
+
+.rt-SegmentedControlItem:hover {
+    background: var(--argentinian_blue_500) !important;
+    color: var(--cadet_gray_100);
+}
+
+.radar_layer_container div {
+    background: var(--argentinian_blue_300);
+    color: var(--cadet_gray_100);
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    opacity: 0.9;
     border-radius: 8px;
+    flex: 1 1 0;
+    min-width: 0;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background 0.2s ease-in-out;
+}
+
+.map_button_container div:hover {
+    background: var(--argentinian_blue_500);
+
+}
+
+.radar_layer_container div:hover {
+    background: var(--argentinian_blue_500);
+}
+
+.map_button_container div:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.map_button_container div:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.map_title {
+    font-weight: 700;
+    margin-bottom: 3rem;
 }
 
 #map {
+    width: 100%;
+    border-radius: 8px;
     height: 450px;
     overflow: hidden;
+}
+
+#play-pause-bt {
+    background: var(--argentinian_blue_300);
+    border: none;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
 }

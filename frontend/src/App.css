@@ -48,6 +48,10 @@
   scroll-behavior: smooth;
 }
 
+/* .radix-themes {
+  background: transparent;
+} */
+
 html {
   font-size: 62.5%;
 }

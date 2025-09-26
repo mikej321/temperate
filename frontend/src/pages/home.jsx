@@ -23,7 +23,7 @@ import generateWindLabel from "../utils/generateWindLabel";
 import { AnimatePresence, motion } from "framer-motion";
 import { displayTime } from "../utils/formatDate";
 import ColdSpinner from "../components/coldSpinner";
-import Map from "../components/map";
+import SdkMap from "../components/map";
 
 
 export default function Home({ weather, setWeather }) {
@@ -454,7 +454,7 @@ function buildEndpoint(path) {
                >
                   <DailyQuickcast weather={weather} />
               </motion.div>
-              <Map weather={weather} />
+              <SdkMap weather={weather} />
             </>
            ) : null}
         </AnimatePresence>
