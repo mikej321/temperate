@@ -102,3 +102,70 @@
     padding: 1rem 2rem;
     border-radius: 8px;
 }
+
+.time_slider_container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    width: 90%;
+    bottom: 3.5rem;
+    left: 50%;
+    /* height: 6rem; */
+    transform: translateX(-50%);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 4rem;
+    gap: 2rem;
+    border-radius: 12px;
+    background: var(--argentinian_blue_500);
+    backdrop-filter: blur(6px);
+}
+
+.time_label {
+    color: var(--cadet_gray_100);
+    font-family: var(--roboto_digits);
+    font-size: 12px;
+    text-wrap: nowrap;
+    flex: 1 1 100px;
+}
+
+.time_slider {
+
+}
+
+.rc-slider-mark {
+    top: 15px;
+    font-family: var(--poppins_titles);
+}
+
+.rc-slider-mark-text {
+    text-wrap: nowrap;
+    font-size: 8px;
+}
+
+.rc-slider-mark-text-active {
+
+}
+
+.rc-slider-dot {
+    
+}
+
+.rc-slider-rail {
+    
+}
+
+.rc-slider-track {
+    
+}
+
+.rc-slider-handle {
+    scale: 1;
+    transition: scale 0.2s ease-in-out;
+}
+
+.rc-slider-handle:hover {
+    scale: 1.1;
+}
