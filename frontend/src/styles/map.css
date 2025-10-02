@@ -2,11 +2,10 @@
 @import url("https://cdn.jsdelivr.net/npm/@maptiler/sdk@3/dist/maptiler-sdk.css");
 @import url("https://cdn.jsdelivr.net/npm/@radix-ui/themes@3/styles.css");
 
-
 .map_container {
     position: relative;
     grid-area: map;
-    margin-top: 2rem;
+    margin-top: 8rem;
     min-width: 0;
 }
 
@@ -86,6 +85,7 @@
 .map_title {
     font-weight: 700;
     margin-bottom: 3rem;
+    display: block;
 }
 
 #map {
@@ -113,11 +113,11 @@
     left: 50%;
     /* height: 6rem; */
     transform: translateX(-50%);
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 4rem;
-    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 4rem;
     border-radius: 12px;
     background: var(--argentinian_blue_500);
     backdrop-filter: blur(6px);
@@ -128,11 +128,11 @@
     font-family: var(--roboto_digits);
     font-size: 12px;
     text-wrap: nowrap;
-    flex: 1 1 100px;
+    flex: 1 1 15%;
 }
 
 .time_slider {
-
+    flex: 1 1 60%;
 }
 
 .rc-slider-mark {
@@ -168,4 +168,105 @@
 
 .rc-slider-handle:hover {
     scale: 1.1;
+}
+
+.play_button_container {
+
+}
+
+.play_button {
+    color: var(--anti_flash_white_100);
+    font-size: 3rem;
+    flex: 1 1 15%;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.play_button:hover {
+    color: var(--argentinian_blue_300);
+}
+
+.color_legend_container {
+    position: absolute;
+    top: 6.4rem;
+    left: 1.5rem;
+    background: var(--argentinian_blue_500);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.color_legend_title {
+    font-family: var(--poppins_titles);
+    color: var(--anti_flash_white_300);
+}
+
+.color_legend {
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (min-width: 1000px) {
+    .map_title {
+        display: none;
+    }
+
+    .map_container {
+        margin-top: unset;
+        margin-bottom: 8rem;
+        /* justify-self: center; */
+        width: 100%;
+        padding-inline: 4rem;
+        /* transform: translateX(10%); */
+    }
+
+    #map {
+        height: 600px;
+    }
+
+    .color_legend_container {
+        top: 1rem;
+        left: 5rem;
+    }
+}
+
+.square {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    filter: blur(0.5px);
+}
+
+.square-1 {
+    background: rgba(180, 220, 255, 1);
+}
+
+.square-2 {
+    background: rgba(100, 180, 255, 1);
+}
+
+.square-3 {
+    background: rgba(0, 140, 255, 1);
+}
+
+.square-4 {
+    background: rgba(0, 210, 140, 1);
+}
+
+.square-5 {
+    background: rgba(255, 230, 0, 1);
+}
+
+.square-6 {
+    background: rgba(255, 140, 0, 1);
+}
+
+.square-7 {
+    background: rgba(255, 60, 60, 1);
+}
+
+.square-8 {
+    background: rgba(200, 0, 200, 1);
 }

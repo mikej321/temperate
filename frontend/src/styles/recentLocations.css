@@ -1,4 +1,5 @@
 .recent_locations_container {
+    grid-area: recent;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -65,4 +66,10 @@
 
 .recent_location_name {
 
+}
+
+@media screen and (min-width: 1000px) {
+    .recent_locations_container {
+        display: none;
+    }
 }

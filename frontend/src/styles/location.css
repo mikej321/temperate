@@ -26,6 +26,7 @@
     display: flex;
     gap: 2rem;
     margin-top: unset;
+    justify-content: unset;
     /* remove: justify-content: stretch; (invalid) */
   }
 

@@ -1,7 +1,7 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "recent" "search" "popup" "loader" "location" "temp" "description" "icon" "details" "forecast" "map";
+    grid-template-areas: "recent" "search" "popup" "loader" "location" "temp" "description" "icon" "map" "details" "forecast";
     grid-template-rows: auto 40px repeat(5, auto) 250px repeat(3, auto);
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
@@ -51,8 +51,7 @@
     inline-size: min(100%, 380px);
     min-inline-size: 0;
     margin-inline: auto;
-    margin-top: 8rem;
-    margin-bottom: 2rem;
+    margin-block: 4rem;
     min-width: 0;
     min-height: 0;
 }
@@ -87,12 +86,53 @@
     .home_container {
         align-items: center;
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "recent icon temp" "search icon temp" "popup icon details" "loader icon details" "location icon details" "description icon details" ". icon details" "forecast forecast forecast";
-        grid-template-rows: minmax(0, max-content) 80px minmax(0, max-content) minmax(0, max-content) repeat(3, auto) 280px;
+        grid-template-areas: "search icon temp" "location icon details" "description icon details" ". icon details" "map map map" "forecast forecast forecast";
+        grid-template-rows: 80px repeat(4, auto) 280px;
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;
     }
+
+    /* only POPUP present */
+.home_container:has(.popup_shell):not(:has(.loader_overlay)) {
+  grid-template-areas:
+    "search      icon  temp"
+    "popup       icon  details"
+    "location    icon  details"
+    "description icon  details"
+    ".           icon  details"
+    "map         map   map"
+    "forecast    forecast forecast";
+  grid-template-rows: 80px auto auto auto auto 280px;
+}
+
+/* only LOADER present */
+.home_container:has(.loader_overlay):not(:has(.popup_shell)) {
+  grid-template-areas:
+    "search      icon  temp"
+    "loader      icon  details"
+    "location    icon  details"
+    "description icon  details"
+    ".           icon  details"
+    "map         map   map"
+    "forecast    forecast forecast";
+  grid-template-rows: 80px auto auto auto auto 280px;
+}
+
+/* BOTH present (popup then loader) */
+.home_container:has(.popup_shell):has(.loader_overlay) {
+  grid-template-areas:
+    "search      icon  temp"
+    "popup       icon  details"
+    "loader      icon  details"
+    "location    icon  details"
+    "description icon  details"
+    ".           icon  details"
+    "map         map   map"
+    "forecast    forecast forecast";
+  grid-template-rows: 80px auto auto auto auto 280px;
+}
+
 
     .home_temp_container {
         justify-self: end;
