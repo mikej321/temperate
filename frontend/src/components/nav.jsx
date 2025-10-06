@@ -14,7 +14,8 @@ export default function Navbar({ date,
   stateAbbr,
   setSettingsClicked,
   dayNightClicked,
-  setDayNightClicked
+  setDayNightClicked,
+  homeRef
 }) {
   
   /* IMPORTANT
@@ -36,6 +37,7 @@ export default function Navbar({ date,
     const [navClicked, setNavClicked] = useState(false);
     const {navDate, navYear} = formatDateCustom(date);
     const [stateAbb, setStateAbb] = useState(null);
+    const [nextMode, setNextMode] = useState('night');
     
     const dayNightModeContainerRef = useRef(null);
     const mobileDayNightModeRef = useRef(null);
@@ -84,6 +86,16 @@ export default function Navbar({ date,
 
     const handleDayNightClick = () => {
         setDayNightClicked((prev) => !prev);
+
+        if (!homeRef.current.classList.contains('dark_mode')) {
+          homeRef.current.classList.add('dark_mode');
+          dayNightModeContainerRef.current.classList.add('clicked');
+          setNextMode('day');
+        } else if (homeRef.current.classList.contains('dark_mode')) {
+          homeRef.current.classList.remove('dark_mode');
+          dayNightModeContainerRef.current.classList.remove('clicked');
+          setNextMode('night');
+        }
         hamburgerRef.current.classList.remove('clicked');
         hamburgerRef.current.classList.add('closed');
         setNavClicked(false);
@@ -182,7 +194,7 @@ export default function Navbar({ date,
         <motion.p
           ref={mobileDayNightModeRef}
           onClick={handleDayNightClick}
-        >Switch to night mode</motion.p>
+        >Switch to {nextMode} mode</motion.p>
       </motion.div>
       <div className="nav_links">
         <a href="">Home</a>

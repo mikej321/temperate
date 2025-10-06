@@ -27,7 +27,7 @@ import ColdSpinner from "../components/coldSpinner";
 import SdkMap from "../components/map";
 
 
-export default function Home({ weather, setWeather, settingsClicked, setSettingsClicked, dayNightClicked, setDayNightClicked }) {
+export default function Home({ homeRef, weather, setWeather, settingsClicked, setSettingsClicked, dayNightClicked, setDayNightClicked }) {
   const [searched, setSearched] = useState(false);
   const [place, setPlace] = useState(null);
   const [userCoord, setUserCoord] = useState(null);
@@ -342,7 +342,7 @@ function buildEndpoint(path) {
   }
 
   return (
-    <WeatherContainer dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked}>
+    <WeatherContainer homeRef={homeRef} dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked}>
       {pickedLocation ? (
         <Navbar
           date={date}
@@ -363,6 +363,7 @@ function buildEndpoint(path) {
           setUserCoord={setUserCoord}
           dayNightClicked={dayNightClicked}
           setDayNightClicked={setDayNightClicked}
+          homeRef={homeRef}
         />
       ) : (
         <Navbar
@@ -382,6 +383,7 @@ function buildEndpoint(path) {
          setUserCoord={setUserCoord}
          dayNightClicked={dayNightClicked}
          setDayNightClicked={setDayNightClicked}
+         homeRef={homeRef}
          />
       )}
       <motion.div

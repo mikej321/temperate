@@ -1,6 +1,6 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Home from './pages/home';
 import ColdSpinner from './components/coldSpinner';
 import './App.css';
@@ -32,6 +32,7 @@ function App() {
   const [waking, setWaking] = useState(true);
   const [settingsClicked, setSettingsClicked] = useState(false);
   const [dayNightClicked, setDayNightClicked] = useState(false);
+  const homeRef = useRef(null);
 
   return (
     <Router>
@@ -47,6 +48,7 @@ function App() {
               setSettingsClicked={setSettingsClicked}
               dayNightClicked={dayNightClicked}
               setDayNightClicked={setDayNightClicked}
+              homeRef={homeRef}
             />
           }
         />
