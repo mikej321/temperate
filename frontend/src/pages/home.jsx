@@ -13,6 +13,7 @@ import WeatherDetails from "../components/weatherDetails";
 import DailyQuickcast from "../components/dailyQuickcast";
 import Location from "../components/location";
 import RecentLocations from "../components/recentLocation";
+import Settings from "../components/settings";
 import Footer from "../components/footer";
 import { SpinnerDotted } from "spinners-react";
 import "../App.css";
@@ -26,7 +27,7 @@ import ColdSpinner from "../components/coldSpinner";
 import SdkMap from "../components/map";
 
 
-export default function Home({ weather, setWeather }) {
+export default function Home({ weather, setWeather, settingsClicked, setSettingsClicked, dayNightClicked, setDayNightClicked }) {
   const [searched, setSearched] = useState(false);
   const [place, setPlace] = useState(null);
   const [userCoord, setUserCoord] = useState(null);
@@ -43,6 +44,10 @@ export default function Home({ weather, setWeather }) {
   const [locationTemps, setLocationTemps] = useState([]);
   const [storageLocations, setStorageLocations] = useState(() => readHistory());
   const [chosenHistoryLocation, setChosenHistoryLocation] = useState(null);
+
+  const homeContainerRef = useRef(null);
+
+
   const [stateAbbr, setStateAbbr] = useState({
     'Alabama': 'AL',
       'Alaska': 'AK',
@@ -321,6 +326,8 @@ function buildEndpoint(path) {
 
   }, [userCoord, API, setWeather])
 
+  
+
   function addToHistoryFromSearch(loc) {
     pushHistory({
       name: loc.name,
@@ -335,7 +342,7 @@ function buildEndpoint(path) {
   }
 
   return (
-    <WeatherContainer>
+    <WeatherContainer dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked}>
       {pickedLocation ? (
         <Navbar
           date={date}
@@ -345,9 +352,37 @@ function buildEndpoint(path) {
           name={pickedLocation.name}
           state={pickedLocation.admin1}
           stateAbbr={stateAbbr}
+          setSettingsClicked={setSettingsClicked}
+          locationTemps={locationTemps}
+          setLocationTemps={setLocationTemps}
+          storageLocations={storageLocations}
+          setStorageLocations={setStorageLocations}
+          pushHistory={pushHistory}
+          setWeather={setWeather}
+          setFirstSearch={setFirstSearch}
+          setUserCoord={setUserCoord}
+          dayNightClicked={dayNightClicked}
+          setDayNightClicked={setDayNightClicked}
         />
       ) : (
-        <Navbar date={date} time={time} setTime={setTime} />
+        <Navbar
+         date={date} 
+         time={time} 
+         setTime={setTime} 
+         setSettingsClicked={setSettingsClicked}
+         locationTemps={locationTemps}
+         pickedLocation={pickedLocation}
+         setLocationTemps={setLocationTemps}
+         stateAbbr={stateAbbr}
+         storageLocations={storageLocations}
+         setStorageLocations={setStorageLocations}
+         pushHistory={pushHistory}
+         setWeather={setWeather}
+         setFirstSearch={setFirstSearch}
+         setUserCoord={setUserCoord}
+         dayNightClicked={dayNightClicked}
+         setDayNightClicked={setDayNightClicked}
+         />
       )}
       <motion.div
        className="home_container"
@@ -356,6 +391,7 @@ function buildEndpoint(path) {
        animate={(!isLoading && weather) ? "visible" : "hidden"}
        exit="exit"
        >
+        <Settings locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} settingsClicked={settingsClicked} />
         <RecentLocations locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} />
         <SearchBar
           firstSearch={firstSearch}

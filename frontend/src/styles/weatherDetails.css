@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 2rem;
   box-sizing: border-box; /* keep padding inside */
+  transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .details_container {
+  color: var(--dark_mode_text_1);
 }
 
 .more_details_label {

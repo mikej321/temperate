@@ -86,6 +86,11 @@
     font-weight: 700;
     margin-bottom: 3rem;
     display: block;
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .map_title {
+    color: var(--dark_mode_text_1);
 }
 
 #map {
@@ -121,6 +126,13 @@
     border-radius: 12px;
     background: var(--argentinian_blue_500);
     backdrop-filter: blur(6px);
+    transition: background 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .time_slider_container {
+    background: var(--dark_mode_primary);
+    color: var(--dark_mode_text_1);
 }
 
 .time_label {
@@ -196,11 +208,21 @@
     gap: 1rem;
     padding: 1rem;
     border-radius: 8px;
+    transition: background 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .color_legend_container {
+    background: var(--dark_mode_primary);
 }
 
 .color_legend_title {
     font-family: var(--poppins_titles);
     color: var(--anti_flash_white_300);
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .color_legend_container .color_legend_title {
+    color: var(--dark_mode_text_1);
 }
 
 .color_legend {
@@ -223,7 +245,7 @@
     }
 
     #map {
-        height: 600px;
+        height: 800px;
     }
 
     .color_legend_container {

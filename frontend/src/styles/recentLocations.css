@@ -18,6 +18,10 @@
     transition: scale 0.2s ease-in-out;
 }
 
+.page_container.dark_mode .location_selection_container p {
+    color: var(--dark_mode_text_2);
+}
+
 .location_selection_container p:hover {
     scale: 1.1;
 }
@@ -30,6 +34,10 @@
     height: 20px;
 }
 
+.page_container.dark_mode .divider {
+    background: var(--dark_mode_highlight_2);
+}
+
 .recent_locations {
     display: flex;
     min-width: 100%;
@@ -40,6 +48,13 @@
     background: var(--cadet_gray_100);
     border-radius: 8px;
     padding-block: 2rem;
+    transition: background 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .recent_locations {
+    background: var(--dark_mode_primary_2);
+    color: var(--dark_mode_text_2);
 }
 
 .recent_location {
@@ -58,6 +73,11 @@
 .recent_location:hover {
     background: var(--argentinian_blue_500);
     color: var(--cadet_gray_100);
+}
+
+.page_container.dark_mode .home_container .recent_location:hover {
+    background: var(--dark_mode_primary);
+    color: var(--dark_mode_text_1);
 }
 
 .recent_location {

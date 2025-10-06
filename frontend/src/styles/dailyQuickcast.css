@@ -10,6 +10,11 @@
 .quickcast_label {
     font-family: var(--roboto_body);
     font-weight: 700;
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .quickcast_label {
+    color: var(--dark_mode_text_1);
 }
 
 .quickcast_inner_container {
@@ -44,6 +49,13 @@
     box-shadow: 2px 8px 4px rgba(255, 255, 255, 0.2),
                 -1px 2px 5px 3px rgba(3, 33, 58, .25);
 
+}
+
+.page_container.dark_mode .home_container .quickcast_inner_container .card {
+    background: var(--dark_mode_primary_2);
+    color: var(--dark_mode_text_2);
+    box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.4),
+                -1px 4px 6px 5px var(--dark_mode_primary);
 }
 
 .quick_icon {

@@ -30,6 +30,8 @@ async function fetchWithRetry(input, init = {}, { retries = 3, baseDelayMs = 500
 function App() {
   const [weather, setWeather] = useState(null);
   const [waking, setWaking] = useState(true);
+  const [settingsClicked, setSettingsClicked] = useState(false);
+  const [dayNightClicked, setDayNightClicked] = useState(false);
 
   return (
     <Router>
@@ -41,6 +43,10 @@ function App() {
               weather={weather}
               setWeather={setWeather}
               waking={waking}
+              settingsClicked={settingsClicked}
+              setSettingsClicked={setSettingsClicked}
+              dayNightClicked={dayNightClicked}
+              setDayNightClicked={setDayNightClicked}
             />
           }
         />

@@ -1,8 +1,8 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "recent" "search" "popup" "loader" "location" "temp" "description" "icon" "map" "details" "forecast";
-    grid-template-rows: auto 40px repeat(5, auto) 250px repeat(3, auto);
+    grid-template-areas: "recent" "search" "popup" "loader" "location" "icon" "temp" "description" "map" "details" "forecast";
+    grid-template-rows: auto 40px repeat(6, auto) repeat(3, auto);
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
 }
@@ -91,6 +91,7 @@
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;
+        margin-top: 2rem;
     }
 
     /* only POPUP present */

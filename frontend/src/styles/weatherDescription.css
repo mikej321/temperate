@@ -4,7 +4,12 @@
     flex-direction: column;
     margin-right: 1rem;
     margin-bottom: 2rem;
-    align-items: center;  /* Mobile alignment is slightly off, this is to fix that */  
+    align-items: center;  /* Mobile alignment is slightly off, this is to fix that */
+    transition: color 0.2s ease-in-out;  
+}
+
+.page_container.dark_mode .home_container .description_container {
+    color: var(--dark_mode_text_1);
 }
 
 .description {

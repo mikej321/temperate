@@ -21,7 +21,8 @@ The temperature display
     padding-inline: var(--page-gutter);
 }
 
-.logo_container {
+.page_container.dark_mode .logo_container svg path {
+    fill: var(--dark_mode_text_1);
 }
 
 .nav_links:not(.mobile_menu .nav_links) {
@@ -49,6 +50,10 @@ The temperature display
     background: var(--argentinian_blue_500);
     border-radius: 8px;
     transform-origin: center;
+}
+
+.page_container.dark_mode .bar {
+    background: var(--dark_mode_text_1);
 }
 
 .hamburger_menu .bar {
@@ -192,6 +197,20 @@ The temperature display
     scale: 1.1;
 }
 
+.mobile_menu p {
+    color: var(--argentinian_blue_500);
+    font-weight: 700;
+    scale: 1;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out,
+                scale 0.2s ease-in-out;
+}
+
+.mobile_menu p:hover {
+    color: var(--prussian_blue_300);
+    scale: 1.1;
+}
+
 .date_time_container {
     display: none;
 }
@@ -247,11 +266,16 @@ The temperature display
     gap: 4rem;
 }
 
-  .nav_links a {
+
+.nav_links a {
     text-decoration: none;
     color: var(--argentinian_blue_500);
     scale: 1;
     transition: all 0.2s ease-in-out;
+}
+
+  .page_container.dark_mode .nav_links a {
+    color: var(--dark_mode_text_1);
   }
 
   .nav_links a:hover {
@@ -264,6 +288,11 @@ The temperature display
     text-align: center;
     gap: 9rem;
     align-items: center;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .page_container.dark_mode .date_time_container {
+    color: var(--dark_mode_text_1);
   }
 
   .date_container {
@@ -306,11 +335,21 @@ The temperature display
 
   .weather_alert_container {
     display: flex;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .page_container.dark_mode .weather_alert_container {
+    color: var(--dark_mode_text_1);
   }
 
   .settings_container {
     display: flex;
     cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .page_container.dark_mode .settings_container {
+    color: var(--dark_mode_text_1);
   }
 
 .settings_container svg {

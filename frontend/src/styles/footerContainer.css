@@ -9,6 +9,10 @@
     align-self: end;
 }
 
+.page_container.dark_mode .footer_container {
+    background: var(--dark_mode_primary_2);
+}
+
 .footer_container p {
     color: var(--anti_flash_white_100);
     font-size: 1.6rem;

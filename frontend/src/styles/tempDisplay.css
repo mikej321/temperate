@@ -4,6 +4,11 @@
     font-weight: 700;
     font-size: 64px;
     padding-top: 2rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .tempDisplay {
+    color: var(--dark_mode_text_1);
 }
 
 @media screen and (min-width: 600px) {

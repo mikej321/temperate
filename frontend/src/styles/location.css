@@ -4,11 +4,21 @@
     justify-content: center;
     align-items: center;
     margin-top: 12rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .location_desktop {
+    color: var(--dark_mode_text_1);
 }
 
 .location_icon {
     stroke: var(--argentinian_blue_500);
     display: none;
+    transition: stroke 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .location_icon {
+    stroke: var(--dark_mode_text_1);
 }
 
 .location {

@@ -19,6 +19,16 @@
                 2px 8px 4px 0px rgba(255, 255, 255, .2);
     justify-self: center;
     font-family: var(--roboto_body);
+    transition: background 0.2s ease-in-out,
+                color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .home_container .search_bar {
+    background: var(--dark_mode_primary_2);
+    color: var(--dark_mode_text_1);
+    box-shadow: -1px 2px 5px 3px rgba(255, 255, 255, 0.2),
+                2px 3px 4px 0px rgba(3, 33, 58, .25);
 }
 
 .search_bar:focus {

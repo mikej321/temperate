@@ -35,9 +35,18 @@
               color 0.3s ease-in-out;
 }
 
+.page_container.dark_mode .home_container .popup_container p {
+  color: var(--dark_mode_primary);
+}
+
 .popup_container p:hover {
   color: var(--anti_flash_white_100);
   background: var(--prussian_blue_200);
+}
+
+.page_container.dark_mode .home_container .popup_container p:hover {
+  background: var(--dark_mode_primary);
+  color: var(--dark_mode_text_2);
 }
 
 @media screen and (min-width: 1000px) {

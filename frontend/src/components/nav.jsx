@@ -5,7 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Navbar({ date, time, setTime, pickedLocation, name, state, stateAbbr }) {
+export default function Navbar({ date, 
+  time, 
+  setTime, 
+  pickedLocation, 
+  name, 
+  state, 
+  stateAbbr,
+  setSettingsClicked,
+  dayNightClicked,
+  setDayNightClicked
+}) {
   
   /* IMPORTANT
   
@@ -28,7 +38,10 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
     const [stateAbb, setStateAbb] = useState(null);
     
     const dayNightModeContainerRef = useRef(null);
+    const mobileDayNightModeRef = useRef(null);
+
     const hamburgerRef = useRef(null);
+    const settingsRef = useRef(null);
 
     const mobileMenuVariant = {
       'closed': {
@@ -43,7 +56,7 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
         }
       },
       'open': {
-        height: 200,
+        height: 300,
         transition: {
           duration: 0.2,
           ease: "easeInOut",
@@ -69,14 +82,11 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
 
     }, [])
 
-    const handleDayNightClick = (e) => {
-        const dayNightModeContainer = dayNightModeContainerRef.current;
-
-        if (dayNightModeContainer.classList.contains('clicked')) {
-            console.log('class contains clicked')
-        } else if (!dayNightModeContainer.classList.contains('clicked')) {
-            console.log('class does not contain click')
-        }
+    const handleDayNightClick = () => {
+        setDayNightClicked((prev) => !prev);
+        hamburgerRef.current.classList.remove('clicked');
+        hamburgerRef.current.classList.add('closed');
+        setNavClicked(false);
     }
 
     const handleNavClick = (e) => {
@@ -117,6 +127,12 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
 
       setStateAbb(stateAbbr[state]);
     }, [state])
+
+    const handleSettingsClicked = () => {
+      if (!settingsRef.current) return;
+
+      setSettingsClicked((prev) => !prev);
+    }
     
   return (
     <div className="navbar">
@@ -125,7 +141,6 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
           width="80"
           height="39"
           viewBox="0 0 80 39"
-          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -164,6 +179,10 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
          href=""
          variants={mobileMenuChildrenVariant}
          >Daily</motion.a>
+        <motion.p
+          ref={mobileDayNightModeRef}
+          onClick={handleDayNightClick}
+        >Switch to night mode</motion.p>
       </motion.div>
       <div className="nav_links">
         <a href="">Home</a>
@@ -178,7 +197,7 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
         <div
          className="day_night_container"
          ref={dayNightModeContainerRef}
-         onClick={(e) => handleDayNightClick(e)}
+         onClick={handleDayNightClick}
          >
           <svg
             width="28"
@@ -214,7 +233,11 @@ export default function Navbar({ date, time, setTime, pickedLocation, name, stat
         <p>Weather Alerts: </p>
         <p>0</p>
       </div>
-      <div className="settings_container">
+      <div
+       className="settings_container"
+       ref={settingsRef}
+       onClick={handleSettingsClicked}
+       >
         <FontAwesomeIcon icon={faGear} size="2xl" />
       </div>
     </div>
