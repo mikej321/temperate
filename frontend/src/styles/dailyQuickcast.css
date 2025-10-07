@@ -33,7 +33,7 @@
 }
 
 .quickcast_inner_container .card {
-    background: var(--argentinian_blue_200);
+    background: var(--prussian_blue_200);
     flex: 0 0 auto;
     min-inline-size: min(100%, 103.33px);
     max-height: 200px;

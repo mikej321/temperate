@@ -135,21 +135,17 @@ router.post('/get-history-temp', async (req, res) => {
     return res.json(data);
 })
 
-router.get("/nowcoast-times", async (req, res) => {
-  const WMS_URL = "https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer";
-  
-  try {
-    const resp = await fetch(`${WMS_URL}?service=WMS&request=GetCapabilities`);
-    const xml = await resp.text();
-    // crude parse for time values
-    const match = xml.match(/<Dimension[^>]*name="time"[^>]*>([\s\S]*?)<\/Dimension>|<Extent[^>]*name="time"[^>]*>([\s\S]*?)<\/Extent>/i);
-    if (!match) return res.json({ times: [] });
-    const body = (match[1] || match[2] || "").trim();
-    const times = body.split(",").map(s => s.trim()).filter(Boolean);
-    res.json({ times });
-  } catch (e) {
-    console.error("nowcoast proxy failed", e);
-    res.status(500).json({ error: "proxy_failed" });
-  }
-});
+router.post('/get-alerts', async (req, res) => {
+
+  const { latitude, longitude } = req.body;
+
+  const { data } = await axios.get('https://api.weather.gov/alerts/active', {
+    params: {
+      point: `${latitude},${longitude}`
+    }
+  })
+
+  res.json(data);
+})
+
 module.exports = router;

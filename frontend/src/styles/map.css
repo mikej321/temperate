@@ -118,10 +118,7 @@
     left: 50%;
     /* height: 6rem; */
     transform: translateX(-50%);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 1rem;
     gap: 4rem;
     border-radius: 12px;
     background: var(--argentinian_blue_500);
@@ -238,6 +235,7 @@
     .map_container {
         margin-top: unset;
         margin-bottom: 8rem;
+        margin-left: 8rem;
         /* justify-self: center; */
         width: 100%;
         padding-inline: 4rem;
@@ -245,12 +243,17 @@
     }
 
     #map {
-        height: 800px;
+        height: 500px;
     }
 
     .color_legend_container {
         top: 1rem;
         left: 5rem;
+    }
+
+    .time_slider_container {
+        width: 80%;
+        padding: 2rem;
     }
 }
 

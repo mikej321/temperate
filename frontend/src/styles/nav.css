@@ -23,6 +23,7 @@ The temperature display
 
 .page_container.dark_mode .logo_container svg path {
     fill: var(--dark_mode_text_1);
+    order: 1;
 }
 
 .nav_links:not(.mobile_menu .nav_links) {
@@ -38,6 +39,7 @@ The temperature display
 }
 
 .hamburger_menu {
+    order: 3;
     display: flex;
     flex-direction: column;
     gap: 2.5px;
@@ -227,12 +229,51 @@ The temperature display
 }
 
 .weather_alert_container {
-    display: none;
+    order: 2;
+    position: relative;
+    gap: 2rem;
+    cursor: pointer;
+    margin-left: -3rem;
+}
+
+.weather_alert_container .weather_alert_label {
+    font-weight: 700;
+    scale: 1;
+    transition: scale 0.2s ease-in-out;
+}
+
+.weather_alert_container:hover .weather_alert_label {
+    scale: 1.1;
+}
+
+.alert_container {
+    height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 7.2rem;
+    left: -10.5rem;
+    background: var(--anti_flash_white_100);
+    min-width: 40rem;
+    max-height: 40rem;
+    z-index: 5000;
+}
+
+.alert {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
     gap: 2rem;
 }
 
 .settings_container {
     display: none;
+}
+
+.affected_areas {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 @media screen and (min-width: 600px) {
@@ -246,7 +287,13 @@ The temperature display
     padding-inline: 2rem;
   }
 
+  .weather_alert_container {
+    order: unset;
+    margin-left: unset;
+  }
+
   .logo_container {
+    order: unset;
   }
 
   .nav_location {
@@ -255,6 +302,7 @@ The temperature display
 
   .hamburger_menu {
     display: none;
+    order: unset;
   }
 
   .mobile_menu {
@@ -352,6 +400,7 @@ The temperature display
     display: flex;
     cursor: pointer;
     transition: color 0.2s ease-in-out;
+    order: unset;
   }
 
   .page_container.dark_mode .settings_container {

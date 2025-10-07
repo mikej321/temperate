@@ -1,23 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {formatDateCustom, displayTime} from "../utils/formatDate";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { formatDateCustom, displayTime } from "../utils/formatDate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
-
-export default function Navbar({ date, 
-  time, 
-  setTime, 
-  pickedLocation, 
-  name, 
-  state, 
+export default function Navbar({
+  date,
+  time,
+  setTime,
+  pickedLocation,
+  name,
+  state,
   stateAbbr,
   setSettingsClicked,
   dayNightClicked,
   setDayNightClicked,
-  homeRef
+  homeRef,
+  weather,
 }) {
-  
   /* IMPORTANT
   
     Also, make it to where the recent searches populate immediately after you input something
@@ -33,119 +34,159 @@ export default function Navbar({ date,
     real estate
   */
 
+  const [navClicked, setNavClicked] = useState(false);
+  const { navDate, navYear } = formatDateCustom(date);
+  const [stateAbb, setStateAbb] = useState(null);
+  const [nextMode, setNextMode] = useState("night");
+  const [weatherWarnings, setWeatherWarnings] = useState(null);
+  const [alertClicked, setAlertClicked] = useState(false);
 
-    const [navClicked, setNavClicked] = useState(false);
-    const {navDate, navYear} = formatDateCustom(date);
-    const [stateAbb, setStateAbb] = useState(null);
-    const [nextMode, setNextMode] = useState('night');
-    
-    const dayNightModeContainerRef = useRef(null);
-    const mobileDayNightModeRef = useRef(null);
+  const dayNightModeContainerRef = useRef(null);
+  const mobileDayNightModeRef = useRef(null);
 
-    const hamburgerRef = useRef(null);
-    const settingsRef = useRef(null);
+  const hamburgerRef = useRef(null);
+  const settingsRef = useRef(null);
 
-    const mobileMenuVariant = {
-      'closed': {
-        height: 0,
-        transition: {
-          duration: 0.2,
-          ease: "easeInOut",
-          when: "afterChildren",
-          delayChildren: 0.3,
-          staggerChildren: 0.05,
-          staggerDirection: -1
-        }
+  const mobileMenuVariant = {
+    closed: {
+      height: 0,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+        when: "afterChildren",
+        delayChildren: 0.3,
+        staggerChildren: 0.05,
+        staggerDirection: -1,
       },
-      'open': {
-        height: 300,
-        transition: {
-          duration: 0.2,
-          ease: "easeInOut",
-          when: "beforeChildren",
-          staggerChildren: 0.1,
-          delayChildren: 0.3
-        }
-      }
-    }
-
-    const mobileMenuChildrenVariant = {
-      'closed': {
-        opacity: 0,
-        x: 10
+    },
+    open: {
+      height: 300,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
       },
-      'open': {
-        opacity: 1,
-        x: 0
-      }
+    },
+  };
+
+  const mobileMenuChildrenVariant = {
+    closed: {
+      opacity: 0,
+      x: 10,
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+    },
+  };
+
+  useEffect(() => {}, []);
+
+  const handleDayNightClick = () => {
+    setDayNightClicked((prev) => !prev);
+
+    if (!homeRef.current.classList.contains("dark_mode")) {
+      homeRef.current.classList.add("dark_mode");
+      dayNightModeContainerRef.current.classList.add("clicked");
+      setNextMode("day");
+    } else if (homeRef.current.classList.contains("dark_mode")) {
+      homeRef.current.classList.remove("dark_mode");
+      dayNightModeContainerRef.current.classList.remove("clicked");
+      setNextMode("night");
+    }
+    hamburgerRef.current.classList.remove("clicked");
+    hamburgerRef.current.classList.add("closed");
+    setNavClicked(false);
+  };
+
+  const handleNavClick = (e) => {
+    if (!hamburgerRef.current.classList.contains("ready"))
+      hamburgerRef.current.classList.add("ready");
+
+    if (!navClicked) {
+      setNavClicked(true);
+      hamburgerRef.current.classList.remove("closed");
+      hamburgerRef.current.classList.add("clicked");
+    } else if (navClicked) {
+      setNavClicked(false);
+      hamburgerRef.current.classList.remove("clicked");
+      hamburgerRef.current.classList.add("closed");
+    }
+  };
+
+  useEffect(() => {
+    const setNow = () => setTime(displayTime(new Date())); // I create a new date to put in displayTime here to update the time value for the page
+    setNow(); // I set the time here for the first render
+
+    let timer;
+    const schedule = () => {
+      const ms = 60000 - (Date.now() % 60000); // The formula for precisely displaying the time
+      timer = setTimeout(() => {
+        setNow(); // Display the new time value
+        schedule(); // Run the function again
+      }, ms); // The ms value precisely decides when the page should update the time
+    };
+
+    schedule(); // Run the schedule function to listen for minute changes to update the time
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!state) return;
+
+    setStateAbb(stateAbbr[state]);
+  }, [state]);
+
+  const handleSettingsClicked = () => {
+    if (!settingsRef.current) return;
+
+    setSettingsClicked((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (!weather) return;
+
+    const { latitude, longitude } = weather;
+
+    async function getAlerts() {
+      const { data } = await axios.post("/search/get-alerts", {
+        latitude,
+        longitude,
+      });
+
+      return data;
     }
 
-    useEffect(() => {
-
-    }, [])
-
-    const handleDayNightClick = () => {
-        setDayNightClicked((prev) => !prev);
-
-        if (!homeRef.current.classList.contains('dark_mode')) {
-          homeRef.current.classList.add('dark_mode');
-          dayNightModeContainerRef.current.classList.add('clicked');
-          setNextMode('day');
-        } else if (homeRef.current.classList.contains('dark_mode')) {
-          homeRef.current.classList.remove('dark_mode');
-          dayNightModeContainerRef.current.classList.remove('clicked');
-          setNextMode('night');
+    (async () => {
+      try {
+        const fc = await getAlerts();
+        if (fc["features"].length == 0) {
+          setWeatherWarnings([]);
+        } else {
+          setWeatherWarnings(fc["features"]);
         }
-        hamburgerRef.current.classList.remove('clicked');
-        hamburgerRef.current.classList.add('closed');
-        setNavClicked(false);
-    }
-
-    const handleNavClick = (e) => {
-
-      if (!hamburgerRef.current.classList.contains('ready')) hamburgerRef.current.classList.add('ready');
-
-      if (!navClicked) {
-        setNavClicked(true);
-        hamburgerRef.current.classList.remove('closed');
-        hamburgerRef.current.classList.add('clicked');
-      } else if (navClicked) {
-        setNavClicked(false);
-        hamburgerRef.current.classList.remove('clicked');
-        hamburgerRef.current.classList.add('closed');
+      } catch (e) {
+        console.error("get-alerts failed:", e);
       }
+    })();
+  }, [weather]);
+
+  const alertContainerVar = {
+    visible: {
+      height: "auto",
+    },
+    exit: {
+      height: 0,
     }
+  }
 
-    useEffect(() => {
-      const setNow = () => setTime(displayTime(new Date())); // I create a new date to put in displayTime here to update the time value for the page
-      setNow(); // I set the time here for the first render
+  const handleAlertClick = () => {
+    setAlertClicked((prev) => !prev);
+  }
 
-      let timer;
-      const schedule = () => {
-        const ms = 60000 - (Date.now() % 60000); // The formula for precisely displaying the time
-        timer = setTimeout(() => {
-          setNow(); // Display the new time value
-          schedule(); // Run the function again
-        }, ms); // The ms value precisely decides when the page should update the time
-      }
-
-      schedule(); // Run the schedule function to listen for minute changes to update the time
-
-      return () => clearTimeout(timer);
-    }, [])
-
-    useEffect(() => {
-      if (!state) return;
-
-      setStateAbb(stateAbbr[state]);
-    }, [state])
-
-    const handleSettingsClicked = () => {
-      if (!settingsRef.current) return;
-
-      setSettingsClicked((prev) => !prev);
-    }
-    
   return (
     <div className="navbar">
       <div className="logo_container">
@@ -166,35 +207,32 @@ export default function Navbar({ date,
         </svg>
       </div>
       <div
-       className="hamburger_menu"
-       ref={hamburgerRef}
-       onClick={(e) => handleNavClick(e)}>
+        className="hamburger_menu"
+        ref={hamburgerRef}
+        onClick={(e) => handleNavClick(e)}
+      >
         <div className="bar bar_top"></div>
         <div className="bar bar_middle"></div>
         <div className="bar bar_bottom"></div>
       </div>
       <motion.div
-       className="mobile_menu"
-       variants={mobileMenuVariant}
-       initial="closed"
-       animate={navClicked ? "open" : "closed"}
-       >
-        <motion.a
-         href=""
-         variants={mobileMenuChildrenVariant}
-         >Home</motion.a>
-        <motion.a
-         href=""
-         variants={mobileMenuChildrenVariant}
-         >Hourly</motion.a>
-        <motion.a
-         href=""
-         variants={mobileMenuChildrenVariant}
-         >Daily</motion.a>
-        <motion.p
-          ref={mobileDayNightModeRef}
-          onClick={handleDayNightClick}
-        >Switch to {nextMode} mode</motion.p>
+        className="mobile_menu"
+        variants={mobileMenuVariant}
+        initial="closed"
+        animate={navClicked ? "open" : "closed"}
+      >
+        <motion.a href="" variants={mobileMenuChildrenVariant}>
+          Home
+        </motion.a>
+        <motion.a href="" variants={mobileMenuChildrenVariant}>
+          Hourly
+        </motion.a>
+        <motion.a href="" variants={mobileMenuChildrenVariant}>
+          Daily
+        </motion.a>
+        <motion.p ref={mobileDayNightModeRef} onClick={handleDayNightClick}>
+          Switch to {nextMode} mode
+        </motion.p>
       </motion.div>
       <div className="nav_links">
         <a href="">Home</a>
@@ -207,10 +245,10 @@ export default function Navbar({ date,
           <div className="date_year">{navYear}</div>
         </div>
         <div
-         className="day_night_container"
-         ref={dayNightModeContainerRef}
-         onClick={handleDayNightClick}
-         >
+          className="day_night_container"
+          ref={dayNightModeContainerRef}
+          onClick={handleDayNightClick}
+        >
           <svg
             width="28"
             height="28"
@@ -237,19 +275,57 @@ export default function Navbar({ date,
           </svg>
         </div>
         <div className="time_container">
-            {/* real time goes here */}
-            <div className="time">{time}</div>
+          {/* real time goes here */}
+          <div className="time">{time}</div>
         </div>
       </div>
-      <div className="weather_alert_container">
-        <p>Weather Alerts: </p>
-        <p>0</p>
+      <div
+       className="weather_alert_container"
+       onClick={handleAlertClick}
+       >
+        <p className="weather_alert_label">Weather Alerts: {weatherWarnings ? weatherWarnings.length : 0}</p>
+        {weatherWarnings && weatherWarnings.length > 0 ?
+          weatherWarnings.map((feat) => {
+            const id = feat?.properties?.id || feat?.id;
+            const p = feat?.properties || {};
+            return (
+              <motion.div
+               key={id} 
+               className="alert_container"
+               variants={alertContainerVar}
+               animate={alertClicked ? "visible" : "exit"}
+               >
+                <div className="alert">
+                  <div className="affected_dates">
+                    <p>
+                      {p.onset} — {p.expires}
+                    </p>
+                  </div>
+                  <p>{p.event}</p>
+                  <p>{p.headline}</p>
+                  <div className="affected_areas">
+                    <p>Areas affected</p>
+                    {p.areaDesc}
+                  </div>
+
+                </div>
+              </motion.div>
+            );
+          }) : (
+            <motion.div
+             className="alert_container"
+             variants={alertContainerVar}
+             animate={alertClicked ? "visible" : "exit"}
+             >
+              <p>No Warnings in your area.</p>
+             </motion.div>
+          )}
       </div>
       <div
-       className="settings_container"
-       ref={settingsRef}
-       onClick={handleSettingsClicked}
-       >
+        className="settings_container"
+        ref={settingsRef}
+        onClick={handleSettingsClicked}
+      >
         <FontAwesomeIcon icon={faGear} size="2xl" />
       </div>
     </div>

@@ -112,21 +112,17 @@ textarea {
   grid-template-rows: 100px 1fr 60px;
   min-height: 100dvh;
   inline-size: 100%;
-  max-inline-size: var(--mobile_max);     /* <-- constrain the entire page */
   margin-inline: auto;                  /* center the page frame */  
   box-sizing: border-box;               /* padding doesn’t grow width */
 }
 
 
 @media screen and (min-width: 400px) {
-  .page_container {
-    max-inline-size: var(--tablet_max);
-  }
+  
 }
 
 @media screen and (min-width: 1000px) {
   .page_container {
-    max-inline-size: var(--desktop_max);
     grid-template-areas: "nav nav nav" "content content content" "footer footer footer";
   }
 }

@@ -364,6 +364,7 @@ function buildEndpoint(path) {
           dayNightClicked={dayNightClicked}
           setDayNightClicked={setDayNightClicked}
           homeRef={homeRef}
+          weather={weather}
         />
       ) : (
         <Navbar
@@ -378,6 +379,7 @@ function buildEndpoint(path) {
          storageLocations={storageLocations}
          setStorageLocations={setStorageLocations}
          pushHistory={pushHistory}
+         weather={weather}
          setWeather={setWeather}
          setFirstSearch={setFirstSearch}
          setUserCoord={setUserCoord}
