@@ -136,14 +136,22 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
              />
              <AnimatePresence>
                 {hits && open && (
-                    <motion.div className="hit_container">
+                    <motion.div className="hit_container" style={{
+                        position: firstSearch ? "absolute" : "static",
+                        top: firstSearch && '70px',
+                        left: firstSearch && "50%",
+                        transform: firstSearch && "translateX(-50%)",
+                        zIndex: firstSearch && 1000,
+                        width: firstSearch && "80%"
+                    }}>
                         {hits[0].features.map((hit) => {
                             const properties = hit?.properties;
 
-                            return properties?.city ? <div className="hit" onClick={() => {
+                            return properties?.city ? <motion.div className="hit" onClick={() => {
                                 handleLocation(properties?.postcode)
                                     .then(() => {
                                         setSearched(false);
+                                        setFirstSearch(true);
                                         inputRef.current.value = '';
                                         const normalized = normalizeGeoapifyShape(properties);
                                         setPickedLocation(normalized);
@@ -160,7 +168,7 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
                             }
 
                             }
-                            >{properties['city']}, {properties['state_code']} {properties['postcode']}</div> : null
+                            >{properties['city']}, {properties['state_code']} {properties['postcode']}</motion.div> : null
                         })}
                     </motion.div>
                 )}
