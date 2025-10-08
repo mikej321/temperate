@@ -2,7 +2,8 @@
     grid-area: content;
     display: grid;
     grid-template-areas: "recent" "search" "popup" "loader" "location" "icon" "temp" "description" "map" "details" "forecast";
-    grid-template-rows: auto 40px repeat(6, auto) repeat(3, auto);
+    grid-template-rows: repeat(8, auto) repeat(3, auto);
+    gap: 2rem;
     padding-inline: var(--page-gutter);
     margin-bottom: 4rem;
 }
@@ -87,7 +88,7 @@
         align-items: center;
         grid-template-columns: 1fr 2fr 1fr;
         grid-template-areas: "search icon temp" "location icon details" "description icon details" ". icon details" ". map ." "forecast forecast forecast";
-        grid-template-rows: 80px repeat(4, auto) 280px;
+        grid-template-rows:repeat(5, auto) 280px;
         row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
         margin-bottom: unset;
@@ -105,7 +106,7 @@
     ".           icon  details"
     "map         map   map"
     "forecast    forecast forecast";
-  grid-template-rows: 80px auto auto auto auto 280px;
+  grid-template-rows: repeat(5, auto) 280px;
 }
 
 /* only LOADER present */
@@ -118,7 +119,7 @@
     ".           icon  details"
     "map         map   map"
     "forecast    forecast forecast";
-  grid-template-rows: 80px auto auto auto auto 280px;
+  grid-template-rows: repeat(5, auto) 280px;
 }
 
 /* BOTH present (popup then loader) */
@@ -132,7 +133,7 @@
     ".           icon  details"
     "map         map   map"
     "forecast    forecast forecast";
-  grid-template-rows: 80px auto auto auto auto 280px;
+  grid-template-rows: repeat(5, auto) 280px;
 }
 
 

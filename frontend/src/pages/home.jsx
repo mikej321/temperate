@@ -49,7 +49,7 @@ export default function Home({ homeRef, weather, setWeather, settingsClicked, se
 
 
   const [stateAbbr, setStateAbbr] = useState({
-    'Alabama': 'AL',
+      'Alabama': 'AL',
       'Alaska': 'AK',
       'Arizona': 'AZ',
       'Arkansas': 'AR',
@@ -405,6 +405,8 @@ function buildEndpoint(path) {
           setSearchVal={setSearchVal}
           setLocations={setLocations}
           setSearched={setSearched}
+          setPickedLocation={setPickedLocation}
+          setStorageLocations={setStorageLocations}
         />
         <AnimatePresence>
           {searched && (

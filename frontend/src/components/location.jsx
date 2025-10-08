@@ -99,7 +99,7 @@ export default function Location({ name, state }) {
           />
         </g>
       </svg>
-      <div className="location">{name}, {stateAbb}</div>
+      <div className="location">{name}, {stateAbb || state}</div>
     </div>
   );
 }
