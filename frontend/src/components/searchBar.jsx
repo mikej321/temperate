@@ -144,7 +144,7 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
                                 handleLocation(properties?.postcode)
                                     .then(() => {
                                         setSearched(false);
-                                        inputRef.value = '';
+                                        inputRef.current.value = '';
                                         const normalized = normalizeGeoapifyShape(properties);
                                         setPickedLocation(normalized);
                                         pushHistory({
