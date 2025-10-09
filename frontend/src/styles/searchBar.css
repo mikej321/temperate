@@ -56,12 +56,7 @@
 }
 
 .hit_container {
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background: var(--cadet_gray_100);

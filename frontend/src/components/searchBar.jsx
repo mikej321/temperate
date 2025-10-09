@@ -235,6 +235,13 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                      initial="initial"
                      animate="animate"
                      exit="exit"
+                     style={{
+                        position: firstSearch ? "absolute" : "static",
+                        top: firstSearch && "70px",
+                        left: firstSearch && "50%",
+                        transform: firstSearch && "translateX(-50%)",
+                        zIndex: 1000
+                     }}
                      onUpdate={() => {
                         if (open && useAuto) setUseAuto(false);
                      }}
