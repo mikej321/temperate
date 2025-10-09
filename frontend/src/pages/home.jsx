@@ -42,8 +42,10 @@ export default function Home({ homeRef, weather, setWeather, settingsClicked, se
   const [time, setTime] = useState(() => displayTime(new Date()));
   const [locations, setLocations] = useState([]);
   const [locationTemps, setLocationTemps] = useState([]);
+  const [autoSuggestionOpen, setAutoSuggestionOpen] = useState(false);
   const [storageLocations, setStorageLocations] = useState(() => readHistory());
   const [chosenHistoryLocation, setChosenHistoryLocation] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const homeContainerRef = useRef(null);
 
@@ -341,8 +343,16 @@ function buildEndpoint(path) {
     setStorageLocations(readHistory());
   }
 
+  useEffect(() => {
+    if (firstSearch) {
+      homeContainerRef.current.style.gap = "4rem";
+    } else {
+      homeContainerRef.current.style.gap = "2rem";
+    }
+  }, [firstSearch])
+
   return (
-    <WeatherContainer homeRef={homeRef} dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked}>
+    <WeatherContainer homeRef={homeRef} dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked} firstSearch={firstSearch}>
       {pickedLocation ? (
         <Navbar
           date={date}
@@ -390,6 +400,7 @@ function buildEndpoint(path) {
       )}
       <motion.div
        className="home_container"
+       ref={homeContainerRef}
        variants={homeVariant}
        initial="hidden"
        animate={(!isLoading && weather) ? "visible" : "hidden"}
@@ -407,6 +418,10 @@ function buildEndpoint(path) {
           setSearched={setSearched}
           setPickedLocation={setPickedLocation}
           setStorageLocations={setStorageLocations}
+          autoSuggestionOpen={autoSuggestionOpen}
+          setAutoSuggestionOpen={setAutoSuggestionOpen}
+          open={open}
+          setOpen={setOpen}
         />
         <AnimatePresence>
           {searched && (
@@ -417,6 +432,10 @@ function buildEndpoint(path) {
               setLocations={setLocations}
               setPickedLocation={setPickedLocation}
               addToHistoryFromSearch={addToHistoryFromSearch}
+              autoSuggestionOpen={autoSuggestionOpen}
+              setAutoSuggestionOpen={setAutoSuggestionOpen}
+              open={open}
+              setOpen={setOpen}
             />
           )}
           {pickedLocation && (

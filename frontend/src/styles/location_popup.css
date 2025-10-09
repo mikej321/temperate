@@ -1,4 +1,7 @@
 .popup_shell {
+  position: absolute;
+  top: 340px;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;

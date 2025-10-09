@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { api } from "../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { readHistory } from "../utils/historyStorage";
@@ -7,21 +7,24 @@ import axios from "axios";
 import '../styles/searchBar.css';
 
 
-export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSearchVal, setLocations, searched, setSearched, setPickedLocation, setStorageLocations}) {
+export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSuggestionOpen, firstSearch, setFirstSearch, searchVal, setSearchVal, setLocations, searched, setSearched, setPickedLocation, setStorageLocations}) {
 
     const { history, pushHistory } = useHistory();
     
     const inputRef = useRef(null);
+    const suggestionRef = useRef(null);
 
     const [hits, setHits] = useState(null);
-    const [open, setOpen] = useState(false);
     const [pickedZipCode, setPickedZipCode] = useState(null);
+    const [target, setTarget] = useState(0);
+    const [useAuto, setUseAuto] = useState(false);
     const abortRef = useRef(null);
 
     // Update's state and open's the dropdown results
     const onChange = (e) => {
         setSearchVal(e.target.value);
         setOpen(true);
+        setAutoSuggestionOpen(true);
     }
 
     // Debounced fetch when searchVal changes
@@ -52,6 +55,7 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
                 } else {
                     setHits([data]);
                     setOpen(true);
+                    setAutoSuggestionOpen(true);
                 }
 
 
@@ -66,6 +70,8 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setOpen(false);
 
         inputRef.current?.blur();
         setTimeout(() => inputRef.current?.blur(), 0);
@@ -115,15 +121,99 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
     const handleLocation = async (postcode) => {
         setPickedZipCode(postcode);
         setOpen(false);
+        setAutoSuggestionOpen(false);
     }
 
+    useEffect(() => {
+        if (!searchVal) {
+            setOpen(false);
+            setAutoSuggestionOpen(false);
+        }
+    }, [searchVal])
 
+    
+    useLayoutEffect(() => {
+        const suggestions = suggestionRef.current;
+        if (!suggestions) return;
+        
+        const prev = suggestions.style.height;
+        suggestions.style.height = "auto"
+        const natHeight = suggestions.scrollHeight;
+        suggestions.style.height = prev;
+        setTarget(natHeight);
+    }, [hits, open])
+    
+    useEffect(() => {
+        const suggestions = suggestionRef.current;
+        if (!suggestions) return;
+        
+        const observer = new ResizeObserver(() => {
+            if (open) setTarget(suggestions.scrollHeight);
+        })
+        
+        observer.observe(suggestions);
+        return () => observer.disconnect();
+    }, [open])
+
+    const hitVar = {
+        initial: {
+            height: 0,
+            opacity: 0
+        },
+        animate: {
+            height: useAuto ? "auto" : target,
+            opacity: 1,
+            transition: {
+                when: "beforeChildren",
+                staggerChildren: 0.07,
+                delayChildren: 0.1,
+                height: {
+                            type: "spring",
+                            stiffness: 500,
+                            damping: 40
+                        },
+                        opacity: {
+                            duration: 0.12
+                        }
+            }
+        },
+        exit: {
+            height: 0,
+            opacity: 0,
+            transition: {
+                when: "afterChildren",
+                staggerChildren: 0.07,
+                delayChildren: 0.1,
+                height: {
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 40
+                },
+            }
+        }
+    }
+
+    const childVar = {
+        initial: {
+            x: -10,
+            opacity: 0
+        },
+        animate: {
+            x: 0,
+            opacity: 1
+        },
+        exit: {
+            x: -10,
+            opacity: 0
+        }
+    }
+    
     return (
         <motion.form
-         className="search_container"
-         inherit={false}
-         onSubmit={(e) => handleSubmit(e)}
-         >
+        className="search_container"
+        inherit={false}
+        onSubmit={(e) => handleSubmit(e)}
+        >
             <motion.input
              ref={inputRef}
              className="search_bar"
@@ -133,21 +223,33 @@ export default function SearchBar({firstSearch, setFirstSearch, searchVal, setSe
              placeholder="City Name or Zip Code"
              enterKeyHint="search"
              onChange={onChange}
+             layout
              />
              <AnimatePresence>
                 {hits && open && (
-                    <motion.div className="hit_container" style={{
-                        position: firstSearch ? "absolute" : "static",
-                        top: firstSearch && '70px',
-                        left: firstSearch && "50%",
-                        transform: firstSearch && "translateX(-50%)",
-                        zIndex: firstSearch && 1000,
-                        width: firstSearch && "80%"
-                    }}>
+                    <motion.div
+                     key="suggestions"
+                     ref={suggestionRef}
+                     variants={hitVar}
+                     className="hit_container"
+                     initial="initial"
+                     animate="animate"
+                     exit="exit"
+                     onUpdate={() => {
+                        if (open && useAuto) setUseAuto(false);
+                     }}
+                     onAnimationComplete={() => {
+                        if (open) setUseAuto(true);
+                     }}
+                     >
                         {hits[0].features.map((hit) => {
                             const properties = hit?.properties;
 
-                            return properties?.city ? <motion.div className="hit" onClick={() => {
+                            return properties?.city ? <motion.div
+                             key={properties.place_id ?? `${properties.city}-${properties.state_code}-${properties.postcode}`} 
+                             className="hit"
+                             variants={childVar}
+                             onClick={() => {
                                 handleLocation(properties?.postcode)
                                     .then(() => {
                                         setSearched(false);

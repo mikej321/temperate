@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import useHistory from "../utils/useHistory";
+import { useState, useLayoutEffect, useRef, useEffect } from "react";
 import "../styles/location_popup.css";
 import { add } from "date-fns";
 
@@ -9,11 +10,20 @@ export default function LocationPopup({
   setPickedLocation,
   setSearched,
   setFirstSearch,
-  addToHistoryFromSearch
+  addToHistoryFromSearch,
+  autoSuggestionOpen,
+  setAutoSuggestionOpen,
+  open,
+  setOpen
 }) {
   // Animate only the shell's height/opacity
 
   const { history, pushHistory } = useHistory();
+  const [target, setTarget] = useState(0);
+  const [useAuto, setUseAuto] = useState(false);
+  const [suggestionOpen, setSuggestionOpen] = useState(false);
+  const abortRef = useRef(null);
+  const locationsRef = useRef(null);
 
   async function handlePickLocation(picked) {
     pushHistory({
@@ -66,22 +76,105 @@ export default function LocationPopup({
     setSearched(false);
     setPickedLocation(loc);
     addToHistoryFromSearch?.(loc);
+    setOpen(false);
   };
+
+  useLayoutEffect(() => {
+    const locationsContainer = locationsRef.current;
+    if (!locationsContainer) return;
+
+    const prev = locationsContainer.style.height;
+    locationsContainer.style.height = "auto";
+    const natHeight = locationsContainer.scrollHeight;
+    locationsContainer.style.height = prev;
+    setTarget(natHeight);
+  }, [locations])
+
+  useEffect(() => {
+    const locationsContainer = locationsRef.current;
+    if (!locationsContainer) return;
+
+    const observer = new ResizeObserver(() => {
+      if (suggestionOpen) setTarget(locationsContainer.scrollHeight);
+    })
+
+    observer.observe(locationsContainer);
+    return () => observer.disconnect();
+  }, [locations])
+
+  const locationVar = {
+    initial: {
+      height: 0,
+      opacity: 0
+    },
+    animate: {
+      height: useAuto ? "auto" : target,
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.07,
+        delayChildren: 0.1,
+        height: {
+          type: "spring",
+          stiffness: 500,
+          damping: 40
+        },
+        opacity: {
+          duration: 0.12
+        }
+      }
+    },
+    exit: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        when: "afterChildren",
+        staggerChildren: 0.07,
+        delayChildren: 0.1,
+        height: {
+          type: "spring",
+          stiffness: 500,
+          damping: 40
+        },
+      }
+    }
+  }
+
+  const childVar = {
+    initial: {
+      x: -10,
+      opacity: 0
+    },
+    animate: {
+      x: 0,
+      opacity: 1
+    },
+    exit: {
+      x: -10,
+      opacity: 0
+    }
+  }
 
   return (
     <motion.div
       className="popup_shell"
-      variants={shell}
-      initial="hidden"
-      animate="visible"
+      variants={locationVar}
+      ref={locationsRef}
+      initial="initial"
+      animate="animate"
       exit="exit"
-      style={{ transformOrigin: "top center" }}
+      onUpdate={() => {
+        if (locations) setUseAuto(false);
+      }}
+      onAnimationComplete={() => {
+        if (locations) setUseAuto(true);
+      }}
     >
       <motion.div
        className="popup_container" 
        role="listbox" 
        aria-label="Search results"
-       variants={wrapperVar}
+       variants={childVar}
        >
         {locations.length === 0 ? (
           <motion.p variants={row}>
