@@ -19,7 +19,6 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, 1fr);
-  /* overflow: hidden; */
   padding-bottom: 2rem;
   row-gap: 2rem;
   column-gap: 1rem;
@@ -62,7 +61,7 @@
 .sunset_label,
 .wind_direction_label,
 .wind_speed_label {
-  font-size: 14px;
+  font-size: 12px;
   order: 1;
   color: var(--argentinian_blue_500);
 }
@@ -76,7 +75,7 @@
 .wind_direction,
 .wind_speed {
   font-family: var(--roboto_digits);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--argentinian_blue_500);
 }
@@ -86,9 +85,7 @@
 }
 
 @media screen and (min-width: 400px) {
-  .details_container {
-    inline-size: min(100%, 710px);
-  }
+  
 }
 
 @media screen and (min-width: 1000px) {

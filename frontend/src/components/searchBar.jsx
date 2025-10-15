@@ -47,8 +47,11 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                         filter: "countrycode:us",
                         limit: Number(7),
                         apiKey: import.meta.env.VITE_GEOAPIFY_KEY
-                    }
+                    },
+                    signal: abortRef.current.signal
                 })
+
+                console.log(data.features)
 
                 if (data.features.length == 0) {
                     return;
@@ -235,13 +238,6 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                      initial="initial"
                      animate="animate"
                      exit="exit"
-                     style={{
-                        position: firstSearch ? "absolute" : "static",
-                        top: firstSearch && "70px",
-                        left: firstSearch && "50%",
-                        transform: firstSearch && "translateX(-50%)",
-                        zIndex: 1000
-                     }}
                      onUpdate={() => {
                         if (open && useAuto) setUseAuto(false);
                      }}
@@ -253,7 +249,7 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                             const properties = hit?.properties;
 
                             return properties?.city ? <motion.div
-                             key={properties.place_id ?? `${properties.city}-${properties.state_code}-${properties.postcode}`} 
+                             key={properties.place_id ?? `${properties.county}-${properties.state_code}-${properties.postcode}`} 
                              className="hit"
                              variants={childVar}
                              onClick={() => {
@@ -275,7 +271,6 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                                         setStorageLocations(readHistory());
                                     });
                             }
-
                             }
                             >{properties['city']}, {properties['state_code']} {properties['postcode']}</motion.div> : null
                         })}

@@ -100,9 +100,9 @@ export default function Location({ name, state }) {
             />
           </g>
         </svg>
-        <div className="location">{name}, {stateAbb || state}</div>
+        <div className="location">{name}, {stateAbb || state.toUpperCase()}</div>
       </div>
-      <div className="location">{name}, {stateAbb || state}</div>
+      <div className="location">{name}, {stateAbb || state.toUpperCase()}</div>
     </>
   );
 }
