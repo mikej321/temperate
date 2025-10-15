@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { readHistory, pushHistory } from "../utils/historyStorage";
 import { api } from "../utils/api";
 import axios from "axios";
@@ -25,6 +25,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { displayTime } from "../utils/formatDate";
 import ColdSpinner from "../components/coldSpinner";
 import SdkMap from "../components/map";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 
 export default function Home({ homeRef, weather, setWeather, settingsClicked, setSettingsClicked, dayNightClicked, setDayNightClicked }) {
@@ -48,6 +52,10 @@ export default function Home({ homeRef, weather, setWeather, settingsClicked, se
   const [open, setOpen] = useState(false);
 
   const homeContainerRef = useRef(null);
+  const sectionOneRef = useRef(null);
+  const sectionTwoRef = useRef(null);
+  const sectionThreeRef = useRef(null);
+  const sectionFourRef = useRef(null);
 
 
   const [stateAbbr, setStateAbbr] = useState({
@@ -328,6 +336,64 @@ function buildEndpoint(path) {
 
   }, [userCoord, API, setWeather])
 
+  useLayoutEffect(() => {
+  // only run once real content exists
+  if (!weather?.current) return;
+
+  // scope all selectors to the home container (nice cleanup on unmount)
+  const ctx = gsap.context(() => {
+    const sections = gsap.utils.toArray(".section_content");
+
+    sections.forEach((sec) => {
+      const content = sec.querySelector(".section_content_container");
+      const title   = sec.querySelector(".section_title");
+
+      // reveal the section body when it enters
+      if (content) {
+        gsap.fromTo(
+          sec,
+          { x: -24, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            overwrite: "auto",
+            scrollTrigger: {
+              trigger: sec,
+              start: "top 90%",
+              end: "top 30%",
+              toggleActions: "play none none reverse",
+              // markers: true, // ← uncomment to debug
+            },
+          }
+        );
+      }
+    });
+
+    // batch reveal for any items you tag with .reveal-on-scroll
+    ScrollTrigger.batch(".reveal-on-scroll", {
+      start: "top 80%",
+      onEnter: (els) =>
+        gsap.to(els, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.08,
+        }),
+      onLeaveBack: (els) =>
+        gsap.to(els, { opacity: 0, y: 12, duration: 0.3 }),
+    });
+
+    // after layout settles (images/icons/map), recalc positions
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  }, homeContainerRef); // limits selectors to your home container
+
+  return () => ctx.revert();
+}, [weather?.current]); // rebuild when main content appears
+
+
   
 
   function addToHistoryFromSearch(loc) {
@@ -475,7 +541,7 @@ function buildEndpoint(path) {
           ): error && !isLoading ? <div className="section_error">{error}</div>
           : !isLoading && weather?.current ? (
             <>
-               <div className="section_content section_1">
+               <div ref={sectionOneRef} className="section_content section_1">
                  <div className="section_title">Current Weather</div>
                  <div className="section_content_container">
                    <Location
@@ -505,7 +571,7 @@ function buildEndpoint(path) {
                                  </motion.div>
                                   </div>
                  </div>
-              <div className="section_content section_2">
+              <div ref={sectionTwoRef} className="section_content section_2">
                 <div className="section_title">Weather Details</div>
                 <div className="section_content_container">
                   <motion.div
@@ -516,7 +582,7 @@ function buildEndpoint(path) {
                   </motion.div>
                 </div>
               </div>
-              <div className="section_content section_3">
+              <div ref={sectionThreeRef} className="section_content section_3">
                 <div className="section_title">Quick Forecast</div>
                 <div className="section_content_container">
                   <motion.div
@@ -527,7 +593,7 @@ function buildEndpoint(path) {
                   </motion.div>
                 </div>
               </div>
-              <div className="section_content section_4">
+              <div ref={sectionFourRef} className="section_content section_4">
                 <div className="section_title">Radar</div>
                 <div className="section_content_container">
                   <SdkMap weather={weather} />
