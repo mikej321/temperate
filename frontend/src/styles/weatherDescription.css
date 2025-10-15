@@ -1,10 +1,14 @@
+.home_description_container {
+    grid-area: description;
+    /* justify-self: center; */
+    min-width: 0;
+    min-height: 0;
+}
+
 .description_container {
     color: var(--argentinian_blue_500);  
     display: flex;
     flex-direction: column;
-    margin-right: 1rem;
-    margin-bottom: 2rem;
-    align-items: center;  /* Mobile alignment is slightly off, this is to fix that */
     transition: color 0.2s ease-in-out;  
 }
 
@@ -27,7 +31,7 @@
 
 @media screen and (min-width: 600px) {
     .description_container {
-        margin-bottom: 2rem;
+        /* margin-bottom: 2rem; */
     }
     
     .description {
@@ -42,7 +46,7 @@
 @media screen and (min-width: 1000px) {
     .description_container {
         align-items: unset;
-        margin-bottom: unset;
+        /* margin-bottom: unset; */
     }
 
     

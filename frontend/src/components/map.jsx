@@ -217,8 +217,6 @@ export default function SdkMap({ weather }) {
 
   return (
     <div className="map_container" style={{ position: "relative" }}>
-      <div className="map_title">Weather Map</div>
-
       <div id="map" ref={containerRef} />
 
       <div className="color_legend_container">

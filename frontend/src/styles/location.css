@@ -1,6 +1,6 @@
 .location_desktop {
     grid-area: location;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     transition: color 0.2s ease-in-out;
@@ -21,8 +21,11 @@
 }
 
 .location {
+    grid-area: location;
+    display: flex;
     font-size: 32px;
     font-weight: bold;
+    color: var(--argentinian_blue_500);
     font-family: var(--poppins_titles);
 }
 
@@ -34,7 +37,7 @@
     min-width: 0;                /* avoid content pinning */
     display: flex;
     gap: 2rem;
-    margin-top: unset;
+    /* margin-top: unset; */
     justify-content: unset;
     /* remove: justify-content: stretch; (invalid) */
   }
@@ -43,10 +46,11 @@
         display: block;
         max-width: 49px;
         max-height: 49px;
-        margin-left: -1rem;
+        /* margin-left: -1rem; */
     }
 
     .location {
+        display: none;
         font-size: 32px;
         font-weight: bold;
         font-family: var(--poppins_titles);

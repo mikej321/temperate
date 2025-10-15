@@ -5,7 +5,7 @@
 .map_container {
     position: relative;
     grid-area: map;
-    margin-top: 8rem;
+    /* margin-top: 8rem; */
     min-width: 0;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .rt-SegmentedControlRoot {
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 }
 
 .rt-SegmentedControlItem { 
@@ -59,7 +59,7 @@
     flex: 1 1 0;
     min-width: 0;
     cursor: pointer;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     transition: background 0.2s ease-in-out;
 }
 
@@ -84,7 +84,7 @@
 
 .map_title {
     font-weight: 700;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
     display: block;
     transition: color 0.2s ease-in-out;
 }
@@ -103,7 +103,7 @@
 #play-pause-bt {
     background: var(--argentinian_blue_300);
     border: none;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     padding: 1rem 2rem;
     border-radius: 8px;
 }
@@ -234,8 +234,8 @@
 
     .map_container {
         margin-top: unset;
-        margin-bottom: 8rem;
-        margin-left: 8rem;
+        /* margin-bottom: 8rem; */
+        /* margin-left: 8rem; */
         /* justify-self: center; */
         width: 100%;
         padding-inline: 4rem;

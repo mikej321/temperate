@@ -343,13 +343,13 @@ function buildEndpoint(path) {
     setStorageLocations(readHistory());
   }
 
-  useEffect(() => {
-    if (firstSearch) {
-      homeContainerRef.current.style.gap = "4rem";
-    } else {
-      homeContainerRef.current.style.gap = "2rem";
-    }
-  }, [firstSearch])
+  // useEffect(() => {
+  //   if (firstSearch) {
+  //     homeContainerRef.current.style.gap = "4rem";
+  //   } else {
+  //     homeContainerRef.current.style.gap = "2rem";
+  //   }
+  // }, [firstSearch])
 
   return (
     <WeatherContainer homeRef={homeRef} dayNightClicked={dayNightClicked} setDayNightClicked={setDayNightClicked} firstSearch={firstSearch}>
@@ -438,22 +438,15 @@ function buildEndpoint(path) {
               setOpen={setOpen}
             />
           )}
-          {pickedLocation && (
-            <>
-              <Location
-                name={place ? place : pickedLocation.name}
-                state={pickedLocation.admin1}
-              />
-            </>
-          )}
+            
           {isLoading ? (
             <motion.div
-             className="loader_overlay"
-             layout
-             initial={{ 
+            className="loader_overlay"
+            layout
+            initial={{ 
               opacity: 0
-             }}
-             animate={{ 
+            }}
+            animate={{ 
               opacity: 1,
               transition: {
                 opacity: {
@@ -461,8 +454,8 @@ function buildEndpoint(path) {
                   delay: 0.18
                 }
               }
-             }}
-             exit={{ 
+            }}
+            exit={{ 
               opacity: 0,
               transition: {
                 opacity: {
@@ -470,7 +463,7 @@ function buildEndpoint(path) {
                 }
               }
             }}
-             >
+            >
               <SpinnerDotted
                 enabled={isLoading}
                 size={60}
@@ -480,42 +473,66 @@ function buildEndpoint(path) {
               />
             </motion.div>
           ): error && !isLoading ? <div className="section_error">{error}</div>
-           : !isLoading && weather?.current ? (
-             <>
-              <motion.div
-               className="home_temp_container"
-               variants={children}
-               >
-                  <TempDisplay temp={weather.current.temperature_2m} />
-              </motion.div>
-              <motion.div
-               className="home_description_container"
-               variants={children}
-               >
-                  <WeatherDescription
-                    desc={weatherDescriptionsObj[weather.current.weather_code]}
-                    wind={windLabel}
-                  />
-              </motion.div>
-              <motion.div
-               className="home_icon_container"
-               variants={children}
-               >
-                  <WeatherIcon weather={weather} />
-              </motion.div>
-              <motion.div
-               className="home_details_container"
-               variants={children}
-               >
-                  <WeatherDetails weather={weather} />
-              </motion.div>
-              <motion.div
-               className="home_quickcast_container"
-               variants={children}
-               >
-                  <DailyQuickcast weather={weather} />
-              </motion.div>
-              <SdkMap weather={weather} />
+          : !isLoading && weather?.current ? (
+            <>
+               <div className="section_content section_1">
+                 <div className="section_title">Current Weather</div>
+                 <div className="section_content_container">
+                   <Location
+                     name={place ? place : pickedLocation.name}
+                     state={pickedLocation.admin1}
+                   />
+                   <motion.div
+                   className="home_temp_container"
+                   variants={children}
+                   >
+                      <TempDisplay temp={weather.current.temperature_2m} />
+                                 </motion.div>
+                                 <motion.div
+                   className="home_description_container"
+                   variants={children}
+                   >
+                      <WeatherDescription
+                        desc={weatherDescriptionsObj[weather.current.weather_code]}
+                        wind={windLabel}
+                      />
+                                 </motion.div>
+                                 <motion.div
+                   className="home_icon_container"
+                   variants={children}
+                   >
+                      <WeatherIcon weather={weather} />
+                                 </motion.div>
+                                  </div>
+                 </div>
+              <div className="section_content section_2">
+                <div className="section_title">Weather Details</div>
+                <div className="section_content_container">
+                  <motion.div
+                   className="home_details_container"
+                   variants={children}
+                   >
+                      <WeatherDetails weather={weather} />
+                  </motion.div>
+                </div>
+              </div>
+              <div className="section_content section_3">
+                <div className="section_title">Quick Forecast</div>
+                <div className="section_content_container">
+                  <motion.div
+                   className="home_quickcast_container"
+                   variants={children}
+                   >
+                      <DailyQuickcast weather={weather} />
+                  </motion.div>
+                </div>
+              </div>
+              <div className="section_content section_4">
+                <div className="section_title">Radar</div>
+                <div className="section_content_container">
+                  <SdkMap weather={weather} />
+                </div>
+              </div>
             </>
            ) : null}
         </AnimatePresence>

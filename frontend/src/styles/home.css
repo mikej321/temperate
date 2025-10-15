@@ -1,11 +1,11 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "recent" "search" "loader" "location" "icon" "temp" "description" "map" "details" "forecast";
-    grid-template-rows: auto minmax(0, auto) repeat(6, auto) repeat(3, auto);
-    gap: 2rem;
-    padding-inline: var(--page-gutter);
-    margin-bottom: 4rem;
+    grid-template-areas: "recent" "search" "loader" "section1" "section2" "section3" "section4";
+    grid-template-rows: repeat(7, minmax(0, auto));
+    gap: 4rem;
+    padding-inline: 2rem;
+    /* margin-bottom: 4rem; */
 }
 
 .loader_overlay {
@@ -15,36 +15,16 @@
     justify-content: center;
 }
 
-.home_temp_container {
-    grid-area: temp;
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    min-width: 0;
-    min-height: 0;
-}
-
-.home_description_container {
-    grid-area: description;
-    justify-self: center;
-    margin-left: 2rem;
-    min-width: 0;
-    min-height: 0;
-}
-
 .home_icon_container {
-    grid-area: icon;
+    grid-area: image;
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 100%;
-    margin-block: 4rem 2rem;
+    /* margin-block: 4rem 2rem; */
     min-width: 0;
     min-height: 0;
+    max-width: 15rem;
 }
 
 .home_details_container {
@@ -52,19 +32,74 @@
     inline-size: min(100%, 380px);
     min-inline-size: 0;
     margin-inline: auto;
-    margin-block: 4rem;
+    /* margin-block: 4rem; */
     min-width: 0;
     min-height: 0;
 }
 
 .home_quickcast_container {
-    grid-area: forecast;
+    grid-area: quickcast;
     inline-size: min(100%, 380px);
     min-inline-size: 0;
     margin-inline: auto;
     min-width: 0;
     min-height: 0;
 }
+
+.home_temp_container {
+    display: flex;
+    grid-area: temp;
+}
+
+.section_content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-radius: 12px;
+    align-items: center;
+    box-shadow:  5px 5px 15px #a7cdef,
+             -5px -5px 15px #bde7ff;
+}
+
+.section_content_container {
+    padding: 4rem 2rem;
+    display: grid;
+}
+
+.section_content.section_1 .section_content_container {
+    grid-template-areas: "location image" "temp image" "description image" ". image";
+}
+
+.section_content.section_2 .section_content_container {
+    grid-template-areas: "details";
+}
+
+.section_content.section_3 .section_content_container {
+    grid-template-areas: "quickcast";
+}
+
+.section_content.section_4 .section_content_container {
+    grid-template-areas: "map";
+}
+
+
+
+.section_title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-family: var(--poppins_titles);
+    font-weight: 700;
+    padding: 2rem;
+    color: var(--argentinian_blue_500);
+    background: var(--cadet_gray_100);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.section_content.section_1 { grid-area: section1; }
+.section_content.section_2 { grid-area: section2; }
+.section_content.section_3 { grid-area: section3; }
+.section_content.section_4 { grid-area: section4; }
 
 @media screen and (min-width: 400px) {
     .home_details_container {
@@ -79,7 +114,7 @@
 @media screen and (min-width: 600px) {
     .home_description_container {
         width: min(100%, 303px);
-        margin-bottom: 2rem;
+        /* margin-bottom: 2rem; */
     }
 }
 
@@ -89,11 +124,9 @@
         grid-template-columns: 1fr 2fr 1fr;
         grid-template-areas: "search icon temp" "location icon details" "description icon details" ". icon details" ". map ." "forecast forecast forecast";
         grid-template-rows:repeat(5, auto) 280px;
-        row-gap: 2rem;
         min-inline-size: min(100%, 1800px);
-        margin-bottom: unset;
-        margin-top: 2rem;
-        padding-inline: 4rem;
+        /* margin-bottom: unset; */
+        /* margin-top: 2rem; */
     }
 
     /* only POPUP present */
@@ -137,18 +170,6 @@
 }
 
 
-    .home_temp_container {
-        justify-self: end;
-        align-self: end;
-        margin-top: unset;
-        margin-bottom: unset;
-    }
-
-    .home_description_container {
-        margin-left: 0;
-        margin-bottom: 0;
-        justify-self: stretch;
-    }
 
     .home_details_container {
         align-self: end;
@@ -157,8 +178,8 @@
 
     .home_quickcast_container {
         inline-size: 100%;
-        margin-top: 4rem;
-        margin-bottom: 8rem;
+        /* margin-top: 4rem;
+        margin-bottom: 8rem; */
     }
 }
 
@@ -169,3 +190,90 @@ via flexbox. It's going to be difficult but this will allow me to map the layout
 of elements without having to make duplicate elements just for mobile / desktop.
 
 */
+
+/* =============================
+   HOME LAYOUT — GRID + GUARDS
+   ============================= */
+
+/* Root grid for the page sections */
+.home_container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  inline-size: 100%;
+  max-inline-size: 1200px;
+  margin-inline: auto;
+}
+
+/* Make every grid child behave (no forced overflow) */
+.home_container > .section_content {
+  min-width: 0;              /* critical: prevents horizontal overflow in grid */
+  min-height: 0;
+}
+
+/* =============================
+   SECTION 1 — TOP STRIP (temp/desc/icon)
+   ============================= */
+
+/* Optional polishing so the big icon never bursts the column */
+.home_icon_container img,
+.home_icon_container svg {
+  max-inline-size: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =============================
+   SECTION 2 — DETAILS
+   ============================= */
+.section_content.section_2,
+.home_details_container {
+  min-width: 0;
+  overflow: clip;
+}
+
+/* =============================
+   SECTION 3 — DAILY QUICKCAST
+   ============================= */
+.section_content.section_3,
+.home_quickcast_container {
+  min-width: 0;
+  overflow: clip;
+}
+
+/* =============================
+   SECTION 4 — MAP
+   ============================= */
+.section_content.section_4 {
+  min-width: 0;
+  overflow: clip;
+}
+
+/* Map canvas safety */
+.section_content.section_4 canvas,
+.section_content.section_4 img {
+  max-inline-size: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Desktop: full page grid; details sticks right, forecast below, map full width */
+@media (min-width: 1024px) {
+  
+}
+
+/* =============================
+   OVERLAY / LOADER SAFETY
+   (prevents overlays from creating layout overflow)
+   ============================= */
+
+.loader_overlay,
+.section_error {
+  min-width: 0;
+  overflow: clip;
+}
+
+/* If any motion wrappers inject transforms, keep them composited without scrolling */
+.section_content [data-motion] {
+  contain: layout paint;
+}

@@ -1,7 +1,6 @@
-.icon_container {
+/* .icon_container {
   margin: 0;
   display: flex;
-  justify-content: center;
 }
 
 .icon_container .main_icon {
@@ -20,9 +19,8 @@
   .icon_container .main_icon {
     width: min(100%, 400px);
     height: 400px;
-    margin-left: 13rem;
   } 
-}
+} */
 
 /* Gonna need more media query icon sizes to account for the icon size bleeding into the content on smaller desktop screen sizes */
 

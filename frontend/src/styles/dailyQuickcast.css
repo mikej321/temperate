@@ -1,9 +1,7 @@
-.quickcast_container {         
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;         
+.quickcast_container {                  
   margin-inline: auto;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 
@@ -21,11 +19,15 @@
     min-height: 240px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding-bottom: 2rem;
+    gap: 2rem;
     cursor: grab;
     touch-action: pan-x;
     user-select: none;
+    position: relative;
+    white-space: nowrap;
+    will-change: transform;
 }
 
 .quickcast_inner_container:active {
@@ -35,10 +37,10 @@
 .quickcast_inner_container .card {
     background: var(--prussian_blue_200);
     flex: 0 0 auto;
-    min-inline-size: min(100%, 103.33px);
+    width: 104px;
     max-height: 200px;
     will-change: transform;
-    margin-right: 25px;
+    /* margin-right: 25px; */
     display: flex;
     flex-direction: column;
     padding-block: 2rem;
@@ -61,16 +63,16 @@
 .quick_icon {
     width: 66px;
     height: 66px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .day_of_week {
-    margin-bottom: 7px;
+    /* margin-bottom: 7px; */
 
 }
 
 .weather_description {
-    margin-bottom: 7px;
+    /* margin-bottom: 7px; */
 }
 
 .quick_temp {
@@ -101,7 +103,7 @@
     }
 
     .quickcast_inner_container .card {
-        margin-right: 0;
+        /* margin-right: 0; */
         min-inline-size: min(100%, 140px);
         max-block-size: max(100%, 250px);
     }

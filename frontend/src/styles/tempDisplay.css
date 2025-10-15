@@ -1,9 +1,27 @@
 .tempDisplay {
-    margin-left: 4rem;
     font-family: var(--roboto_digits);
     font-weight: 700;
     font-size: 64px;
-    padding-top: 2rem;
+    transition: color 0.2s ease-in-out;
+    color: var(--argentinian_blue_500);
+}
+
+.page_container.dark_mode .home_container .tempDisplay {
+    color: var(--dark_mode_text_1);
+}
+
+/* .home_temp_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    min-height: 0;
+}
+
+.tempDisplay {
+    font-family: var(--roboto_digits);
+    font-weight: 700;
+    font-size: 64px;
     transition: color 0.2s ease-in-out;
 }
 
@@ -23,4 +41,4 @@
         margin-left: unset;
         padding-top: unset;
     }
-}
+} */

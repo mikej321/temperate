@@ -1,23 +1,10 @@
-/*
-
-I will need two of these same elements.
-
-.nav_location
-
-The searchbar (haven't created yet)
-
-The temperature display
-
-*/
-
 .navbar {
     position: relative;
     grid-area: nav;
-    min-height: 8rem;
+    min-height: 6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
     padding-inline: var(--page-gutter);
 }
 
@@ -408,17 +395,16 @@ The temperature display
   }
 
 .settings_container svg {
-  /* define it once so it has a timeline to pause */
   animation: spin 10s linear infinite;
-  animation-play-state: paused;       /* default = frozen */
+  animation-play-state: paused;       
   transform-origin: 50% 50%;
-  transform-box: view-box;            /* SVG center, esp. for Firefox */
+  transform-box: view-box;            
   scale: 1;
   transition: scale 0.2s ease-in-out;
 }
 
 .settings_container:hover svg {
-  animation-play-state: running;      /* hover = play */
+  animation-play-state: running;      
   scale: 1.1;
 }
 }
