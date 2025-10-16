@@ -133,10 +133,8 @@
     display: grid;
     grid-template-areas: "feels_like low_temp" "high_temp humidity" "sunrise sunrise" "sunset sunset" "wind_direction wind_direction" "wind_speed wind_speed";
     row-gap: 2rem;
-    column-gap: 2rem;
-    max-inline-size: 400px;
+    column-gap: 4rem;
     cursor: auto;
-    align-self: end;
   }
 
   .inner_container div {

@@ -8,6 +8,43 @@
     padding-bottom: 2rem;
 }
 
+@media screen and (min-width: 1000px) {
+  .home_container {
+    grid-template-areas: "search search" "section1 section4" "section2 section3";
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: unset;
+  }
+
+  .home_container:has(.popup_shell):not(:has(.loader_overlay)) {
+    grid-template-areas: "search search" "popup section4" "section1 section4" "section2 section3";
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: unset;
+  }
+
+  .home_container:has(.loader_overlay):not(:has(.popup_shell)) {
+    grid-template-areas: "search search" "loader section4" "section1 section4" "section2 section3";
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: unset;
+  }
+
+  .home_container:has(.popup_shell):has(.loader_overlay) {
+    grid-template-areas: "search search" "popup section4" "loader section4" "section1 section4" "section2 section3";
+    grid-template-columns: 0.5fr 1fr; 
+    grid-template-rows: unset;
+  }
+
+  .section_content.section_1 .section_content_container {
+    grid-template-rows: repeat(3, 100px);
+    grid-template-columns: 1fr .5fr;
+    padding: 0rem 2rem 4rem;
+    align-items: unset;
+  }
+
+  .section_content.section_2 .section_content_container {
+    gap: 2rem;
+  }
+}
+
 .loader_overlay {
     grid-area: loader;
     display: flex;
@@ -55,10 +92,13 @@
     display: grid;
     grid-template-rows: auto 1fr;
     border-radius: 12px;
-    align-items: center;
     box-shadow:  5px 5px 15px #a7cdef,
              -5px -5px 15px #bde7ff;
     transition: box-shadow 0.2s ease-in-out;
+}
+
+.section_1 .section_content_container {
+  align-items: center;
 }
 
 .page_container.dark_mode .section_content {
@@ -72,7 +112,7 @@
 }
 
 .section_content.section_1 .section_content_container {
-    grid-template-areas: "location image" "temp image" "description image" ". image";
+    grid-template-areas: "location location" "temp image" "description image";
 }
 
 .section_content.section_2 .section_content_container {
@@ -149,58 +189,6 @@
 }
 
 @media screen and (min-width: 1000px) {
-    .home_container {
-        align-items: center;
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-template-areas: "search icon temp" "location icon details" "description icon details" ". icon details" ". map ." "forecast forecast forecast";
-        grid-template-rows:repeat(5, auto) 280px;
-        min-inline-size: min(100%, 1800px);
-        /* margin-bottom: unset; */
-        /* margin-top: 2rem; */
-    }
-
-    /* only POPUP present */
-.home_container:has(.popup_shell):not(:has(.loader_overlay)) {
-  grid-template-areas:
-    "search      icon  temp"
-    "popup       icon  details"
-    "location    icon  details"
-    "description icon  details"
-    ".           icon  details"
-    "map         map   map"
-    "forecast    forecast forecast";
-  grid-template-rows: repeat(5, auto) 280px;
-}
-
-/* only LOADER present */
-.home_container:has(.loader_overlay):not(:has(.popup_shell)) {
-  grid-template-areas:
-    "search      icon  temp"
-    "loader      icon  details"
-    "location    icon  details"
-    "description icon  details"
-    ".           icon  details"
-    "map         map   map"
-    "forecast    forecast forecast";
-  grid-template-rows: repeat(5, auto) 280px;
-}
-
-/* BOTH present (popup then loader) */
-.home_container:has(.popup_shell):has(.loader_overlay) {
-  grid-template-areas:
-    "search      icon  temp"
-    "popup       icon  details"
-    "loader      icon  details"
-    "location    icon  details"
-    "description icon  details"
-    ".           icon  details"
-    "map         map   map"
-    "forecast    forecast forecast";
-  grid-template-rows: repeat(5, auto) 280px;
-}
-
-
-
     .home_details_container {
         align-self: end;
         margin-top: 0;
@@ -224,16 +212,6 @@ of elements without having to make duplicate elements just for mobile / desktop.
 /* =============================
    HOME LAYOUT — GRID + GUARDS
    ============================= */
-
-/* Root grid for the page sections */
-.home_container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-auto-rows: min-content;
-  inline-size: 100%;
-  max-inline-size: 1200px;
-  margin-inline: auto;
-}
 
 /* Make every grid child behave (no forced overflow) */
 .home_container > .section_content {

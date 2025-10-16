@@ -40,7 +40,7 @@
     text-wrap: nowrap;          /* item stays only as wide as its content */
     min-width: 0;                /* avoid content pinning */
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     /* margin-top: unset; */
     justify-content: unset;
     /* remove: justify-content: stretch; (invalid) */
@@ -48,9 +48,13 @@
 
     .location_icon {
         display: block;
-        max-width: 49px;
-        max-height: 49px;
+        min-width: 49px;
+        min-height: 49px;
         /* margin-left: -1rem; */
+    }
+
+    .location_desktop .location {
+        display: flex;
     }
 
     .location {
