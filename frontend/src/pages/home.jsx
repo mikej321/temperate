@@ -473,7 +473,7 @@ function buildEndpoint(path) {
        exit="exit"
        >
         <Settings locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} settingsClicked={settingsClicked} />
-        <RecentLocations locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} />
+        <RecentLocations weather={weather} locationTemps={locationTemps} setLocationTemps={setLocationTemps} pickedLocation={pickedLocation} setPickedLocation={setPickedLocation} stateAbbr={stateAbbr} storageLocations={storageLocations} setStorageLocations={setStorageLocations} pushHistory={pushHistory} setWeather={setWeather} setFirstSearch={setFirstSearch} userCoord={userCoord} setUserCoord={setUserCoord} />
         <SearchBar
           firstSearch={firstSearch}
           setFirstSearch={setFirstSearch}

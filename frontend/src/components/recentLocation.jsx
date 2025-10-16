@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { api } from '../utils/api';
+import WeatherIcon from './weatherIcon';
 import getPosition from '../utils/getPosition';
+import getWeatherSvg from '../utils/generateIcon';
 import '../styles/recentLocations.css';
 
 export default function RecentLocations({
@@ -14,7 +16,8 @@ export default function RecentLocations({
   setWeather, 
   setFirstSearch,
   userCoord,
-  setUserCoord
+  setUserCoord,
+  weather
 }) {    
   const [currentConds, setCurrentConds] = useState([]);
 
@@ -113,9 +116,8 @@ export default function RecentLocations({
   return (
     <motion.div className="recent_locations_container">
       <motion.div className="location_selection_container">
-        <motion.p>Recently Searched</motion.p>
-        <motion.div className="divider"></motion.div>
         <motion.p
+          className="use_location_button"
           onClick={() => {
             setFirstSearch(true)
             grabUserLocation()
@@ -146,9 +148,12 @@ export default function RecentLocations({
                 <p className="recent_location_name">
                   {loc.name}{loc.admin1 ? `, ${stateAbbr?.[loc.admin1] ?? loc.admin1}` : ''}
                 </p>
-                <p className="recent_temp">
-                  {temp != null ? Math.round(temp) : '…'}&deg;
-                </p>
+                <div className="recent_conditions">
+                  {getWeatherSvg(current?.weather_code, 'recent_icon', current?.is_day)}
+                  <p className="recent_temp">
+                    {temp != null ? Math.round(temp) : '…'}&deg;
+                  </p>
+                </div>
               </motion.div>
             );
           })

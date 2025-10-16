@@ -6,6 +6,11 @@
     align-items: center;
 }
 
+.use_location_button {
+    font-family: var(--poppins_titles);
+    color: var(--argentinian_blue_500);
+}
+
 .location_selection_container {
     position: relative;
     display: flex;
@@ -24,18 +29,6 @@
 
 .location_selection_container p:hover {
     scale: 1.1;
-}
-
-.divider {
-    position: relative;
-    content: '';
-    background: var(--prussian_blue_400);
-    width: 1px;
-    height: 20px;
-}
-
-.page_container.dark_mode .divider {
-    background: var(--dark_mode_highlight_2);
 }
 
 .recent_locations {
@@ -58,13 +51,15 @@
 }
 
 .recent_location {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
     width: 100%;
     min-height: 4rem;
     cursor: pointer;
     gap: 4rem;
+
+    padding: 1rem 4rem;
     background: transparent;
     transition: background 0.3s ease-in-out,
                 color 0.3s ease-in-out;
@@ -75,10 +70,43 @@
     color: var(--cadet_gray_100);
 }
 
+.recent_location_name {
+    width: 100%;
+    font-family: var(--poppins_titles);
+    color: var(--argentinian_blue_500);
+}
+
+.recent_location:hover .recent_location_name {
+    color: var(--cadet_gray_100);
+}
+
+.recent_conditions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 4rem;
+}
+
 .page_container.dark_mode .home_container .recent_location:hover {
     background: var(--dark_mode_primary);
     color: var(--dark_mode_text_1);
 }
+
+.recent_icon {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.recent_temp {
+    font-family: var(--roboto_digits);
+    color: var(--argentinian_blue_500);
+}
+
+.recent_location:hover .recent_temp {
+    color: var(--cadet_gray_100);
+}
+
 
 .recent_location {
 
