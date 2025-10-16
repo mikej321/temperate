@@ -109,7 +109,8 @@ export default function DailyQuickcast({ weather }) {
 
   const drag = Draggable.create(proxy, {
     type: "x",
-    throwResistance: 1200, // Controls the drag
+    throwResistance: 3000, // Controls the drag
+    maxDuration: 0.4,
     trigger: outer,                   // What triggers the drag
     inertia: true,                    // Adds Inertia
     lockAxis: true,                   // Vertical swipes won't mess up drag as much
