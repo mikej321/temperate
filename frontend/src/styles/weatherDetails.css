@@ -6,10 +6,6 @@
   transition: color 0.2s ease-in-out;
 }
 
-.page_container.dark_mode .home_container .details_container {
-  color: var(--dark_mode_text_1);
-}
-
 .more_details_label {
   font-family: var(--roboto_body);
   font-weight: 700;
@@ -64,6 +60,7 @@
   font-size: 12px;
   order: 1;
   color: var(--argentinian_blue_500);
+  transition: color 0.2s ease-in-out;
 }
 
 .feels_like_temp,
@@ -78,6 +75,7 @@
   font-size: 20px;
   font-weight: 700;
   color: var(--argentinian_blue_500);
+  transition: color 0.2s ease-in-out;
 }
 
 .low_temp_container {

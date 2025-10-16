@@ -65,6 +65,13 @@
                 color 0.3s ease-in-out;
 }
 
+.page_container.dark_mode .recent_location_name,
+.page_container.dark_mode .recent_temp {
+    color: var(--cadet_gray_100);
+}
+
+
+
 .recent_location:hover {
     background: var(--argentinian_blue_500);
     color: var(--cadet_gray_100);
@@ -89,7 +96,7 @@
 }
 
 .page_container.dark_mode .home_container .recent_location:hover {
-    background: var(--dark_mode_primary);
+    background: var(--cadet_gray_100);
     color: var(--dark_mode_text_1);
 }
 
@@ -100,6 +107,11 @@
 
 .recent_temp {
     font-family: var(--roboto_digits);
+    color: var(--argentinian_blue_500);
+}
+
+.page_container.dark_mode .home_container .recent_location:hover .recent_location_name,
+.page_container.dark_mode .home_container .recent_location:hover .recent_temp {
     color: var(--argentinian_blue_500);
 }
 

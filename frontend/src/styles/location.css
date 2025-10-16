@@ -29,6 +29,10 @@
     font-family: var(--poppins_titles);
 }
 
+.page_container.dark_mode .location {
+    color: var(--cadet_gray_100);
+}
+
 @media screen and (min-width: 1000px) {
     .location_desktop {
     /* keep your own sizes for the icon/text */
