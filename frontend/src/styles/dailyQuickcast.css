@@ -98,20 +98,24 @@
 
     .quickcast_inner_container {
         justify-content: space-between;
-        overflow: visible;
         cursor: auto;
+        gap: 1rem;
     }
 
     .quickcast_inner_container .card {
         /* margin-right: 0; */
-        min-inline-size: min(100%, 140px);
+        min-inline-size: min(100%, 120px);
         max-block-size: max(100%, 250px);
     }
 }
 
-@media screen and (min-width: 1440px) {
-    .quickcast_inner_container .card {
-        min-inline-size: min(100%, 150px);
-        max-block-size: max(100%, 250px);
+@media screen and (min-width: 1760px) {
+
+    .quickcast_container {
+        overflow: visible;
+    }
+
+    .quickcast_inner_container {
+        overflow: visible;
     }
 }

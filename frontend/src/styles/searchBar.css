@@ -92,21 +92,14 @@
         /* width: 100%; */
     }
 
-    .search_bar {
-        width: min(100%, 600px);
-        align-self: center;
-        
-    }
 }
 
 @media screen and (min-width: 1000px) {
 
     .search_container {
-        width: min(100%, 400px);
         justify-self: unset;
         padding-inline: unset;
         padding-top: unset;
-        transform: translateY(15px);
     }
 
     .search_bar {

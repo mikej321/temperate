@@ -51,8 +51,6 @@ export default function SearchBar({open, setOpen, autoSuggestionOpen, setAutoSug
                     signal: abortRef.current.signal
                 })
 
-                console.log(data.features)
-
                 if (data.features.length == 0) {
                     return;
                 } else {

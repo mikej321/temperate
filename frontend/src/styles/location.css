@@ -41,6 +41,7 @@
     min-width: 0;                /* avoid content pinning */
     display: flex;
     gap: 1rem;
+    margin-left: -1rem;
     /* margin-top: unset; */
     justify-content: unset;
     /* remove: justify-content: stretch; (invalid) */
@@ -62,5 +63,6 @@
         font-size: 32px;
         font-weight: bold;
         font-family: var(--poppins_titles);
+        margin-bottom: 1rem;
     }
 }

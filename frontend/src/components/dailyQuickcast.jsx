@@ -6,6 +6,7 @@ import "../styles/dailyQuickcast.css";
 import getWeatherSvg from "../utils/generateIcon";
 import { formatDay } from "../utils/formatDate";
 import { motion, AnimatePresence, press } from "framer-motion";
+import { useMediaQuery } from "../utils/matchMedia";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -19,6 +20,8 @@ export default function DailyQuickcast({ weather }) {
   const txRef = useRef(0);
   const loopWRef = useRef(0);
   const wrapRef = useRef((n) => n);
+  const dragRef = useRef(null);
+  const resizeHandlerRef = useRef(null);
 
   const weatherDescriptionsQuickObj = {
     0: "Clear",
@@ -79,11 +82,41 @@ export default function DailyQuickcast({ weather }) {
     </div>
   ));
 
+  const isMobile = useMediaQuery("(max-width: 1759px)");
+  
   useLayoutEffect(() => {
   const outer = outerContainerRef.current;
   const inner = innerContainerRef.current;
   if (!outer || !inner) return;
 
+  // Always clear previous listeners/drag if the effect re-runs
+  if (resizeHandlerRef.current) {
+    window.removeEventListener("resize", resizeHandlerRef.current);
+    resizeHandlerRef.current = null;
+  }
+  if (dragRef.current) {
+    dragRef.current.kill();
+    dragRef.current = null;
+  }
+
+  if (!isMobile) {
+  // 1) zero your state/refs
+  txRef.current = 0;
+  loopWRef.current = 0;
+  wrapRef.current = (n) => n;
+
+  // 2) clear transform AFTER React removed the duplicate row
+  //    (one rAF lets the DOM commit & measure settle first)
+  requestAnimationFrame(() => {
+    // fully remove the inline transform so flex layout is pristine
+    gsap.set(inner, { x: 0, clearProps: "transform,willChange" });
+    outer.style.cursor = "auto";
+  });
+
+  return; // nothing else to set up
+}
+
+  // ---- Your existing mobile setup (unchanged logic) ----
   const measure = () => {
     const loopW = inner.scrollWidth / 2;
     loopWRef.current = loopW;
@@ -95,11 +128,12 @@ export default function DailyQuickcast({ weather }) {
 
   const onResize = () => requestAnimationFrame(measure);
   window.addEventListener("resize", onResize);
+  resizeHandlerRef.current = onResize; // store so we can remove later
 
   const proxy = document.createElement("div");
   gsap.set(proxy, { x: 0 });
 
-  let startTx = 0; 
+  let startTx = 0;
   const update = (rawX) => {
     const next = startTx + rawX;
     const wrapped = wrapRef.current(next);
@@ -109,38 +143,39 @@ export default function DailyQuickcast({ weather }) {
 
   const drag = Draggable.create(proxy, {
     type: "x",
-    throwResistance: 3000, // Controls the drag
     maxDuration: 0.4,
-    trigger: outer,                   // What triggers the drag
-    inertia: true,                    // Adds Inertia
-    lockAxis: true,                   // Vertical swipes won't mess up drag as much
-    minimumMovement: 6,               // ignore micro-moves before locking
-    allowNativeTouchScrolling: true,  // keep vertical page scroll
+    trigger: outer,
+    inertia: true,
+    lockAxis: true,
+    minimumMovement: 12,
+    allowNativeTouchScrolling: true,
     dragClickables: true,
     activeCursor: "grabbing",
-
     onPress() {
       gsap.set(proxy, { x: 0 });
       startTx = txRef.current || 0;
       outer.style.cursor = "grabbing";
     },
-    onDrag() {
-      update(this.x);
-    },
-    onThrowUpdate() {
-      update(this.x);
-    },
-    onRelease() {
-      outer.style.cursor = "grab";
-    }
+    onDrag() { update(this.x); },
+    onThrowUpdate() { update(this.x); },
+    onRelease() { outer.style.cursor = "grab"; }
   })[0];
 
-  // 3) tidy up
+  dragRef.current = drag; // store the instance
+
+  // cleanup for this run
   return () => {
-    window.removeEventListener("resize", onResize);
-    drag.kill();
+    if (resizeHandlerRef.current) {
+      window.removeEventListener("resize", resizeHandlerRef.current);
+      resizeHandlerRef.current = null;
+    }
+    if (dragRef.current) {
+      dragRef.current.kill();
+      dragRef.current = null;
+    }
   };
-}, [duplicateRow.length]);
+}, [duplicateRow.length, isMobile]); // ← add isMobile here
+
 
 
   return (
@@ -153,7 +188,7 @@ export default function DailyQuickcast({ weather }) {
     >
       <div className="quickcast_inner_container" ref={innerContainerRef}>
         {duplicateRow}
-        {duplicateRow}
+        {isMobile && duplicateRow}
       </div>
     </motion.div>
   );

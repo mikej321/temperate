@@ -148,4 +148,21 @@ router.post('/get-alerts', async (req, res) => {
   res.json(data);
 })
 
+router.post('/get-minute-cast', async (req, res) => {
+
+  const { latitude, longitude } = req.body;
+  const API_KEY = process.env.OPENWEATHER_KEY;
+
+  const { data } = await axios.get('https://api.openweathermap.org/data/3.0/onecall', {
+    params: {
+      lat: latitude,
+      lon: longitude,
+      appid: API_KEY,
+      units: "imperial"
+    }
+  })
+
+  res.json(data);
+})
+
 module.exports = router;
