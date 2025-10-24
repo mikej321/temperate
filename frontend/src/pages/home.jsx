@@ -14,6 +14,7 @@ import DailyQuickcast from "../components/dailyQuickcast";
 import Location from "../components/location";
 import MinuteCast from "../components/minuteCast";
 import RecentLocations from "../components/recentLocation";
+import QuickHourly from "../components/quickHourly";
 import Settings from "../components/settings";
 import Footer from "../components/footer";
 import { SpinnerDotted } from "spinners-react";
@@ -58,10 +59,11 @@ export default function Home({
   const [storageLocations, setStorageLocations] = useState(() => readHistory());
   const [chosenHistoryLocation, setChosenHistoryLocation] = useState(null);
   const [open, setOpen] = useState(false);
-
-  // Holds raw One Call response
+  const [extraIsOpen, setExtraIsOpen] = useState(null);
+  // Holds all of my relevant data for minute / hourly / daily forecasts. Highly Important!!!!
   const [forecastData, setForecastData] = useState(null);
-  // Holds merged per-minute series: [{ dt, precipitation, temp }]
+  
+  // The minute data from forecastData, sent to minuteCast
   const [minuteSeries, setMinuteSeries] = useState([]);
 
   const homeContainerRef = useRef(null);
@@ -398,8 +400,6 @@ export default function Home({
 
     setStorageLocations(readHistory());
   }
-
-  // ---------- Minute-by-minute temperature helpers ----------
 
   // Normalize One Call temps to °F if provider returned Kelvin (no units param)
   function normalizeOneCallUnits(oneCall) {
@@ -782,6 +782,13 @@ export default function Home({
                 <div className="section_title">Minute To Minute Temperature</div>
                 <div className="section_content_container">
                   <MinuteCast minuteSeries={minuteSeries} />
+                </div>
+              </div>
+
+              <div className="section_content section_6">
+                <div className="section_title">Hourly Weather</div>
+                <div className="section_content_container">
+                  <QuickHourly extraIsOpen={extraIsOpen} setExtraIsOpen={setExtraIsOpen} forecastData={forecastData} time={time} />
                 </div>
               </div>
 

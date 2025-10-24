@@ -1,0 +1,181 @@
+.quick_hourly_container {
+    display: grid;
+    row-gap: 2rem;
+}
+
+.hourly_item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "quick_description quick_time quick_hourly" "quick_extra quick_extra quick_extra";
+    justify-content: space-between;
+    background: white;
+    color: var(--argentinian_blue_500);
+    padding: 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+    box-shadow:  9px 9px 18px #7aadda,
+             -9px -9px 18px #c0ebff;
+}
+
+
+
+.hourly_item:hover {
+    background: var(--argentinian_blue_500);
+    color: var(--cadet_gray_100);
+}
+
+.hourly_item .quick_extra_stats {
+    color: var(--argentinian_blue_500);
+    font-size: 2rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.hourly_item:hover .quick_extra_stats .quick_extra_container {
+    color: var(--cadet_gray_100);
+}
+
+.quick_description {
+    grid-area: quick_description;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--poppins_titles);
+    font-size: 18px;
+    gap: 1rem;
+}
+
+.quick_description p:first-child {
+    font-weight: 700;
+}
+
+
+
+.quick_svg_container svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.time_hours_container {
+    grid-area: quick_time;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeHours {
+    font-weight: 700;
+}
+
+p:has(.quick_svg_container) {
+    align-items: center;
+}
+
+.hourly_item p:has(.quick_svg_container) svg {
+    transition: fill 0.2s ease-in-out;
+}
+
+.hourly_item:hover p:has(.quick_svg_container) svg {
+    fill: var(--cadet_gray_100);
+}
+
+.quick_hourly_temp {
+    grid-area: quick_hourly;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+}
+
+.quick_hourly_temp p {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.hourly_value {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.quick_extra_stats {
+    grid-area: quick_extra;
+    overflow: hidden;
+}
+
+.quick_extra_container {
+    display: grid;
+    grid-template-areas: "humidity wind_speed wind_gusts";
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    padding-top: 2rem;
+    gap: 1rem;
+    font-size: 20px;
+    font-family: var(--roboto_digits);
+    color: var(--argentinian_blue_500);
+}
+
+.hourly_item .quick_extra_container .humidity_container,
+.hourly_item .quick_extra_container .wind_speed_container,
+.hourly_item .quick_extra_container .wind_gust_container {
+    color: var(--argentinian_blue_500);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: color 0.2s ease-in-out;
+}
+
+.hourly_item .quick_extra_container .humidity_container p,
+.hourly_item .quick_extra_container .wind_speed_container p,
+.hourly_item .quick_extra_container .wind_gust_container p {
+    font-family: var(--poppins_titles);
+}
+
+.hourly_item .quick_extra_container .humidity_container span,
+.hourly_item .quick_extra_container .wind_speed_container span,
+.hourly_item .quick_extra_container .wind_gust_container span {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.hourly_item:hover .quick_extra_container .humidity_container,
+.hourly_item:hover .quick_extra_container .wind_speed_container,
+.hourly_item:hover .quick_extra_container .wind_gust_container {
+    color: var(--cadet_gray_100);
+}
+
+
+
+/* .quick_extra_stats.closed {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.quick_extra_stats.opened {
+    max-height: 200px;
+    overflow: visible;
+} */
+
+.humidity_container {
+    align-items: start;
+    grid-area: humidity;
+}
+
+.wind_gust_container {
+    align-items: end;
+    grid-area: wind_gusts;
+}
+
+.wind_speed_container {
+    justify-self: center;
+    grid-area: wind_speed;
+}
+
+@media screen and (min-width: 1000px) {
+    .quick_hourly_container {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        column-gap: 2rem;
+    }
+}
