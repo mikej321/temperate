@@ -20,13 +20,14 @@
     font-family: var(--poppins_titles);
     font-size: 24px;
     font-weight: 700;
-    
+    text-wrap: nowrap;
 }
 
 .sub_description {
     font-family: var(--poppins_titles);
     font-size: 24px;
     font-weight: 500;
+    text-wrap: nowrap;
 }
 
 @media screen and (min-width: 600px) {
@@ -49,5 +50,11 @@
         /* margin-bottom: unset; */
     }
 
-    
+    .description {
+        font-size: 28px;
+    }
+
+    .sub_description {
+        font-size: 28px;
+    }
 }

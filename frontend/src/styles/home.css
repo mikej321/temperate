@@ -13,11 +13,11 @@
   .home_container {
     grid-template-areas: "search . ." "section1 section4 section5" "section2 section3 section3" "section6 section6 section6";
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: unset;
+    grid-template-rows: minmax(0, auto) 400px 420px 1fr;
     gap: unset;
     /* max-width: 1600px; */
     min-width: 100%;
-    padding-inline: 10rem;
+    padding-inline: 4rem;
     justify-self: center;
     column-gap: 4rem;
     row-gap: 4rem;
@@ -43,7 +43,7 @@
   }
 
   .section_content.section_1 .section_content_container {
-    grid-template-rows: repeat(3, 100px);
+    grid-template-rows: 80px repeat(2, 90px);
     grid-template-columns: 1fr .5fr;
     padding: 2rem;
     align-items: unset;
@@ -55,6 +55,12 @@
 
   .section_content.section_3 .section_content_container {
     align-items: center;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .home_container {
+    padding-inline: 10rem;
   }
 }
 
@@ -217,6 +223,10 @@
         inline-size: 100%;
         /* margin-top: 4rem;
         margin-bottom: 8rem; */
+    }
+
+    .home_icon_container {
+      align-items: unset;
     }
 }
 

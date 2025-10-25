@@ -41,8 +41,8 @@
     display: flex;
     flex-direction: column;
     font-family: var(--poppins_titles);
-    font-size: 18px;
-    gap: 1rem;
+    font-size: clamp(1rem, 0.6429rem + 0.5714vw, 1.25rem);
+    justify-content: space-around;
 }
 
 .quick_description p:first-child {
@@ -105,7 +105,7 @@ p:has(.quick_svg_container) {
 
 .quick_extra_container {
     display: grid;
-    grid-template-areas: "humidity wind_speed wind_gusts";
+    grid-template-areas: "quick_humidity quick_wind_speed quick_wind_gusts";
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     padding-top: 2rem;
@@ -115,9 +115,9 @@ p:has(.quick_svg_container) {
     color: var(--argentinian_blue_500);
 }
 
-.hourly_item .quick_extra_container .humidity_container,
-.hourly_item .quick_extra_container .wind_speed_container,
-.hourly_item .quick_extra_container .wind_gust_container {
+.hourly_item .quick_extra_container .quick_humidity_container,
+.hourly_item .quick_extra_container .quick_wind_speed_container,
+.hourly_item .quick_extra_container .quick_wind_gust_container {
     color: var(--argentinian_blue_500);
     font-size: 14px;
     display: flex;
@@ -126,22 +126,22 @@ p:has(.quick_svg_container) {
     transition: color 0.2s ease-in-out;
 }
 
-.hourly_item .quick_extra_container .humidity_container p,
-.hourly_item .quick_extra_container .wind_speed_container p,
-.hourly_item .quick_extra_container .wind_gust_container p {
+.hourly_item .quick_extra_container .quick_humidity_container p,
+.hourly_item .quick_extra_container .quick_wind_speed_container p,
+.hourly_item .quick_extra_container .quick_wind_gust_container p {
     font-family: var(--poppins_titles);
 }
 
-.hourly_item .quick_extra_container .humidity_container span,
-.hourly_item .quick_extra_container .wind_speed_container span,
-.hourly_item .quick_extra_container .wind_gust_container span {
+.hourly_item .quick_extra_container .quick_humidity_container span,
+.hourly_item .quick_extra_container .quick_wind_speed_container span,
+.hourly_item .quick_extra_container .quick_wind_gust_container span {
     font-weight: 700;
     font-size: 20px;
 }
 
-.hourly_item:hover .quick_extra_container .humidity_container,
-.hourly_item:hover .quick_extra_container .wind_speed_container,
-.hourly_item:hover .quick_extra_container .wind_gust_container {
+.hourly_item:hover .quick_extra_container .quick_humidity_container,
+.hourly_item:hover .quick_extra_container .quick_wind_speed_container,
+.hourly_item:hover .quick_extra_container .quick_wind_gust_container {
     color: var(--cadet_gray_100);
 }
 
@@ -157,25 +157,26 @@ p:has(.quick_svg_container) {
     overflow: visible;
 } */
 
-.humidity_container {
+.quick_humidity_container {
     align-items: start;
-    grid-area: humidity;
+    grid-area: quick_humidity;
 }
 
-.wind_gust_container {
+.quick_wind_gust_container {
     align-items: end;
-    grid-area: wind_gusts;
+    grid-area: quick_wind_gusts;
 }
 
-.wind_speed_container {
+.quick_wind_speed_container {
     justify-self: center;
-    grid-area: wind_speed;
+    grid-area: quick_wind_speed;
 }
 
 @media screen and (min-width: 1000px) {
     .quick_hourly_container {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        column-gap: 2rem;
+        column-gap: 4rem;
+        row-gap: 4rem;
     }
 }

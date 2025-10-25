@@ -10,6 +10,12 @@
     color: var(--dark_mode_text_1);
 }
 
+@media screen and (min-width: 1000px) {
+    .tempDisplay {
+        font-size: 60px;
+    }
+}
+
 /* .home_temp_container {
     display: flex;
     justify-content: center;

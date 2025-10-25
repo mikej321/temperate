@@ -36,12 +36,11 @@
 @media screen and (min-width: 1000px) {
     .location_desktop {
     /* keep your own sizes for the icon/text */
-    width: min(100%, 303px);
+    width: 100%;
     text-wrap: nowrap;          /* item stays only as wide as its content */
     min-width: 0;                /* avoid content pinning */
     display: flex;
     gap: 1rem;
-    margin-left: -1rem;
     /* margin-top: unset; */
     justify-content: unset;
     /* remove: justify-content: stretch; (invalid) */
@@ -49,13 +48,13 @@
 
     .location_icon {
         display: block;
-        min-width: 49px;
-        min-height: 49px;
+        width: 49px;
         /* margin-left: -1rem; */
     }
 
     .location_desktop .location {
         display: flex;
+        font-size: 30px;
     }
 
     .location {
@@ -63,6 +62,5 @@
         font-size: 32px;
         font-weight: bold;
         font-family: var(--poppins_titles);
-        margin-bottom: 1rem;
     }
 }

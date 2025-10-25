@@ -1,7 +1,7 @@
 import { useState, useRef, useLayoutEffect, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, AnimatePresence, spring } from "framer-motion";
-
+import { useMediaQuery } from "../utils/matchMedia";
 import "../styles/quickHourly.css";
 import {
   faTemperatureArrowDown,
@@ -129,6 +129,14 @@ export default function QuickHourly({
     }
   }
 
+  const isDesktop = useMediaQuery("(max-width: 1000px)");
+
+  useLayoutEffect(() => {
+    if (!isDesktop) return;
+
+    console.log(isDesktop)
+  }, [isDesktop])
+
   return (
     <div className="quick_hourly_container" ref={containerRef}>
       {hourlyForecast &&
@@ -241,24 +249,24 @@ export default function QuickHourly({
                      variants={parentVar}
                      >
                       <motion.p
-                       className="humidity_container"
+                       className="quick_humidity_container"
                        variants={childVar}
                        >
-                        <p>humidity</p> 
+                        <span>humidity</span> 
                         <span>{humidity}</span>
                       </motion.p>
                       <motion.p
-                       className="wind_speed_container"
+                       className="quick_wind_speed_container"
                        variants={childVar}
                        >
-                        <p>Wind Speed</p> 
+                        <span>Wind Speed</span> 
                         <span>{wind_speed}</span>{" "}
                       </motion.p>
                       <motion.p
-                       className="wind_gust_container"
+                       className="quick_wind_gust_container"
                        variants={childVar}
                        >
-                        <p>Wind Gust</p> 
+                        <span>Wind Gust</span> 
                         <span>{wind_gust}</span>
                       </motion.p>
                     </motion.div>
