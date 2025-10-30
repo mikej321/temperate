@@ -233,25 +233,12 @@
     scale: 1.1;
 }
 
-.alert_container {
-    height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: absolute;
-    top: 7.2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--anti_flash_white_100);
-    min-width: 40rem;
-    max-height: 40rem;
-    z-index: 5000;
+.uv_index_container {
+    color: var(--argentinian_blue_500);
 }
 
-.alert {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    gap: 2rem;
+.uv_data {
+    font-weight: 700;
 }
 
 .settings_container {

@@ -18,6 +18,8 @@ export default function Navbar({
   setDayNightClicked,
   homeRef,
   weather,
+  oneCallCurrent,
+  setOneCallCurrent
 }) {
   /* IMPORTANT
   
@@ -40,6 +42,7 @@ export default function Navbar({
   const [nextMode, setNextMode] = useState("night");
   const [weatherWarnings, setWeatherWarnings] = useState(null);
   const [alertClicked, setAlertClicked] = useState(false);
+  const [uviData, setUviData] = useState(null);
 
   const dayNightModeContainerRef = useRef(null);
   const mobileDayNightModeRef = useRef(null);
@@ -81,8 +84,6 @@ export default function Navbar({
       x: 0,
     },
   };
-
-  useEffect(() => {}, []);
 
   const handleDayNightClick = () => {
     setDayNightClicked((prev) => !prev);
@@ -147,32 +148,10 @@ export default function Navbar({
   };
 
   useEffect(() => {
-    if (!weather) return;
+    if (!oneCallCurrent) return;
 
-    const { latitude, longitude } = weather;
-
-    async function getAlerts() {
-      const { data } = await axios.post("/search/get-alerts", {
-        latitude,
-        longitude,
-      });
-
-      return data;
-    }
-
-    (async () => {
-      try {
-        const fc = await getAlerts();
-        if (fc["features"].length == 0) {
-          setWeatherWarnings([]);
-        } else {
-          setWeatherWarnings(fc["features"]);
-        }
-      } catch (e) {
-        console.error("get-alerts failed:", e);
-      }
-    })();
-  }, [weather]);
+    setUviData(oneCallCurrent['current']['uvi']);
+  }, [oneCallCurrent, setOneCallCurrent])
 
   const alertContainerVar = {
     visible: {
@@ -279,48 +258,17 @@ export default function Navbar({
           <div className="time">{time}</div>
         </div>
       </div>
-      <div
-       className="weather_alert_container"
-       onClick={handleAlertClick}
-       >
-        <p className="weather_alert_label">Weather Alerts: {weatherWarnings ? weatherWarnings.length : 0}</p>
-        {weatherWarnings && weatherWarnings.length > 0 ?
-          weatherWarnings.map((feat) => {
-            const id = feat?.properties?.id || feat?.id;
-            const p = feat?.properties || {};
-            return (
-              <motion.div
-               key={id} 
-               className="alert_container"
-               variants={alertContainerVar}
-               animate={alertClicked ? "visible" : "exit"}
-               >
-                <div className="alert">
-                  <div className="affected_dates">
-                    <p>
-                      {p.onset} — {p.expires}
-                    </p>
-                  </div>
-                  <p>{p.event}</p>
-                  <p>{p.headline}</p>
-                  <div className="affected_areas">
-                    <p>Areas affected</p>
-                    {p.areaDesc}
-                  </div>
-
-                </div>
-              </motion.div>
-            );
-          }) : (
-            <motion.div
-             className="alert_container"
-             variants={alertContainerVar}
-             animate={alertClicked ? "visible" : "exit"}
-             >
-              <p>No Warnings in your area.</p>
-             </motion.div>
-          )}
-      </div>
+      {uviData !== null && uviData !== undefined ? (
+        <div className="uv_index_container">
+          <p>UV Exposure: <span className="uv_data">
+            {uviData < 3 ? 'Low' :
+                              uviData < 6 ? 'Moderate' :
+                                uviData < 8 ? 'High' :
+                                  uviData < 11 ? 'Very High' :
+                                    'Extreme'}
+          </span></p>
+        </div>
+      ) : null}
       <div
         className="settings_container"
         ref={settingsRef}

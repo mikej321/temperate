@@ -1,7 +1,7 @@
 .home_container {
     grid-area: content;
     display: grid;
-    grid-template-areas: "recent" "search" "loader" "section1" "section2" "section3" "section4" "section5" "section6";
+    grid-template-areas: "recent" "search" "loader" "section1" "section2" "section3" "section4" "section5" "section6" "section7";
     grid-template-rows: repeat(7, minmax(0, auto));
     grid-auto-rows: minmax(0, auto);
     gap: 4rem;
@@ -11,9 +11,9 @@
 
 @media screen and (min-width: 1000px) {
   .home_container {
-    grid-template-areas: "search . ." "section1 section4 section5" "section2 section3 section3" "section6 section6 section6";
+    grid-template-areas: "search . ." "section1 section4 section5" "section2 section3 section3" "section6 section6 section6" "section7 . .";
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: minmax(0, auto) 400px 420px 1fr;
+    grid-template-rows: minmax(0, auto) repeat(2, 420px) 1fr;
     gap: unset;
     /* max-width: 1600px; */
     min-width: 100%;
@@ -25,19 +25,19 @@
   }
 
   .home_container:has(.popup_shell):not(:has(.loader_overlay)) {
-    grid-template-areas: "search . ." "popup section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6";
+    grid-template-areas: "search . ." "popup section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6" "section7 . .";
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: unset;
   }
 
   .home_container:has(.loader_overlay):not(:has(.popup_shell)) {
-    grid-template-areas: "search . ." "loader section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6";
+    grid-template-areas: "search . ." "loader section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6" "section7 . .";
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: unset;
   }
 
   .home_container:has(.popup_shell):has(.loader_overlay) {
-    grid-template-areas: "search . ." "popup section4 section5" "loader section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6";
+    grid-template-areas: "search . ." "popup section4 section5" "loader section4 section5" "section1 section4 section5" "section2 section3 section3" "section6 section6 section6" "section7 . .";
     grid-template-columns: repeat(3, 1fr); 
     grid-template-rows: unset;
   }
@@ -146,6 +146,14 @@
     grid-template-areas: "map";
 }
 
+.home_alert_container {
+  display: grid;
+  grid-template-rows: minmax(0, auto);
+  grid-auto-rows: minmax(0, auto);
+  row-gap: 8rem;
+}
+
+
 .section_title {
     display: flex;
     align-items: center;
@@ -194,6 +202,10 @@
 }
 .section_content.section_6 {
   grid-area: section6;
+}
+
+.section_content.section_7 {
+  grid-area: section7;
 }
 
 @media screen and (min-width: 400px) {

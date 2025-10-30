@@ -143,13 +143,13 @@ router.post('/get-alerts', async (req, res) => {
     params: {
       point: `${latitude},${longitude}`
     }
-  })
-
+  });
+  
   res.json(data);
 })
 
 router.post('/get-minute-cast', async (req, res) => {
-
+  
   const { latitude, longitude } = req.body;
   const API_KEY = process.env.OPENWEATHER_KEY;
 
@@ -159,6 +159,22 @@ router.post('/get-minute-cast', async (req, res) => {
       lon: longitude,
       appid: API_KEY,
       units: "imperial"
+    }
+  })
+  
+  res.json(data);
+})
+
+router.post('/get-hurricane-data', async (req, res) => {
+  
+  const url = "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/Active_Hurricanes_v1/FeatureServer/0/query";
+  
+  const { data } = await axios.get(url, {
+    params: {
+      where: "1=1",
+      outFields: "*",
+      returnGeometry: true,
+      f: "geojson"
     }
   })
 

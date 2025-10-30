@@ -1,0 +1,42 @@
+.home_alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    background: var(--cadet_gray_100);
+    border-radius: 8px;
+    padding: 2rem;
+    font-family: var(--roboto_body);
+    color: var(--argentinian_blue_500);
+}
+
+.alert_area_details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.alert_area {
+
+}
+
+.alert_name {
+
+}
+
+.alert_content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.alert_headline {
+
+}
+
+.alert_description {
+    
+}
+
+.alert_instruction {
+
+}

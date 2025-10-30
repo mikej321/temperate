@@ -15,6 +15,8 @@ import Location from "../components/location";
 import MinuteCast from "../components/minuteCast";
 import RecentLocations from "../components/recentLocation";
 import QuickHourly from "../components/quickHourly";
+import Alerts from "../components/alerts";
+import HurricaneCenter from "../components/hurricaneCenter";
 import Settings from "../components/settings";
 import Footer from "../components/footer";
 import { SpinnerDotted } from "spinners-react";
@@ -65,6 +67,9 @@ export default function Home({
   
   // The minute data from forecastData, sent to minuteCast
   const [minuteSeries, setMinuteSeries] = useState([]);
+  const [oneCallCurrent, setOneCallCurrent] = useState(null);
+  const [alertData, setAlertData] = useState([]);
+  const [hurricaneData, setHurricaneData] = useState(null);
 
   const homeContainerRef = useRef(null);
   const sectionOneRef = useRef(null);
@@ -545,6 +550,7 @@ export default function Home({
 
         setForecastData(normalized);
         setMinuteSeries(series);
+        setOneCallCurrent(raw);
       } catch (e) {
         if (!cancelled) {
           setError(e?.message || "Failed to fetch minute-cast");
@@ -563,6 +569,87 @@ export default function Home({
     userCoord?.latitude,
     userCoord?.longitude,
   ]);
+
+  useEffect(() => {
+    if (!weather) return;
+
+    let cancelled = false;
+
+    (async () => {
+      const endpoint = buildEndpoint("/search/get-alerts");
+      try {
+        
+        const res = await postJsonWithRetry(
+          endpoint,
+          {latitude: pickedLocation.lat,
+           longitude: pickedLocation.lon
+          },
+          { retries: 3, baseDelayMs: 600 }
+        );
+
+        if (!res.ok) {
+          console.warn("[weather] non-OK", res.status);
+          throw new Error(`Weather request failed (${res.status})`);
+        }
+
+        const result = await res.json();
+        const features = result['features'];
+
+        console.log(features)
+
+        
+        if (cancelled) return;
+
+        setAlertData(features);
+        
+      } catch (e) {
+        if (!cancelled) {
+          setError(e?.message || "Failed to fetch weather");
+          setWeather(null);
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [weather]);
+
+  useEffect(() => {
+
+    if (!weather) return;
+
+    let cancelled = false;
+
+    (async () => {
+      const endpoint = buildEndpoint('/search/get-hurricane-data');
+      try {
+        const res = await postJsonWithRetry(endpoint,
+          {},
+          { retries: 3, baseDelayMs: 600 }
+        );
+
+        if (!res.ok) {
+          console.warn("Failed to get hurricane data", res.status);
+          throw new Error(`Failed to get hurricane data ${res.status}`);
+        }
+
+        const result = await res.json();
+        const features = result['features'];
+        setHurricaneData(features);
+      } catch (e) {
+          if (!cancelled) {
+            setError(e?.message || "Failed to fetch hurricane data");
+            setWeather(null);
+          }
+      } finally {
+          if (!cancelled) setIsLoading(false);
+      }
+    })();
+
+  }, [weather])
 
   return (
     <WeatherContainer
@@ -593,6 +680,8 @@ export default function Home({
           setDayNightClicked={setDayNightClicked}
           homeRef={homeRef}
           weather={weather}
+          oneCallCurrent={oneCallCurrent}
+          setOneCallCurrent={setOneCallCurrent}
         />
       ) : (
         <Navbar
@@ -614,6 +703,8 @@ export default function Home({
           dayNightClicked={dayNightClicked}
           setDayNightClicked={setDayNightClicked}
           homeRef={homeRef}
+          oneCallCurrent={oneCallCurrent}
+          setOneCallCurrent={setOneCallCurrent}
         />
       )}
       <motion.div
@@ -789,6 +880,20 @@ export default function Home({
                 <div className="section_title">Hourly Weather</div>
                 <div className="section_content_container">
                   <QuickHourly extraIsOpen={extraIsOpen} setExtraIsOpen={setExtraIsOpen} forecastData={forecastData} time={time} />
+                </div>
+              </div>
+
+              <div className="section_content section_7">
+                <div className="section_title">Alert Corner</div>
+                <div className="section_content_container">
+                  <Alerts alertData={alertData} />
+                </div>
+              </div>
+
+              <div className="section_content section_8">
+                <div className="section_title">Hurricane Center</div>
+                <div className="section_content_cotna">
+                  <HurricaneCenter hurricaneData={hurricaneData} setHurricaneData={setHurricaneData} />
                 </div>
               </div>
 

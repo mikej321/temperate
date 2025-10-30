@@ -47,7 +47,9 @@ export default function SdkMap({ weather }) {
     const map = new Map({
       container: containerRef.current,
       style: MapStyle.STREETS,
-      zoom: 6,
+      zoom: 4,
+      bearing: 0,
+      pitch: 40,
       center: [weather.longitude, weather.latitude],
       projectionControl: true,
     });
