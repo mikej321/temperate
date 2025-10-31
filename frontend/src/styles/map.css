@@ -198,7 +198,7 @@
 .color_legend_container {
     position: absolute;
     top: 1.1rem;
-    left: 3rem;
+    left: 1rem;
     background: var(--argentinian_blue_500);
     display: flex;
     flex-direction: column;

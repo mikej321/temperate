@@ -5,7 +5,7 @@
 
 .hourly_item {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: .25fr .5fr .25fr;
     grid-template-areas: "quick_description quick_time quick_hourly" "quick_extra quick_extra quick_extra";
     justify-content: space-between;
     background: white;
