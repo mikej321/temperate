@@ -892,7 +892,7 @@ export default function Home({
 
               <div className="section_content section_8">
                 <div className="section_title">Hurricane Center</div>
-                <div className="section_content_cotna">
+                <div className="section_content_container">
                   <HurricaneCenter hurricaneData={hurricaneData} setHurricaneData={setHurricaneData} />
                 </div>
               </div>

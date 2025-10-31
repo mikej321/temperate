@@ -235,6 +235,7 @@
 
 .uv_index_container {
     color: var(--argentinian_blue_500);
+    display: none;
 }
 
 .uv_data {
@@ -243,6 +244,15 @@
 
 .settings_container {
     display: none;
+    pointer-events: all;
+}
+
+.settings_container svg {
+    pointer-events: none;
+}
+
+.settings_container svg path {
+    pointer-events: none;
 }
 
 .affected_areas {
@@ -395,6 +405,11 @@
   animation-play-state: running;      
   scale: 1.1;
 }
+
+.uv_index_container {
+    display: block;
+}
+
 }
 
 @keyframes spin {

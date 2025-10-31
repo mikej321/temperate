@@ -10,7 +10,7 @@
 .hurricane_svg_container {
     display: flex;
     gap: 2rem; 
-    background: var(--cadet_gray_100);
+    background: white;
     border-radius: 8px;
     align-items: center;
     padding-inline: 1.5rem;
@@ -36,7 +36,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: "h_name h_svg" "h_category h_svg" "h_date h_svg" "h_wind h_svg";
     gap: 2rem;
-    background: var(--cadet_gray_100);
+    background: white;
     border-radius: 8px;
     padding: 4rem 2rem;
 }

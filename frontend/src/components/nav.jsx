@@ -147,6 +147,19 @@ export default function Navbar({
     setSettingsClicked((prev) => !prev);
   };
 
+  const blurSettings = (e) => {
+    
+    if (e.target.className !== 'settings_container') setSettingsClicked(false);
+  }
+
+  useEffect(() => {
+    document.body.addEventListener("click", blurSettings);
+
+    return () => {
+      document.body.removeEventListener("click", blurSettings);
+    }
+  }, [])
+
   useEffect(() => {
     if (!oneCallCurrent) return;
 

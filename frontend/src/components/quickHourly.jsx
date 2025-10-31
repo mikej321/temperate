@@ -54,7 +54,7 @@ export default function QuickHourly({
     if (!forecastData) return;
 
     // Separating the data for easier mapping in the component
-    const hourlyData = forecastData["hourly"].slice(1, 10);
+    const hourlyData = forecastData["hourly"].slice(1, 9);
 
     // Setting the data to a state (will be empty array if null)
     setHourlyForecast(hourlyData || []);
