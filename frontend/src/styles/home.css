@@ -121,8 +121,8 @@
 }
 
 .page_container.dark_mode .section_content {
-  box-shadow:  1px 1px 12px #8b5fd0,
-             0px -1px 12px #8d61d4;
+  box-shadow:  1px 1px 4px #8b5fd0,
+             0px -1px 4px #8d61d4;
 }
 
 .section_content_container {

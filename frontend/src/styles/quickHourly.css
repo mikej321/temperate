@@ -19,11 +19,19 @@
              -9px -9px 18px #c0ebff;
 }
 
-
-
 .hourly_item:hover {
     background: var(--argentinian_blue_500);
     color: var(--cadet_gray_100);
+    transition: color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out,
+                background 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .hourly_item {
+    background: var(--dark_mode_primary);
+    box-shadow: 1px 1px 4px #a48dc9,
+                0px -1px 4px #a28fc0;
+    color: var(--dark_mode_text_1);
 }
 
 .hourly_item .quick_extra_stats {
@@ -34,6 +42,11 @@
 
 .hourly_item:hover .quick_extra_stats .quick_extra_container {
     color: var(--cadet_gray_100);
+}
+
+.page_container.dark_mode .hourly_item:hover {
+    background: var(--dark_mode_text_1);
+    color: var(--argentinian_blue_500);
 }
 
 .quick_description {
@@ -80,6 +93,18 @@ p:has(.quick_svg_container) {
     fill: var(--cadet_gray_100);
 }
 
+.page_container.dark_mode .hourly_item .quick_svg_container svg {
+    fill: var(--dark_mode_text_1);
+}
+
+.page_container.dark_mode .hourly_item:hover .quick_svg_container svg {
+    fill: var(--argentinian_blue_500);
+}
+
+.page_container.dark_mode .hourly_item:hover .quick_extra_stats .quick_extra_container span {
+    color: var(--argentinian_blue_500);
+}
+
 .quick_hourly_temp {
     grid-area: quick_hourly;
     display: flex;
@@ -123,6 +148,7 @@ p:has(.quick_svg_container) {
     font-size: 14px;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
     text-align: center;
     transition: color 0.2s ease-in-out;
 }
@@ -137,7 +163,14 @@ p:has(.quick_svg_container) {
 .hourly_item .quick_extra_container .quick_wind_speed_container span,
 .hourly_item .quick_extra_container .quick_wind_gust_container span {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 12px;
+    transition: color 0.2s ease-in-out;
+}
+
+.page_container.dark_mode .hourly_item .quick_extra_container .quick_humidity_container span,
+.page_container.dark_mode .hourly_item .quick_extra_container .quick_wind_speed_container span,
+.page_container.dark_mode .hourly_item .quick_extra_container .quick_wind_gust_container span {
+    color: var(--dark_mode_text_1);
 }
 
 .hourly_item:hover .quick_extra_container .quick_humidity_container,

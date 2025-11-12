@@ -181,4 +181,77 @@ router.post('/get-hurricane-data', async (req, res) => {
   res.json(data);
 })
 
+router.post('/get-news', async (req, res) => {
+  const API = process.env.NEWS_API;
+  const url = "https://newsdata.io/api/1/latest";
+
+  // const { data } = await axios.get(url, {
+  //   params: {
+  //     apikey: API,
+  //     language: 'en',
+  //     country: 'us',
+  //     category: "environment",
+  //     full_content: 1,
+  //     q: "(temperature AND South Carolina) OR (storm AND South Carolina) OR (weather AND South Carolina)"
+  //   }
+  // })
+
+// 1) Minimal (baseline)
+const { data } = await axios.get(url, {
+  params: { apikey: API, q: "weather", full_content: 1 },
+  validateStatus: () => true
+});
+
+// 2) Add country
+const { data2 } = await axios.get(url, {
+  params: { apikey: API, q: "weather", country: "us", full_content: 1 },
+  validateStatus: () => true
+});
+
+// 3) Add category
+const {data3} = await axios.get(url, {
+  params: {
+    apikey: API,
+    q: "weather",
+    country: "us",
+    category: "environment",
+    full_content: 1
+  },
+  validateStatus: () => true
+});
+
+// 4) Simpler boolean (NO parentheses)
+const {data4} = await axios.get(url, {
+  params: {
+    apikey: API,
+    q: '"South Carolina" AND weather',
+    country: "us",
+    category: "environment",
+    full_content: 1
+  },
+  validateStatus: () => true
+});
+
+// 5) Add domains (FQDNs, comma-separated, no spaces)
+const {data5} = await axios.get(url, {
+  params: {
+    apikey: API,
+    q: '"South Carolina" AND weather',
+    country: "us",
+    category: "environment",
+    domainurl: "apnews.com,postandcourier.com,wltx.com",
+    full_content: 1
+  },
+  validateStatus: () => true
+});
+
+  res.json({
+    data,
+    data2,
+    data3,
+    data4,
+    data5
+  });
+})
+
 module.exports = router;

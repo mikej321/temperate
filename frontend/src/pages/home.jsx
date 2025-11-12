@@ -17,6 +17,7 @@ import RecentLocations from "../components/recentLocation";
 import QuickHourly from "../components/quickHourly";
 import Alerts from "../components/alerts";
 import HurricaneCenter from "../components/hurricaneCenter";
+import News from "../components/newsCorner";
 import Settings from "../components/settings";
 import Footer from "../components/footer";
 import { SpinnerDotted } from "spinners-react";
@@ -70,6 +71,7 @@ export default function Home({
   const [oneCallCurrent, setOneCallCurrent] = useState(null);
   const [alertData, setAlertData] = useState([]);
   const [hurricaneData, setHurricaneData] = useState(null);
+  const [newsData, setNewsData] = useState(null);
 
   const homeContainerRef = useRef(null);
   const sectionOneRef = useRef(null);
@@ -639,6 +641,39 @@ export default function Home({
         const result = await res.json();
         const features = result['features'];
         setHurricaneData(features);
+      } catch (e) {
+          if (!cancelled) {
+            setError(e?.message || "Failed to fetch hurricane data");
+            setWeather(null);
+          }
+      } finally {
+          if (!cancelled) setIsLoading(false);
+      }
+    })();
+
+  }, [weather])
+
+  useEffect(() => {
+
+    if (!weather) return;
+
+    let cancelled = false;
+
+    (async () => {
+      const endpoint = buildEndpoint('/search/get-news');
+      try {
+        const res = await postJsonWithRetry(endpoint,
+          {}, // Params block
+          { retries: 3, baseDelayMs: 600 }
+        );
+
+        if (!res.ok) {
+          console.warn("Failed to get news data", res.status);
+          throw new Error(`Failed to get news data ${res.status}`);
+        }
+
+        const result = await res.json();
+        console.log(result);
       } catch (e) {
           if (!cancelled) {
             setError(e?.message || "Failed to fetch hurricane data");

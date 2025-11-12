@@ -4,6 +4,7 @@
     color: var(--argentinian_blue_500);
     padding: 2rem;
     gap: 4rem;
+    font-family: var(--roboto_body);
 }
 
 
@@ -98,4 +99,12 @@
     position: absolute;
     font-size: 48px;
     font-weight: bold;
+}
+
+.hurricane_center_container:has(.hurricane_svg_container .inactive_container) {
+    padding: unset;
+}
+
+.inactive_container {
+    padding-block: 1rem;
 }

@@ -116,7 +116,7 @@ export default function HurricaneCenter({ hurricaneData, setHurricaneData }) {
   return (
     <div className="hurricane_center_container">
       <div className="hurricane_svg_container">
-        {currentConditions &&
+        {currentConditions ?
           currentConditions.map((el, i) => {
             return (
               <svg
@@ -154,7 +154,7 @@ export default function HurricaneCenter({ hurricaneData, setHurricaneData }) {
                 />
               </svg>
             );
-          })}
+          }) : <p className="inactive_container">No active hurricanes</p>}
       </div>
       {activeStorm && (
         <div className="hurricane">
@@ -190,7 +190,8 @@ export default function HurricaneCenter({ hurricaneData, setHurricaneData }) {
 
             return (
               <>
-                <div className="hurricane_details_container">
+                <div
+                 className="hurricane_details_container">
                   <p className="hurricane_name">
                     {properties["MAXWIND"] <= 74
                       ? "Tropical Storm"
